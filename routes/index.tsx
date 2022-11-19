@@ -2,26 +2,7 @@ import { Head } from "$fresh/runtime.ts";
 import Layout from "../components/Layout.tsx";
 
 import { Handlers, PageProps } from "$fresh/server.ts";
-
-export interface Post {
-  id: string;
-  title: string;
-  date: string;
-  slug: string;
-  excerpt: string;
-  categories: {
-    nodes: {
-      name: string;
-    }[];
-  };
-
-  featuredImage: {
-    node: {
-      sourceUrl: string;
-      srcSet: string;
-    };
-  };
-}
+import { Post } from "../utils/posts.ts";
 
 export const handler: Handlers = {
   async GET(_, ctx) {
@@ -114,7 +95,7 @@ export default function Home({ data }: PageProps) {
                 </div>
                 <div class="flex flex-col lg:flex-row lg:space-x-8 ">
                   <div class="lg:w-2/6  flex flex-col justify-between divide-y">
-                    {data.stickyPosts.slice(2).map((post) => (
+                    {data.stickyPosts.slice(2).map((post: Post) => (
                       <div className="overflow-hidden text-slate-500">
                         <div
                           class="aspect-w-16 aspect-h-9 bg-cover"
@@ -183,7 +164,9 @@ export default function Home({ data }: PageProps) {
                   {data.latestPosts.map((post: Post) => (
                     <div class="flex items-center my-2 py-2">
                       <div class="w-3/4 pr-2">
-                        <h3 class="font-mono font-semibold">{post.title}</h3>
+                        <h3 class="font-mono font-semibold">
+                          <a href={`/${post.slug}`}>{post.title}</a>
+                        </h3>
                         <time className="text-sm text-slate-400">
                           {formatDate(post.date)}
                         </time>

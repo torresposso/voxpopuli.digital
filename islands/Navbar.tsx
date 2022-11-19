@@ -5,7 +5,6 @@ export default function Navbar() {
 
   return (
     <>
-      {/*<!-- Component: Basic Navbar --> */}
       <header className="relative z-20 w-full border-slate-200 bg-white/90 shadow-slate-700/5 after:absolute after:top-full after:left-0 after:z-10 after:block after:h-px after:w-full after:bg-slate-200 lg:border-slate-200 lg:backdrop-blur-sm lg:after:hidden">
         <div className="relative mx-auto max-w-[80vw] ">
           <nav
@@ -13,12 +12,11 @@ export default function Navbar() {
             className="flex h-[5.5rem] items-stretch justify-between font-medium text-slate-700"
             role="navigation"
           >
-            {/*      <!-- Brand logo --> */}
             <a
               aria-label="Vox Populi logo"
               aria-current="page"
               className="flex flex-col items-center p-1 focus:outline-none"
-              href="javascript:void(0)"
+              href="/"
             >
               <svg
                 id="svg"
@@ -72,7 +70,6 @@ export default function Navbar() {
               </svg>
               vopopuli.digital
             </a>
-            {/*      <!-- Mobile trigger --> */}
             <button
               className={`relative order-10 block h-10 w-10 self-center lg:hidden
                 ${

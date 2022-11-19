@@ -1,4 +1,4 @@
-import "https://flackr.github.io/scroll-timeline/dist/scroll-timeline.js";
+import "./scroll-timeline.js";
 
 const scrollTracker = document.getElementById("scroll-tracker");
 
@@ -17,4 +17,5 @@ scrollTracker.animate(
     timeline: scrollTrackingTimeline,
   },
 );
+
 console.log("loaded");

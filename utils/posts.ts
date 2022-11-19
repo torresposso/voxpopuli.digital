@@ -4,10 +4,18 @@ export interface Post {
   date: string;
   slug: string;
   excerpt: string;
+  content: string;
   categories: {
-    nodes: {
+    nodes: [{ name: string }];
+  };
+  author: {
+    node: {
       name: string;
-    }[];
+      uri: string;
+      avatar: {
+        url: string;
+      };
+    };
   };
 
   featuredImage: {
