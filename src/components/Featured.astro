@@ -1,0 +1,19 @@
+---
+import Card from "./Card.astro";
+const { posts } = Astro.props;
+const [mainPost, ...otherPosts] = posts;
+---
+
+<div>
+  <div>
+    {
+      mainPost && (
+        <div
+          class={`bg-[url(${mainPost.featuredImage.node.mediaItemUrl})] h-24`}
+        >
+          <h2>{mainPost.title}</h2>
+        </div>
+      )
+    }
+  </div>
+</div>
