@@ -4,16 +4,38 @@ const { posts } = Astro.props;
 const [mainPost, ...otherPosts] = posts;
 ---
 
-<div>
-  <div>
-    {
-      mainPost && (
-        <div
-          class={`bg-[url(${mainPost.featuredImage.node.mediaItemUrl})] h-24`}
-        >
-          <h2>{mainPost.title}</h2>
+<div class="lg:w-2/3 mx-auto p-4">
+  <div
+    class="zoom relative overflow-hidden rounded-lg bg-cover bg-no-repeat shadow-lg dark:shadow-black/20"
+    data-te-ripple-init
+    data-te-ripple-color="light"
+  >
+    <img
+      src="https://mdbcdn.b-cdn.net/img/new/standard/nature/051.jpg"
+      class="w-full align-middle transition duration-300 ease-linear"
+    />
+    <a href="#!">
+      <div
+        class="absolute top-0 right-0 bottom-0 left-0 h-full w-full overflow-hidden bg-[hsla(0,0%,0%,0.4)] bg-fixed"
+      >
+        <div class="flex h-full items-end justify-start">
+          <div class="m-6 text-white">
+            <h5 class="hidden lg:block mb-3 text-lg font-bold">
+              {mainPost.title}
+            </h5>
+            <p>
+              <small>Published <u>13.01.2022</u> by Anna Maria Doe</small>
+            </p>
+          </div>
         </div>
-      )
-    }
+      </div>
+      <div
+        class="absolute top-0 right-0 bottom-0 left-0 h-full w-full overflow-hidden bg-fixed transition duration-300 ease-in-out hover:bg-[hsla(0,0%,99%,0.15)]"
+      >
+      </div>
+    </a>
+  </div>
+  <div>
+    <h4>{mainPost.title}</h4>
   </div>
 </div>
