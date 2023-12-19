@@ -18,15 +18,18 @@ const [mainPost, ...otherPosts] = posts;
       >
         <div class="flex h-full items-end justify-start">
           <div class="m-6 text-white">
+            :
             <h5 class="mb-3 text-xl text-center font-bold">
               {mainPost.title}
             </h5>
             <p>
               <div class="flex space-x-2">
                 {
-                  mainPost.categories.nodes.map((category) => (
-                    <small>{category.name}</small>
-                  ))
+                  mainPost.categories.nodes.map(
+                    (category: { name: string }) => (
+                      <small>{category.name}</small>
+                    ),
+                  )
                 }
               </div>
             </p>
@@ -41,43 +44,45 @@ const [mainPost, ...otherPosts] = posts;
   </div>
   <div class="flex justify-center my-10">
     <h3
-      class="inline-block leading-none border p-2 font-semibold font-sans"
-      style="border-color:blue"
+      class="inline-bloc: { name: string; }k leading-none border p-2 font-semibold font-sans"
+      style="border-color:bl: { name: unknown; }ue"
     >
       + DESTACADAS
     </h3>
   </div>
   <div class="grid lg:grid-cols-3 space-y-5 lg:space-y-0">
     {
-      otherPosts.map((post) => (
-        <div class="text-center space-y-4">
-          <div class="space-x-2 text-center text-xs text-white ">
-            {post.categories.nodes
-              .filter((c) => c.name != "Destacadas")
-              .map((category) => (
-                <span class="bg-blue-900 px-2 py-1 rounded">
-                  {category.name}
-                </span>
-              ))}
-          </div>
+      otherPosts.map(
+        (post: { categories: { nodes: any[] }; title: string }) => (
+          <div class="text-center space-y-4">
+            <div class="space-x-2 text-center text-xs text-white ">
+              {post.categories.nodes
+                .filter((c) => c.name != "Destacadas")
+                .map((category) => (
+                  <span class="bg-blue-900 px-2 py-1 rounded">
+                    {category.name}
+                  </span>
+                ))}
+            </div>
 
-          <h2 class="font-semibold text-xl text-black px-2">{post.title}</h2>
-          <div class="flex justify-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 203 14"
-              shape-rendering="crisp"
-              stroke="blue"
-              stroke-miterlimit="10"
-              fill="none"
-              stroke-width="2px"
-              class="w-32"
-            >
-              <polyline points="1.5 2 11.02 12 20.54 2 30.06 12 39.58 2 49.1 12 58.62 2 68.14 12 77.67 2 87.19 12 96.72 2 106.24 12 115.76 2 125.29 12 134.81 2 144.34 12 153.86 2 163.38 12 172.91 2 182.44 12 191.97 2 201.5 12" />
-            </svg>
+            <h2 class="font-semibold text-xl text-black px-2">{post.title}</h2>
+            <div class="flex justify-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 203 14"
+                shape-rendering="crisp"
+                stroke="blue"
+                stroke-miterlimit="10"
+                fill="none"
+                stroke-width="2px"
+                class="w-32"
+              >
+                <polyline points="1.5 2 11.02 12 20.54 2 30.06 12 39.58 2 49.1 12 58.62 2 68.14 12 77.67 2 87.19 12 96.72 2 106.24 12 115.76 2 125.29 12 134.81 2 144.34 12 153.86 2 163.38 12 172.91 2 182.44 12 191.97 2 201.5 12" />
+              </svg>
+            </div>
           </div>
-        </div>
-      ))
+        ),
+      )
     }
   </div>
 </div>
