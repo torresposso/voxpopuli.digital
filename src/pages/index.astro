@@ -3,9 +3,10 @@ import Layout from "../layouts/Layout.astro";
 import Featured from "../components/Featured.astro";
 import { WPQuery } from "../data/wordpress";
 import VoxVideo from "../components/VoxVideo.astro";
+import Latest from "../components/Latest.astro";
 
 const data = await WPQuery({
-	query: `
+  query: `
 	{
   destacadas: posts(first: 4, where: {categoryName: "destacadas"}) {
     nodes {
@@ -27,8 +28,23 @@ const data = await WPQuery({
       }
     }
   }
-
-  videos: posts(first: 5, where: {categoryName: "Videos"}) {
+  latest: posts(first: 5, where: {categoryNotIn: 3072}) {
+    nodes {
+      title(format: RENDERED)
+      date
+      excerpt
+      slug
+      featuredImage {
+        node {
+          mediaItemUrl
+          srcSet
+          sizes
+          altText
+        }
+      }
+    }
+  }
+  videos: posts(first: 7, where: {categoryName: "Videos"}) {
     nodes {
       title
       slug
@@ -54,6 +70,7 @@ const data = await WPQuery({
 ---
 
 <Layout title="Welcome to Astro.">
-	<Featured posts={data.destacadas.nodes} />
-	<VoxVideo videos={data.videos.nodes} />
+  <Featured posts={data.destacadas.nodes} />
+  <Latest posts={data.latest.nodes} />
+  <VoxVideo videos={data.videos.nodes} />
 </Layout>

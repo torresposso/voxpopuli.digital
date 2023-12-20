@@ -6,14 +6,19 @@ type VideoProps = {
 };
 ---
 
-<div class="bg-blue-900 p-6">
+<div class="bg-slate-800 p-4">
+  <div
+    class="max-w-md mx-auto text-center rounded-lg text-white text-3xl py-2 mb-4 bg-black"
+  >
+    Vox Videos
+  </div>
   <div class="flex overflow-x-auto">
     <div class="flex flex-nowrap space-x-8">
       {
         videos.map((video: VideoProps) => (
           <div class="relative bg-white  rounded-xl overflow-hidden">
             <div
-              class=" h-64 aspect-square lg:h-48 bg-cover bg-center "
+              class=" h-64 aspect-square  bg-cover bg-center "
               style={{
                 backgroundImage: `url('${video.featuredImage.node.mediaItemUrl}')`,
               }}
@@ -22,7 +27,7 @@ type VideoProps = {
               <div class="absolute top-0 right-0 bottom-0 left-0 h-full w-full overflow-hidden bg-[hsla(0,0%,0%,0.4)] bg-fixed">
                 <div class="flex h-full items-end justify-center">
                   <div class="m-6 text-white">
-                    <h5 class="mb-3 text-lg lg:text-xl text-center font-bold">
+                    <h5 class="mb-3 text-lg  text-center font-bold">
                       {video.title}
                     </h5>
                   </div>

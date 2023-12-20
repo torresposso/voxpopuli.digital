@@ -1,0 +1,34 @@
+---
+const { posts } = Astro.props;
+type LatestProps = {
+  featuredImage: { node: { mediaItemUrl: string } };
+  title: string;
+  excerpt: string;
+  date: string;
+};
+---
+
+<div class="max-w-2xl mx-auto px-4 flex flex-col space-y-4 my-5">
+  {
+    posts.map((post: LatestProps) => (
+      <div class="flex justify-between rounded overflow-hidden border h-32">
+        <div class="w-2/3 p-3">
+          <h3 class="text-base lg:text-xl font-medium">{post.title}</h3>
+          <small class="capitalize">
+            {new Intl.DateTimeFormat("es-CO", {
+              weekday: "long",
+              day: "numeric",
+              month: "long",
+            }).format(new Date(post.date))}
+          </small>
+        </div>
+        <div
+          class="w-1/3  bg-cover bg-center "
+          style={{
+            backgroundImage: `url('${post.featuredImage.node.mediaItemUrl}')`,
+          }}
+        />
+      </div>
+    ))
+  }
+</div>
