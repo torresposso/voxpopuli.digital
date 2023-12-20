@@ -5,12 +5,10 @@ const [mainPost, ...otherPosts] = posts;
 
 <div class="w-full mx-auto p-4">
   <div
-    class="lg:w-2/3 mx-auto h-96 lg:h-96 relative overflow-hidden rounded-lg bg-cover bg-center shadow-lg dark:shadow-black/20"
+    class="lg:w-2/3 mx-auto h-96 lg:h-96 relative overflow-hidden rounded-lg bg-cover bg-center shadow-lg mt-2"
     style={{
       backgroundImage: `url('${mainPost.featuredImage.node.mediaItemUrl}')`,
     }}
-    data-te-ripple-init
-    data-te-ripple-color="light"
   >
     <a href="#!">
       <div
@@ -19,7 +17,7 @@ const [mainPost, ...otherPosts] = posts;
         <div class="flex h-full items-end justify-start">
           <div class="m-6 text-white">
             :
-            <h5 class="mb-3 text-xl text-center font-bold">
+            <h5 class="mb-3 text-2xl text-center font-bold">
               {mainPost.title}
             </h5>
             <p>
@@ -42,7 +40,7 @@ const [mainPost, ...otherPosts] = posts;
       </div>
     </a>
   </div>
-  <div class="flex justify-center my-10">
+  <div class="flex justify-center my-8">
     <h3
       class="inline-bloc: { name: string; }k leading-none border p-2 font-semibold font-sans"
       style="border-color:bl: { name: unknown; }ue"
