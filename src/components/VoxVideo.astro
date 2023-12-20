@@ -1,12 +1,16 @@
 ---
 const { videos } = Astro.props;
+type VideoProps = {
+  featuredImage: { node: { mediaItemUrl: string } };
+  title: string;
+};
 ---
 
 <div class="bg-blue-900 p-6">
   <div class="flex overflow-x-auto">
     <div class="flex flex-nowrap space-x-8">
       {
-        videos.map((video) => (
+        videos.map((video: VideoProps) => (
           <div class="relative bg-white  rounded-xl overflow-hidden">
             <div
               class=" h-64 aspect-square lg:h-48 bg-cover bg-center "
