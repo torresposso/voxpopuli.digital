@@ -28,7 +28,7 @@ const data = await WPQuery({
       }
     }
   }
-  latest: posts(first: 5, where: {categoryNotIn: 3072}) {
+  latest: posts(first: 4, where: {categoryNotIn: 3072}) {
     nodes {
       title(format: RENDERED)
       date

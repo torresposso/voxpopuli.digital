@@ -8,13 +8,15 @@ type LatestProps = {
 };
 ---
 
-<div class="max-w-2xl mx-auto px-4 flex flex-col space-y-4 my-5">
+<div class="max-w-5xl mx-auto px-4 grid lg:grid-cols-2 gap-6 my-5">
   {
     posts.map((post: LatestProps) => (
-      <div class="flex justify-between rounded overflow-hidden border h-32">
-        <div class="w-2/3 p-3">
-          <h3 class="text-base lg:text-xl font-medium">{post.title}</h3>
-          <small class="capitalize">
+      <div class="flex justify-between rounded-lg overflow-hidden  h-32 ">
+        <div class="flex flex-col justify-between w-2/3 p-3 text-white bg-gradient-to-b from-blue-900 to-blue-950">
+          <h3 class="text-base lg:text-xl font-medium leading-tight">
+            {post.title}
+          </h3>
+          <small class="capitalize text-xs">
             {new Intl.DateTimeFormat("es-CO", {
               weekday: "long",
               day: "numeric",
