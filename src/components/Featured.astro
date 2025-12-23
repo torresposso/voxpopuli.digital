@@ -1,0 +1,23 @@
+---
+import MainPost from "./MainPost.astro";
+import SecondaryPost from "./SecondaryPost.astro";
+import { get5Destacadas } from "../lib/wp";
+
+const posts = await get5Destacadas();
+const featured = posts[0];
+const otherFeatured = posts.slice(1, 5);
+---
+
+<section class="">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <!-- Big Featured Post -->
+        <div class="lg:col-span-3">
+            {featured && <MainPost post={featured} />}
+        </div>
+
+        <!-- Smaller Featured Posts -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6">
+            {otherFeatured.map((post) => <SecondaryPost post={post} />)}
+        </div>
+    </div>
+</section>
