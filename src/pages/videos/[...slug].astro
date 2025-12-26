@@ -1,9 +1,10 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { getAllPosts } from "../../lib/wp";
+
+import { getLatestPostsFromCategoryId } from "../../lib/wp";
 
 export async function getStaticPaths() {
-    const posts = await getAllPosts();
+    const posts = await getLatestPostsFromCategoryId(9, 5);
     return posts.map((post) => ({
         params: { slug: post.slug },
         props: { post },

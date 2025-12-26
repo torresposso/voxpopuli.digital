@@ -153,10 +153,10 @@ function mapWPPostToViewModel(post: WPPost): PostViewModel {
    FETCH FUNCTION (PUBLIC API)
    ====================================================== */
 
-// Get latest 5 posts from category 14
-export async function get5Destacadas(): Promise<PostViewModel[]> {
+
+export async function getLatestPostsFromCategoryId(categoryId: number, postCount = 5): Promise<PostViewModel[]> {
   const res = await fetch(
-    `${API_URL}/posts?categories=14&per_page=5&_embed`
+    `${API_URL}/posts?categories=${categoryId}&per_page=${postCount}&_embed`
   );
 
   if (!res.ok) {
