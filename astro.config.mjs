@@ -1,15 +1,14 @@
 // @ts-check
 
-import mdx from '@astrojs/mdx';
-import sitemap from '@astrojs/sitemap';
-import { defineConfig } from 'astro/config';
+import alpinejs from "@astrojs/alpinejs";
+import mdx from "@astrojs/mdx";
+import sitemap from "@astrojs/sitemap";
 
-import tailwindcss from '@tailwindcss/vite';
-
-import alpinejs from '@astrojs/alpinejs';
+import tailwindcss from "@tailwindcss/vite";
+import { defineConfig } from "astro/config";
 
 export default defineConfig({
-  site: 'https://voxpopuli.digital',
+  site: "https://voxpopuli.digital",
   integrations: [mdx(), sitemap(), alpinejs()],
 
   vite: {

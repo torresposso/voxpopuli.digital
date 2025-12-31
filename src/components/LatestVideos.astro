@@ -4,55 +4,38 @@ import { getLatestPostsFromCategoryId } from "../lib/wp";
 const videos = await getLatestPostsFromCategoryId(9, 5);
 ---
 
-<section class="bg-base-300">
-    <!-- Latest 5 videos as Squircles cards -->
-    <div class="container mx-auto p-6">
-        <h2 class="text-3xl font-bold">Últimos Videos</h2>
-
-        <div
-            class="carousel carousel-center w-full p-4 space-x-6 bg-transparent rounded-box"
-        >
+<section class="py-4 bg-base-300">
+    <div class="container mx-auto px-4">
+        <h2 class="text-2xl font-bold mb-4">VoxPopuli Videos</h2>
+        <div class="carousel carousel-center w-full space-x-4 rounded-box aspect-video">
             {
                 videos.map((video) => (
-                    <div class="carousel-item">
-                        <a
-                            href={`/videos/${video.slug}`}
-                            class="relative w-48 md:w-72 aspect-9/16 rounded-4xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 group ring-1 ring-white/10"
-                        >
-                            <img
-                                src={video.featuredImage?.url}
-                                alt={video.title}
-                                class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                            />
-
-                            <div class="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
-
-                            <div class="absolute inset-0 flex items-center justify-center opacity-70 group-hover:opacity-100 transition-opacity duration-300">
-                                <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center ring-1 ring-white/40">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 24 24"
-                                        fill="currentColor"
-                                        class="w-6 h-6 text-white ml-0.5"
-                                    >
-                                        <path
-                                            fill-rule="evenodd"
-                                            d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z"
-                                            clip-rule="evenodd"
-                                        />
-                                    </svg>
+                    <div class="carousel-item aspect-video w-4/5 rounded-2xl">
+                        <a href={`/articulos/${video.slug}`} class="card image-full bg-base-100 shadow-xl group hover:shadow-2xl transition-all duration-300 w-full aspect-[4/5] overflow-hidden">
+                            <figure class="w-full h-full">
+                                {video.featuredImage ? (
+                                    <img
+                                        src={video.featuredImage.url}
+                                        alt={video.featuredImage.alt}
+                                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                    />
+                                ) : (
+                                    <div class="w-full h-full bg-neutral flex items-center justify-center text-neutral-content">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                                    </div>
+                                )}
+                            </figure>
+                            <div class="card-body flex flex-col justify-end p-4 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-100 group-hover:from-black/90 transition-all">
+                                <div class="mb-auto flex justify-center pt-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                   <div class="w-12 h-12 rounded-full bg-primary/80 backdrop-blur-sm flex items-center justify-center scale-75 group-hover:scale-100 transition-transform duration-300">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary-content ml-1" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="absolute bottom-0 left-0 right-0 p-4 md:p-6 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                                <h3 class="text-white font-bold text-2xl md:text-2xl leading-tight line-clamp-5 text-shadow-blue-500/25 text-shadow-lg">
+                                <h3 class="card-title leading-tight mb-0 group-hover:text-primary transition-colors">
                                     {video.title}
                                 </h3>
-                                <div class="flex items-center gap-2 mt-3 text-xs text-white/80 font-medium">
-                                    <span class="bg-white/20 px-2 py-0.5 rounded-full backdrop-blur-sm">
-                                        Video
-                                    </span>
-                                </div>
                             </div>
                         </a>
                     </div>

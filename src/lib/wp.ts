@@ -1,10 +1,12 @@
 const API_URL = "https://voxpopuli.digital/wp-json/wp/v2";
 
+export const FEATURED_CATEGORY_ID = 14;
+
 /* ======================================================
    RAW WORDPRESS API TYPES
    ====================================================== */
 
-export interface WPApiPostsResponse extends Array<WPPost> { }
+export interface WPApiPostsResponse extends Array<WPPost> {}
 
 export interface WPPost {
   id: number;
@@ -112,8 +114,8 @@ function mapWPPostToViewModel(post: WPPost): PostViewModel {
   const categories =
     post._embedded?.["wp:term"]
       ?.flat()
-      .filter(term => term.taxonomy === "category")
-      .map(term => ({
+      .filter((term) => term.taxonomy === "category")
+      .map((term) => ({
         id: term.id,
         name: term.name,
         slug: term.slug,
@@ -138,11 +140,11 @@ function mapWPPostToViewModel(post: WPPost): PostViewModel {
 
     featuredImage: media
       ? {
-        url: media.source_url,
-        alt: media.alt_text,
-        width: media.media_details?.width,
-        height: media.media_details?.height,
-      }
+          url: media.source_url,
+          alt: media.alt_text,
+          width: media.media_details?.width,
+          height: media.media_details?.height,
+        }
       : undefined,
 
     categories,
@@ -153,8 +155,10 @@ function mapWPPostToViewModel(post: WPPost): PostViewModel {
    FETCH FUNCTION (PUBLIC API)
    ====================================================== */
 
-
-export async function getLatestPostsFromCategoryId(categoryId: number, postCount = 5): Promise<PostViewModel[]> {
+export async function getLatestPostsFromCategoryId(
+  categoryId: number,
+  postCount = 5
+): Promise<PostViewModel[]> {
   const res = await fetch(
     `${API_URL}/posts?categories=${categoryId}&per_page=${postCount}&_embed`
   );
@@ -168,9 +172,25 @@ export async function getLatestPostsFromCategoryId(categoryId: number, postCount
   return posts.map(mapWPPostToViewModel);
 }
 
+export async function getLatestNonFeaturedPosts(
+  limit = 5
+): Promise<PostViewModel[]> {
+  const res = await fetch(
+    `${API_URL}/posts?categories_exclude=${FEATURED_CATEGORY_ID}&per_page=${limit}&_embed`
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch non-featured posts");
+  }
+
+  const posts = (await res.json()) as WPApiPostsResponse;
+
+  return posts.map(mapWPPostToViewModel);
+}
+
 // Get all posts (limited to 10 for now, WP default is 10)
 export async function getAllPosts(): Promise<PostViewModel[]> {
-  const res = await fetch(`${API_URL}/posts?per_page=10&_embed`);
+  const res = await fetch(`${API_URL}/posts?per_page=100&_embed`);
 
   if (!res.ok) {
     throw new Error("Failed to fetch WordPress posts");
@@ -182,7 +202,9 @@ export async function getAllPosts(): Promise<PostViewModel[]> {
 }
 
 // Get single post by slug
-export async function getPostBySlug(slug: string): Promise<PostViewModel | null> {
+export async function getPostBySlug(
+  slug: string
+): Promise<PostViewModel | null> {
   const res = await fetch(`${API_URL}/posts?slug=${slug}&_embed`);
 
   if (!res.ok) {
