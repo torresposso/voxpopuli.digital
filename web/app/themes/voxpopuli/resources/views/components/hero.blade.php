@@ -55,7 +55,7 @@
 
                             {{-- Excerpt --}}
                             @if (!empty($main_post->excerpt))
-                                <p class="p-4 text-primary-content/85 text-lg font-serif line-clamp-3 leading-relaxed">
+                                <p class="py-3 pr-4 text-primary-content/85 text-base md:text-lg font-serif line-clamp-2 md:line-clamp-3 leading-relaxed">
                                     {{ $main_post->excerpt }}
                                 </p>
                             @endif
@@ -119,7 +119,7 @@
                     <span aria-hidden="true" class="text-secondary font-black">//</span>
                     {{ __('Últimos Artículos', 'voxpopuli') }}
                 </span>
-                <span class="badge badge-secondary badge-xs animate-pulse"></span>
+                <span class="badge badge-secondary badge-xs animate-pulse" aria-hidden="true"></span>
             </div>
 
             {{-- List occupying the remaining/all available height --}}
