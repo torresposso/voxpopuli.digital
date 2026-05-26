@@ -1,0 +1,8 @@
+{
+  "files": [
+    "web/app/themes/voxpopuli/resources/views/layouts/app.blade.php"
+  ],
+  "insertBefore": "</body>",
+  "commentSyntax": "html",
+  "cspChecked": true
+}

@@ -1,0 +1,8 @@
+{
+  "name": "voxpopuli-root",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix web/app/themes/voxpopuli install && npm --prefix web/app/themes/voxpopuli run dev",
+    "build": "npm --prefix web/app/themes/voxpopuli install && npm --prefix web/app/themes/voxpopuli run build"
+  }
+}

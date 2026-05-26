@@ -1,0 +1,23 @@
+{
+  "name": "Vox Populi Development Container",
+  "dockerComposeFile": [
+    "../docker-compose.yml"
+  ],
+  "service": "app",
+  "workspaceFolder": "/app",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "bmewburn.vscode-intelephense-client",
+        "onecentlin.laravel-blade",
+        "amiralizadeh94.laravel-extra-intellisense",
+        "editorconfig.editorconfig"
+      ],
+      "settings": {
+        "php.validate.enable": true,
+        "php.validate.executablePath": "/usr/local/bin/php"
+      }
+    }
+  },
+  "remoteUser": "root"
+}
