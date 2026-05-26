@@ -4,10 +4,11 @@
     @endphp
 
     <section
-        class="w-full max-w-[1440px] mx-auto px-4 md:px-8 pt-4 md:pt-0 md:h-[calc(100vh-4rem)] md:overflow-hidden bg-base-100 animate-fade-in-up border-b border-base-300 grid grid-cols-1 md:grid-cols-4"
+        class="w-full max-w-[1440px] mx-auto px-0 md:px-8 pt-0 md:pt-0 md:h-[calc(100vh-4rem)] md:overflow-hidden bg-base-100 animate-fade-in-up border-b border-base-300 grid grid-cols-1 md:grid-cols-4"
         aria-label="{{ __('Artículos principales destacados', 'voxpopuli') }}">
-        <div class="bg-primary col-span-1 md:col-span-2 flex flex-col justify-between md:h-full py-4 md:py-0">
-            <article class="flex flex-col justify-between md:h-full pb-4 md:pb-0">
+        <div
+            class="bg-primary col-span-1 md:col-span-2 h-[calc(100vh-4rem)] flex flex-col justify-between overflow-hidden">
+            <article class="h-full flex flex-col">
                 <div class="relative w-full aspect-video overflow-hidden bg-base-200 rounded-none shrink-0">
                     @if (!empty($main_post->image))
                         <img alt="{{ $main_post->alt ?? $main_post->title }}"
@@ -27,8 +28,7 @@
                         </div>
                     @endif
                 </div>
-                <div class="px-6 pt-2 flex-1 flex flex-col justify-between">
-                    {{-- Text Partition (Bottom, remaining 2/5 height on desktop) --}}
+                <div class="px-4 flex-0 flex flex-col ">
                     <div class="w-full flex-1 md:h-2/5 flex flex-col justify-between pt-5">
                         <div class="flex flex-col gap-2">
                             {{-- Category Kicker --}}
@@ -55,7 +55,7 @@
 
                             {{-- Excerpt --}}
                             @if (!empty($main_post->excerpt))
-                                <p class="py-3 pr-4 text-primary-content/85 text-base md:text-lg font-serif line-clamp-2 md:line-clamp-3 leading-relaxed">
+                                <p class="py-6 text-primary-content/85 text-base md:text-lg line-clamp-5">
                                     {{ $main_post->excerpt }}
                                 </p>
                             @endif
@@ -63,7 +63,7 @@
 
                         {{-- Meta info (Author and Date) --}}
                         <div
-                            class="flex items-center gap-2 font-sans text-xs text-primary-content/75 font-semibold uppercase tracking-wider mt-4 border-t border-primary-content/15 pt-3">
+                            class="flex items-center gap-2 font-sans text-xs text-primary-content/75 font-semibold uppercase tracking-wider mt-4 border-t border-primary-content/15 py-6">
                             <span>{{ sprintf(__('Por %s', 'voxpopuli'), $main_post->author) }}</span>
                             <span aria-hidden="true" class="opacity-40">//</span>
                             <span>{{ $main_post->date }}</span>
@@ -72,51 +72,64 @@
                 </div>
             </article>
         </div>
-        <div class="col-span-1 flex flex-col md:h-full border-r border-base-300 divide-y divide-base-300">
+        <div
+            class="col-span-1 flex flex-col h-[calc(100vh-4rem)] md:h-full border-r border-base-300 divide-y divide-base-300 overflow-hidden">
             @foreach (array_slice($featured_posts, 1) as $post)
-                <div class="card image-full flex-1 rounded-none group overflow-hidden relative">
-                    <figure class="w-full h-full">
+                <div class="flex-1 rounded-none group overflow-hidden relative w-full h-full flex flex-col justify-end">
+                    {{-- Image layer --}}
+                    <div class="absolute inset-0 w-full h-full">
                         @if (!empty($post->image))
                             <img alt="{{ $post->alt ?? $post->title }}"
-                                class="w-full h-full object-cover group-hover:scale-105 transition duration-500 ease-out"
+                                class="w-full h-full object-cover group-hover:scale-105 transition duration-700 ease-out"
                                 src="{{ $post->image }}" loading="lazy" decoding="async" />
-                            {{-- Fractal noise overlay for texture --}}
-                            <div class="absolute inset-0 opacity-10 pointer-events-none mix-blend-overlay noise-overlay"></div>
                         @else
                             <div class="w-full h-full bg-base-200 flex items-center justify-center">
-                                <span class="badge badge-ghost font-sans font-extrabold uppercase text-[10px]">{{ __('Artículo', 'voxpopuli') }}</span>
+                                <span
+                                    class="badge badge-ghost font-sans font-extrabold uppercase text-[10px]">{{ __('Artículo', 'voxpopuli') }}</span>
                             </div>
                         @endif
-                    </figure>
-                    <div class="card-body justify-end p-5 z-10 bg-gradient-to-t from-black/85 via-black/40 to-transparent">
+                    </div>
+
+                    {{-- Premium Brand Tint Gradient Overlay (transparent at top, deep primary/black tint at bottom for text contrast) --}}
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-primary/40 to-transparent opacity-90 group-hover:opacity-80 transition duration-500 ease-out pointer-events-none z-0"></div>
+                    {{-- Fractal noise overlay for texture --}}
+                    <div class="absolute inset-0 opacity-10 pointer-events-none mix-blend-overlay noise-overlay z-0"></div>
+
+                    {{-- Content --}}
+                    <div class="relative z-10 p-5 flex flex-col gap-1.5 justify-end h-full">
                         {{-- Category Kicker --}}
                         <div>
-                            <span class="font-sans font-extrabold uppercase tracking-[0.2em] text-[10px] text-secondary">
-                                <span aria-hidden="true" class="opacity-50">//</span> {{ $post->category }}
+                            <span
+                                class="font-sans font-extrabold uppercase tracking-[0.2em] text-[10px] text-secondary drop-shadow-sm">
+                                <span aria-hidden="true" class="opacity-70">//</span> {{ $post->category }}
                             </span>
                         </div>
 
                         {{-- Title --}}
-                        <h3 class="card-title font-display text-base md:text-sm lg:text-base text-neutral-content font-bold leading-tight line-clamp-2">
-                            <a href="{{ $post->url }}" class="hover:text-secondary transition-colors duration-300 after:absolute after:inset-0">
+                        <h3
+                            class="font-display text-base md:text-sm lg:text-base text-white font-bold leading-tight line-clamp-2 drop-shadow-md">
+                            <a href="{{ $post->url }}"
+                                class="hover:text-secondary transition-colors duration-300 after:absolute after:inset-0">
                                 {{ $post->title }}
                             </a>
                         </h3>
 
                         {{-- Meta Author and Date --}}
-                        <div class="flex items-center gap-2 font-sans text-[10px] text-neutral-content/75 font-semibold uppercase tracking-wider mt-1">
+                        <div
+                            class="flex items-center gap-2 font-sans text-[10px] text-white/80 font-semibold uppercase tracking-wider mt-1 drop-shadow-sm">
                             <span>{{ sprintf(__('Por %s', 'voxpopuli'), $post->author) }}</span>
-                            <span aria-hidden="true" class="opacity-40">//</span>
+                            <span aria-hidden="true" class="opacity-50">//</span>
                             <span>{{ $post->date }}</span>
                         </div>
                     </div>
                 </div>
             @endforeach
         </div>
-        <div class="col-span-1 md:h-full bg-base-100 flex flex-col">
+        <div class="col-span-1 h-[calc(100vh-4rem)] md:h-full bg-base-100 flex flex-col overflow-hidden">
             {{-- Header/Title --}}
             <div class="p-4 border-b border-base-300 bg-base-200/50 flex items-center justify-between shrink-0">
-                <span class="font-sans font-black uppercase tracking-wider text-xs text-base-content flex items-center gap-1.5">
+                <span
+                    class="font-sans font-black uppercase tracking-wider text-xs text-base-content flex items-center gap-1.5">
                     <span aria-hidden="true" class="text-secondary font-black">//</span>
                     {{ __('Últimos Artículos', 'voxpopuli') }}
                 </span>
@@ -124,20 +137,24 @@
             </div>
 
             {{-- List occupying the remaining/all available height --}}
-            <ul class="list flex flex-col flex-1 divide-y divide-base-200 bg-base-100 md:h-full md:overflow-y-auto">
+            <ul class="list flex flex-col flex-1 divide-y divide-base-200 bg-base-100 h-full overflow-y-auto">
                 @foreach ($latest_posts as $index => $post)
-                    <li class="list-row flex-1 flex items-center gap-3 p-4 group hover:bg-base-200/60 transition-colors duration-300 relative cursor-pointer">
+                    <li
+                        class="list-row flex-1 flex items-center gap-3 p-4 group hover:bg-base-200/60 transition-colors duration-300 relative cursor-pointer">
                         {{-- Number / Index counter --}}
-                        <div class="text-3xl font-display font-light text-base-content/25 group-hover:text-secondary/60 transition-colors duration-300 tabular-nums shrink-0">
+                        <div
+                            class="text-3xl font-display font-light text-base-content/25 group-hover:text-secondary/60 transition-colors duration-300 tabular-nums shrink-0">
                             {{ sprintf('%02d', $index + 1) }}
                         </div>
 
                         {{-- Image --}}
                         <div class="size-16 rounded-box overflow-hidden bg-base-200 shrink-0 relative">
                             @if (!empty($post->image))
-                                <img src="{{ $post->image }}" alt="{{ $post->alt ?? $post->title }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300 ease-out" />
+                                <img src="{{ $post->image }}" alt="{{ $post->alt ?? $post->title }}"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition duration-300 ease-out" />
                             @else
-                                <div class="w-full h-full flex items-center justify-center bg-base-300 text-[10px] text-base-content/40 font-bold uppercase">
+                                <div
+                                    class="w-full h-full flex items-center justify-center bg-base-300 text-[10px] text-base-content/40 font-bold uppercase">
                                     VP
                                 </div>
                             @endif
@@ -150,21 +167,27 @@
                                 {{ $post->category }}
                             </span>
                             {{-- Title --}}
-                            <h4 class="font-display text-xs md:text-sm text-base-content font-bold leading-snug group-hover:text-primary transition-colors duration-300">
-                                <a href="{{ $post->url }}" class="after:absolute after:inset-0 hover:text-primary transition-colors duration-300">
+                            <h4
+                                class="font-display text-xs md:text-sm text-base-content font-bold leading-snug group-hover:text-primary transition-colors duration-300">
+                                <a href="{{ $post->url }}"
+                                    class="after:absolute after:inset-0 hover:text-primary transition-colors duration-300">
                                     {{ $post->title }}
                                 </a>
                             </h4>
                             {{-- Date --}}
-                            <span class="font-sans text-[9px] text-base-content/50 font-semibold uppercase tracking-wider mt-0.5">
+                            <span
+                                class="font-sans text-[9px] text-base-content/50 font-semibold uppercase tracking-wider mt-0.5">
                                 {{ $post->date }}
                             </span>
                         </div>
 
                         {{-- Arrow Action Indicator --}}
-                        <div class="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition duration-300 shrink-0 text-primary">
-                            <svg class="size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                        <div
+                            class="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition duration-300 shrink-0 text-primary">
+                            <svg class="size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="2.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                             </svg>
                         </div>
                     </li>
