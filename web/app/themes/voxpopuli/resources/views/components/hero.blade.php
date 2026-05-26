@@ -4,10 +4,10 @@
     @endphp
 
     <section
-        class="w-full max-w-[1440px] mx-auto px-0 md:px-8 pt-0 md:pt-0 h-[calc(100vh-4rem)] overflow-y-auto snap-y snap-mandatory scroll-smooth md:h-[calc(100vh-4rem)] md:overflow-hidden bg-base-100 animate-fade-in-up border-b border-base-300 grid grid-cols-1 md:grid-cols-4"
+        class="w-full max-w-[1440px] mx-auto px-4 md:px-8 pt-4 md:pt-0 md:h-[calc(100vh-4rem)] md:overflow-hidden bg-base-100 animate-fade-in-up border-b border-base-300 grid grid-cols-1 md:grid-cols-4"
         aria-label="{{ __('Artículos principales destacados', 'voxpopuli') }}">
-        <div class="bg-primary col-span-1 md:col-span-2 snap-start h-[calc(100vh-4rem)] md:h-full flex flex-col justify-between overflow-hidden py-4 md:py-0">
-            <article class="h-full flex flex-col justify-between pb-4 md:pb-0">
+        <div class="bg-primary col-span-1 md:col-span-2 flex flex-col justify-between md:h-full py-4 md:py-0">
+            <article class="flex flex-col justify-between md:h-full pb-4 md:pb-0">
                 <div class="relative w-full aspect-video overflow-hidden bg-base-200 rounded-none shrink-0">
                     @if (!empty($main_post->image))
                         <img alt="{{ $main_post->alt ?? $main_post->title }}"
@@ -72,7 +72,7 @@
                 </div>
             </article>
         </div>
-        <div class="col-span-1 flex flex-col h-[calc(100vh-4rem)] md:h-full border-r border-base-300 divide-y divide-base-300 snap-start shrink-0 overflow-hidden">
+        <div class="col-span-1 flex flex-col md:h-full border-r border-base-300 divide-y divide-base-300">
             @foreach (array_slice($featured_posts, 1) as $post)
                 <div class="card image-full flex-1 rounded-none group overflow-hidden relative">
                     <figure class="w-full h-full">
@@ -113,7 +113,7 @@
                 </div>
             @endforeach
         </div>
-        <div class="col-span-1 h-[calc(100vh-4rem)] md:h-full bg-base-100 flex flex-col snap-start shrink-0 overflow-hidden">
+        <div class="col-span-1 md:h-full bg-base-100 flex flex-col">
             {{-- Header/Title --}}
             <div class="p-4 border-b border-base-300 bg-base-200/50 flex items-center justify-between shrink-0">
                 <span class="font-sans font-black uppercase tracking-wider text-xs text-base-content flex items-center gap-1.5">
@@ -124,7 +124,7 @@
             </div>
 
             {{-- List occupying the remaining/all available height --}}
-            <ul class="list flex flex-col flex-1 divide-y divide-base-200 bg-base-100 h-full overflow-y-auto">
+            <ul class="list flex flex-col flex-1 divide-y divide-base-200 bg-base-100 md:h-full md:overflow-y-auto">
                 @foreach ($latest_posts as $index => $post)
                     <li class="list-row flex-1 flex items-center gap-3 p-4 group hover:bg-base-200/60 transition-colors duration-300 relative cursor-pointer">
                         {{-- Number / Index counter --}}
