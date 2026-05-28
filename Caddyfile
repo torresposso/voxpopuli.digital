@@ -4,6 +4,7 @@
 # https://caddyserver.com/docs/caddyfile
 {
 	skip_install_trust
+	auto_https off
 
 	{$CADDY_GLOBAL_OPTIONS}
 
@@ -14,7 +15,7 @@
 
 {$CADDY_EXTRA_CONFIG}
 
-{$SERVER_NAME:localhost} {
+:{$PORT} {
 	root {$SERVER_ROOT:public/}
 	encode zstd br gzip
 

@@ -107,7 +107,6 @@ RUN apk add --no-cache su-exec \
     && ln -s /data/uploads /app/web/app/uploads \
     && chown -h appuser:appuser /app/web/app/uploads
 
-ENV SERVER_NAME=:$PORT
 ENV SERVER_ROOT=/app/web
 ENV DB_DIR=/data/database
 
