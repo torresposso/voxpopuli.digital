@@ -95,8 +95,10 @@ COPY --from=vendor /app/web/app/themes/voxpopuli/vendor /app/web/app/themes/voxp
 COPY --from=build /theme/public /app/web/app/themes/voxpopuli/public
 
 COPY --chown=appuser:appuser Caddyfile /etc/frankenphp/Caddyfile
+COPY --chmod=755 docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
-RUN setcap CAP_NET_BIND_SERVICE=+eip /usr/local/bin/frankenphp \
+RUN apk add --no-cache su-exec \
+    && setcap CAP_NET_BIND_SERVICE=+eip /usr/local/bin/frankenphp \
     && mkdir -p /data/caddy /config/caddy /data/database /data/uploads \
     && chown -R appuser:appuser /data/caddy /config/caddy /data \
     && mkdir -p /app/web/app/cache \
@@ -108,7 +110,6 @@ RUN setcap CAP_NET_BIND_SERVICE=+eip /usr/local/bin/frankenphp \
 ENV SERVER_NAME=:$PORT
 ENV SERVER_ROOT=/app/web
 
-# USER appuser
-
 EXPOSE 80
+ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["frankenphp", "run"]
