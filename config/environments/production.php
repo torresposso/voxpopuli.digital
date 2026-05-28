@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Production environment configuration
  *

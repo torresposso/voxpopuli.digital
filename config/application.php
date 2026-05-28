@@ -92,7 +92,7 @@ if (!defined('WP_DEVELOPMENT_MODE')) {
 /**
  * URLs
  */
-$wp_home = env('WP_HOME');
+$wp_home = env('WP_HOME') ?: (env('RAILWAY_PUBLIC_DOMAIN') ? 'https://' . env('RAILWAY_PUBLIC_DOMAIN') : null);
 if (in_array(WP_ENV, ['development', 'local'], true) && isset($_SERVER['HTTP_HOST'])) {
     $scheme = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') ? 'https' : 'http';
     $wp_home = "{$scheme}://{$_SERVER['HTTP_HOST']}";

@@ -21,7 +21,7 @@
       
       <div class="drawer-content flex flex-col min-h-screen">
         <a class="sr-only focus:not-sr-only" href="#main">
-          {{ __('Skip to content', 'voxpopuli') }}
+          {{ __('Ir al contenido principal', 'voxpopuli') }}
         </a>
 
         <x-navbar />
@@ -36,7 +36,7 @@
           </aside>
         @endif
 
-        @include('sections.footer')
+        <x-footer />
       </div>
 
       <x-drawer />

@@ -103,7 +103,7 @@ function rewrite_url_to_current_host(string $url): string
 /**
  * Dynamically adjust home_url in dev to match the request host.
  */
-add_filter('home_url', fn ($url) => rewrite_url_to_current_host($url), 10, 1);
+add_filter('home_url', fn($url) => rewrite_url_to_current_host($url), 10, 1);
 
 /**
  * Rewrite old image URLs in post content to match the current request host.
@@ -141,8 +141,8 @@ add_filter('the_content', function ($content) {
 
     $content = preg_replace_callback(
         '/https?:\/\/[^\s"\']+\.(jpg|jpeg|png|gif|webp|svg|avif)(\?[^\s"\']*)?["\'\s>]/i',
-        fn ($m) => $replace_host($m[0]),
-        $content
+        fn($m) => $replace_host($m[0]),
+        $content,
     );
 
     $content = str_replace('/wp-content/uploads/', '/app/uploads/', $content);
@@ -170,7 +170,7 @@ add_filter('the_content', function ($content) {
             }
             return $full_url;
         },
-        $content
+        $content,
     );
 
     return $content;
@@ -179,12 +179,12 @@ add_filter('the_content', function ($content) {
 /**
  * Dynamically adjust site_url in dev to match the request host.
  */
-add_filter('site_url', fn ($url) => rewrite_url_to_current_host($url), 10, 1);
+add_filter('site_url', fn($url) => rewrite_url_to_current_host($url), 10, 1);
 
 /**
  * Dynamically adjust attachment URLs in dev to match the request host.
  */
-add_filter('wp_get_attachment_url', fn ($url) => rewrite_url_to_current_host($url), 10, 1);
+add_filter('wp_get_attachment_url', fn($url) => rewrite_url_to_current_host($url), 10, 1);
 
 /**
  * Dynamically adjust image srcset URLs in dev to match the request host.
@@ -195,5 +195,3 @@ add_filter('wp_calculate_image_srcset', function ($sources) {
     }
     return $sources;
 }, 10, 1);
-
-

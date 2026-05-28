@@ -20,10 +20,10 @@ class Vite extends SageVite
 
         if (isset($_SERVER['HTTP_HOST'])) {
             $requestHost = $_SERVER['HTTP_HOST'];
-            
+
             // Remove port from host if it exists to get just the hostname/IP
             $requestHostName = parse_url('http://' . $requestHost, PHP_URL_HOST);
-            
+
             if ($requestHostName) {
                 $urlParts = parse_url($url);
                 if (isset($urlParts['host']) && $urlParts['host'] === '0.0.0.0') {

@@ -64,4 +64,149 @@ class Post extends Composer
             'after' => '</p>',
         ]);
     }
+
+    /**
+     * Retrieve the featured image details.
+     */
+    public function featuredImage(): ?array
+    {
+        $id = get_post_thumbnail_id();
+        if (!$id) {
+            return null;
+        }
+
+        $src = wp_get_attachment_image_src($id, 'large');
+        return [
+            'url' => $src[0] ?? '',
+            'width' => $src[1] ?? '',
+            'height' => $src[2] ?? '',
+            'alt' => get_post_meta($id, '_wp_attachment_image_alt', true) ?: get_the_title(),
+            'caption' => wp_get_attachment_caption($id) ?: '',
+        ];
+    }
+
+    /**
+     * Retrieve the estimated reading time.
+     */
+    public function readingTime(): string
+    {
+        $content = get_post_field('post_content', get_the_ID());
+        $wordCount = str_word_count(strip_tags($content));
+        $wordsPerMinute = 200; // Average reading speed
+        $minutes = ceil($wordCount / $wordsPerMinute);
+
+        return sprintf(
+            _n('%d min de lectura', '%d min de lectura', $minutes, 'voxpopuli'),
+            $minutes,
+        );
+    }
+
+    /**
+     * Retrieve the primary category.
+     */
+    public function primaryCategory(): ?array
+    {
+        $categories = get_the_category();
+        if (empty($categories)) {
+            return null;
+        }
+
+        // Try Yoast Primary Category
+        $primaryId = null;
+        if (class_exists('WPSEO_Primary_Term')) {
+            $wpseoPrimaryTerm = new \WPSEO_Primary_Term('category', get_the_ID());
+            $primaryId = $wpseoPrimaryTerm->get_primary_term();
+        }
+
+        $category = $primaryId ? get_term($primaryId) : $categories[0];
+        if (is_wp_error($category) || !$category) {
+            $category = $categories[0];
+        }
+
+        return [
+            'name' => $category->name,
+            'link' => get_category_link($category->term_id),
+            'slug' => $category->slug,
+        ];
+    }
+
+    /**
+     * Retrieve 2 suggested posts in the same category, excluding the current one.
+     */
+    public function suggestedPosts(): array
+    {
+        $categories = wp_get_post_categories(get_the_ID());
+        if (empty($categories)) {
+            return [];
+        }
+
+        $query = new \WP_Query([
+            'post_type' => 'post',
+            'posts_per_page' => 2,
+            'category__in' => $categories,
+            'post__not_in' => [get_the_ID()],
+            'orderby' => 'date',
+            'order' => 'DESC',
+        ]);
+
+        $posts = [];
+        if ($query->have_posts()) {
+            while ($query->have_posts()) {
+                $query->the_post();
+                $imgId = get_post_thumbnail_id();
+                $imgUrl = $imgId ? wp_get_attachment_image_url($imgId, 'medium') : '';
+                $posts[] = [
+                    'title' => get_the_title(),
+                    'link' => get_permalink(),
+                    'date' => get_the_date(),
+                    'image' => $imgUrl,
+                    'category' => get_the_category()[0]->name ?? '',
+                ];
+            }
+            wp_reset_postdata();
+        }
+
+        return $posts;
+    }
+
+    /**
+     * Retrieve the latest featured (sticky) post, or latest post overall as fallback, excluding current post.
+     */
+    public function latestFeaturedPost(): ?array
+    {
+        $sticky = get_option('sticky_posts');
+        $args = [
+            'post_type' => 'post',
+            'posts_per_page' => 1,
+            'post__not_in' => [get_the_ID()],
+        ];
+
+        if (!empty($sticky)) {
+            $args['post__in'] = $sticky;
+            $args['ignore_sticky_posts'] = 1;
+        } else {
+            $args['orderby'] = 'date';
+            $args['order'] = 'DESC';
+        }
+
+        $query = new \WP_Query($args);
+        $featured = null;
+
+        if ($query->have_posts()) {
+            $query->the_post();
+            $imgId = get_post_thumbnail_id();
+            $imgUrl = $imgId ? wp_get_attachment_image_url($imgId, 'large') : '';
+            $featured = [
+                'title' => get_the_title(),
+                'link' => get_permalink(),
+                'date' => get_the_date(),
+                'excerpt' => get_the_excerpt(),
+                'image' => $imgUrl,
+                'category' => get_the_category()[0]->name ?? '',
+            ];
+            wp_reset_postdata();
+        }
+
+        return $featured;
+    }
 }

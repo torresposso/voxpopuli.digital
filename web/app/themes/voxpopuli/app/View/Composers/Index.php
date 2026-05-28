@@ -10,23 +10,40 @@ class Index extends Composer
         'index',
     ];
 
+    /**
+     * Safely and surgically bust the composer cache without side effects.
+     *
+     * @return void
+     */
+    public function bustCache(): void
+    {
+        \Illuminate\Support\Facades\Cache::forget('voxpopuli_homepage_sections_ids');
+    }
+
     public function with()
     {
         $sections = $this->getSections();
-        $seen = [];
-        $loadedSections = [];
 
-        foreach ($sections as $section) {
-            $posts = get_posts([
-                'category_name' => $section['slug'],
-                'posts_per_page' => 3,
-                'post__not_in' => $seen,
-                'no_found_rows' => true,
-                'update_post_meta_cache' => true,
-                'update_post_term_cache' => true,
-            ]);
-            $seen = array_merge($seen, wp_list_pluck($posts, 'ID'));
-            $loadedSections[] = array_merge($section, ['posts' => $posts]);
+        $loadedSections = \Illuminate\Support\Facades\Cache::remember('voxpopuli_homepage_sections_ids', 3600, function () use ($sections) {
+            $seen = [];
+            $res = [];
+            foreach ($sections as $section) {
+                $post_ids = get_posts([
+                    'category_name' => $section['slug'],
+                    'posts_per_page' => 3,
+                    'post__not_in' => $seen,
+                    'fields' => 'ids',
+                    'no_found_rows' => true,
+                ]);
+                $seen = array_merge($seen, $post_ids);
+                $res[] = array_merge($section, ['post_ids' => $post_ids]);
+            }
+            return $res;
+        });
+
+        // Map post_ids to WP_Post objects
+        foreach ($loadedSections as &$section) {
+            $section['posts'] = array_filter(array_map('get_post', $section['post_ids']));
         }
 
         return [

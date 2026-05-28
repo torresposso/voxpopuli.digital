@@ -28,4 +28,3 @@ if (file_exists($filters = __DIR__ . '/app/filters.php')) {
 }
 
 return $app;
-

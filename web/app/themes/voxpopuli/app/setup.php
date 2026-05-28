@@ -17,9 +17,9 @@ app()->instance(\Roots\Acorn\Assets\Vite::class, $vite);
 app()->instance(\Illuminate\Foundation\Vite::class, $vite);
 app()->instance('assets.vite', $vite);
 
-app()->singleton(\Roots\Acorn\Assets\Vite::class, fn () => $vite);
-app()->singleton(\Illuminate\Foundation\Vite::class, fn () => $vite);
-app()->singleton('assets.vite', fn () => $vite);
+app()->singleton(\Roots\Acorn\Assets\Vite::class, fn() => $vite);
+app()->singleton(\Illuminate\Foundation\Vite::class, fn() => $vite);
+app()->singleton('assets.vite', fn() => $vite);
 
 // Register class-based Blade components explicitly
 \Illuminate\Support\Facades\Blade::component(\App\View\Components\Hero::class, 'hero');
@@ -190,12 +190,13 @@ add_action('widgets_init', function () {
 });
 
 /**
- * Invalidate Hero featured posts cache transient when a post is saved or deleted.
+ * Invalidate Hero and Homepage sections caches when a post is saved or deleted.
  */
 add_action('save_post', function () {
-    delete_transient('voxpopuli_hero_featured_posts');
+    delete_transient(\App\View\Components\Hero::getCacheKey());
+    (new \App\View\Composers\Index())->bustCache();
 });
 add_action('deleted_post', function () {
-    delete_transient('voxpopuli_hero_featured_posts');
+    delete_transient(\App\View\Components\Hero::getCacheKey());
+    (new \App\View\Composers\Index())->bustCache();
 });
-

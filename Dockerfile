@@ -97,10 +97,13 @@ COPY --from=build /theme/public /app/web/app/themes/voxpopuli/public
 COPY --chown=appuser:appuser Caddyfile /etc/frankenphp/Caddyfile
 
 RUN setcap CAP_NET_BIND_SERVICE=+eip /usr/local/bin/frankenphp \
-    && mkdir -p /data/caddy /config/caddy \
-    && chown -R appuser:appuser /data/caddy /config/caddy \
+    && mkdir -p /data/caddy /config/caddy /data/database /data/uploads \
+    && chown -R appuser:appuser /data/caddy /config/caddy /data \
     && mkdir -p /app/web/app/cache \
-    && chown -R appuser:appuser /app/web/app/cache
+    && chown -R appuser:appuser /app/web/app/cache \
+    && rm -rf /app/web/app/uploads \
+    && ln -s /data/uploads /app/web/app/uploads \
+    && chown -h appuser:appuser /app/web/app/uploads
 
 ENV SERVER_NAME=:$PORT
 ENV SERVER_ROOT=/app/web

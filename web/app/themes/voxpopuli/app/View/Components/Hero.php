@@ -31,19 +31,27 @@ class Hero extends Component
     }
 
     /**
+     * Get the unified cache key for the hero component.
+     *
+     * @return string
+     */
+    public static function getCacheKey(): string
+    {
+        if (defined('WP_ENV') && WP_ENV === 'development') {
+            $hostHash = substr(md5($_SERVER['HTTP_HOST'] ?? 'default'), 0, 20);
+            return "vp_hero_data_v2_{$hostHash}";
+        }
+        return 'voxpopuli_hero_data_cache_v2';
+    }
+
+    /**
      * Fetch and cache the featured and latest posts.
      *
      * @return array
      */
     protected function getHeroData()
     {
-        // Use host-specific cache key ONLY in development to prevent transient poisoning when switching between localhost and LAN IP
-        if (defined('WP_ENV') && WP_ENV === 'development') {
-            $hostHash = substr(md5($_SERVER['HTTP_HOST'] ?? 'default'), 0, 20);
-            $cacheKey = "vp_hero_data_v2_{$hostHash}";
-        } else {
-            $cacheKey = 'voxpopuli_hero_data_cache_v2';
-        }
+        $cacheKey = self::getCacheKey();
 
         // Try to retrieve cached hero data only in production to ensure instant feedback in development
         if (!defined('WP_ENV') || (WP_ENV !== 'development' && WP_ENV !== 'local')) {
@@ -148,4 +156,3 @@ class Hero extends Component
         return $this->view('components.hero');
     }
 }
-

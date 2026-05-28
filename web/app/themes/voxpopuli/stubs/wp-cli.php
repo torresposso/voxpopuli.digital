@@ -1,4 +1,5 @@
 <?php
+
 /**
  * WP-CLI Stubs for IDE Static Analysis and Type Resolution.
  *
@@ -7,7 +8,8 @@
  */
 
 if (! class_exists('WP_CLI')) {
-    class WP_CLI {
+    class WP_CLI
+    {
         /**
          * Log a message to the console.
          *
