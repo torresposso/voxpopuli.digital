@@ -9,7 +9,6 @@ web/app/mu-plugins/*/
 web/app/themes/twentytwentyfive/
 web/app/uploads/*
 web/app/cache
-storage/
 exports/
 .git
 .gitignore

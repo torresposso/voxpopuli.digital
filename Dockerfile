@@ -109,6 +109,7 @@ RUN apk add --no-cache su-exec \
 
 ENV SERVER_NAME=:$PORT
 ENV SERVER_ROOT=/app/web
+ENV DB_DIR=/data/database
 
 EXPOSE 80
 ENTRYPOINT ["docker-entrypoint.sh"]
