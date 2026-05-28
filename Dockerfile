@@ -108,7 +108,7 @@ RUN setcap CAP_NET_BIND_SERVICE=+eip /usr/local/bin/frankenphp \
 ENV SERVER_NAME=:$PORT
 ENV SERVER_ROOT=/app/web
 
-USER appuser
+# USER appuser
 
 EXPOSE 80
 CMD ["frankenphp", "run"]
