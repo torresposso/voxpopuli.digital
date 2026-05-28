@@ -31,3 +31,23 @@ if (! function_exists('app')) {
         return $abstract ? null : new stdClass();
     }
 }
+
+if (! function_exists('get_bloginfo')) {
+    /**
+     * Stub for get_bloginfo.
+     */
+    function get_bloginfo(string $show = ''): string
+    {
+        return $show === 'name' ? 'Vox Populi' : '';
+    }
+}
+
+if (! function_exists('get_locale')) {
+    /**
+     * Stub for get_locale.
+     */
+    function get_locale(): string
+    {
+        return 'es_ES';
+    }
+}

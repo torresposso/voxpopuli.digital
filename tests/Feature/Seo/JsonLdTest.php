@@ -184,6 +184,19 @@ it('renders to script tag via toScript', function () {
 
     expect($script)->toContain('<script type="application/ld+json">');
     expect($script)->toContain('</script>');
-    expect($script)->toContain('"@type": "Organization"');
-    expect($script)->toContain('"name": "Test"');
+    expect($script)->toContain('"@type":"Organization"');
+    expect($script)->toContain('"name":"Test"');
+});
+
+it('prevents XSS script tag breakout injection', function () {
+    $jsonld = new JsonLd();
+    $schema = $jsonld->organization([
+        'name' => '</script><script>alert("xss")</script>',
+    ]);
+
+    $script = JsonLd::toScript($schema);
+
+    // Ensure it does not contain the raw unescaped closing script tag or injection
+    expect($script)->not->toContain('</script><script>');
+    expect($script)->toContain('\u003C/script\u003E\u003Cscript\u003E');
 });
