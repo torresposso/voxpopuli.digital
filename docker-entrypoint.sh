@@ -7,7 +7,7 @@ if [ "$(id -u)" = "0" ]; then
     fi
 
     chown -R appuser:appuser /data 2>/dev/null || true
-    exec su-exec appuser "$@"
+    exec gosu appuser "$@"
 fi
 
 exec "$@"

@@ -91,24 +91,10 @@
     const postContent = document.querySelector('.e-content');
     if (!fab || !trigger || !postContent) return;
 
-    // Toggle active state on click (Progressive Enhancement via Web Share API)
-    trigger.addEventListener('click', async (e) => {
+    // Toggle share buttons on click
+    trigger.addEventListener('click', (e) => {
       e.stopPropagation();
-      if (navigator.share) {
-        try {
-          await navigator.share({
-            title: decodeURIComponent('{{ $encodedTitle }}'),
-            url: '{{ $url }}'
-          });
-        } catch (err) {
-          // Fallback only if sharing failed and it wasn't aborted by the user
-          if (err.name !== 'AbortError') {
-            fab.classList.toggle('fab-active');
-          }
-        }
-      } else {
-        fab.classList.toggle('fab-active');
-      }
+      fab.classList.toggle('fab-active');
     });
 
     // Close when clicking outside

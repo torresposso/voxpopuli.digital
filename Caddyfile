@@ -10,7 +10,15 @@
 
 	frankenphp {
 		num_threads 2
-		max_threads 4
+		max_threads 6
+		max_requests 500
+		php_ini memory_limit 128M
+		php_ini max_execution_time 30
+		php_ini max_input_vars 5000
+		php_ini opcache.enable 1
+		php_ini opcache.memory_consumption 64
+		php_ini opcache.max_accelerated_files 20000
+		php_ini opcache.revalidate_freq 2
 	}
 }
 
