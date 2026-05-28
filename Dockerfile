@@ -79,7 +79,8 @@ ARG GROUP_ID=1000
 RUN addgroup -g ${GROUP_ID} appuser \
     && adduser -u ${USER_ID} -G appuser -D appuser
 
-RUN install-php-extensions gd zip exif mysqli pdo_mysql opcache
+RUN install-php-extensions gd zip exif mysqli pdo_mysql opcache \
+    && cp $PHP_INI_DIR/php.ini-production $PHP_INI_DIR/php.ini
 
 WORKDIR /app
 
@@ -110,6 +111,8 @@ RUN apk add --no-cache su-exec \
 ENV SERVER_ROOT=/app/web
 ENV DB_DIR=/data/database
 ENV FRANKENPHP_CONFIG="num_threads 2; max_threads 4"
+ENV GOMEMLIMIT=1024MB
+ENV GODEBUG=cgocheck=0
 
 EXPOSE 80
 ENTRYPOINT ["docker-entrypoint.sh"]
