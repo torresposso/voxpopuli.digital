@@ -111,7 +111,7 @@ RUN apk add --no-cache su-exec \
 ENV SERVER_ROOT=/app/web
 ENV DB_DIR=/data/database
 ENV FRANKENPHP_CONFIG="num_threads 2; max_threads 4"
-ENV GOMEMLIMIT=1024MB
+ENV GOMEMLIMIT=1024MiB
 ENV GODEBUG=cgocheck=0
 
 EXPOSE 80
