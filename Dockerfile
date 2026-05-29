@@ -113,7 +113,9 @@ RUN set -eux; \
     mkdir -p /data/caddy /config/caddy /data/database /data/uploads; \
     chown -R appuser:appuser /data/caddy /config/caddy /data; \
     mkdir -p /app/web/app/cache; \
-    chown -R appuser:appuser /app/web/app/cache; \
+    cp /app/web/app/plugins/wp-super-cache/wp-cache-config-sample.php /app/web/app/wp-cache-config.php || true; \
+    cp /app/web/app/plugins/wp-super-cache/advanced-cache.php /app/web/app/advanced-cache.php || true; \
+    chown -R appuser:appuser /app/web/app; \
     rm -rf /app/web/app/uploads; \
     ln -s /data/uploads /app/web/app/uploads; \
     chown -h appuser:appuser /app/web/app/uploads
