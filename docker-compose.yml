@@ -11,6 +11,8 @@ services:
         GROUP_ID: ${GROUP_ID:-1000}
     ports:
       - "8080:8080"
+    environment:
+      PORT: "8080"
     volumes:
       - .:/app
       - ./Caddyfile:/etc/frankenphp/Caddyfile

@@ -10,22 +10,21 @@
 
 	frankenphp {
 		num_threads 2
-		max_threads 6
+		max_threads 4
 		max_requests 500
-		php_ini memory_limit 128M
+		php_ini memory_limit 96M
 		php_ini max_execution_time 30
 		php_ini max_input_vars 5000
 		php_ini opcache.enable 1
-		php_ini opcache.memory_consumption 64
+		php_ini opcache.memory_consumption 32
 		php_ini opcache.max_accelerated_files 20000
 		php_ini opcache.revalidate_freq 2
-		php_ini realpath_cache_size 4096K
+		php_ini realpath_cache_size 2048K
 		php_ini realpath_cache_ttl 600
 	}
 }
 
 {$CADDY_EXTRA_CONFIG}
-
 :{$PORT} {
 	root {$SERVER_ROOT:public/}
 	encode zstd br gzip
@@ -45,6 +44,13 @@
 	# HTML pages: always revalidate (news site — latest content each visit)
 	header ?Cache-Control "no-cache, must-revalidate"
 
+	# Security headers
+	header {
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		Referrer-Policy "strict-origin-when-cross-origin"
+	}
+
 	# Block public access to SQLite database files and database directories
 	@db_blocked {
 		path */uploads/database/*
@@ -54,15 +60,13 @@
 	}
 	respond @db_blocked "Access Denied" 403
 
-	# Block sensitive files
-	@sensitive_files {
-		path /.env
-		path /.env.*
-		path /.git/*
-		path /composer.json
-		path /composer.lock
+	# Block debug logs, cache dirs, and dotfiles under web root
+	@blocked_paths {
+		path *.log
+		path /app/cache/*
+		path /app/debug.log
 	}
-	respond @sensitive_files "Access Denied" 403
+	respond @blocked_paths "Access Denied" 403
 
 	# Block PHP execution in uploads
 	@php_in_uploads {
@@ -73,8 +77,7 @@
 
 	{$CADDY_SERVER_EXTRA_DIRECTIVES}
 
-	php_server {
-	}
+	php_server
 }
 
 import Caddyfile.d/*.caddyfile

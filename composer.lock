@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "22cc143d693755b9761dcb215aa36468",
+    "content-hash": "c1bd2c28ad0b9b2ef74e522d350667a2",
     "packages": [
         {
             "name": "brick/math",
@@ -6985,6 +6985,37 @@
                 "source": "https://plugins.svn.wordpress.org/sqlite-database-integration"
             },
             "time": "2026-04-10T15:10:54+00:00"
+        },
+        {
+            "name": "wp-plugin/wp-super-cache",
+            "version": "3.1.1",
+            "source": {
+                "type": "svn",
+                "url": "https://plugins.svn.wordpress.org/wp-super-cache/",
+                "reference": "tags/3.1.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/wp-super-cache.3.1.1.zip"
+            },
+            "require": {
+                "composer/installers": "~1.0|~2.0"
+            },
+            "type": "wordpress-plugin",
+            "notification-url": "https://wp-packages.org/downloads",
+            "authors": [
+                {
+                    "name": "Automattic"
+                }
+            ],
+            "description": "A very fast caching engine for WordPress that produces static html files.",
+            "homepage": "https://wordpress.org/plugins/wp-super-cache/",
+            "support": {
+                "changelog": "https://wordpress.org/plugins/wp-super-cache/#developers",
+                "issues": "https://wordpress.org/support/plugin/wp-super-cache",
+                "source": "https://plugins.svn.wordpress.org/wp-super-cache"
+            },
+            "time": "2026-05-27T17:41:44+00:00"
         },
         {
             "name": "wp-theme/twentytwentyfive",

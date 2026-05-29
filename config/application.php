@@ -189,6 +189,12 @@ if (file_exists($env_config)) {
     require_once $env_config;
 }
 
+/**
+ * WP Super Cache: enable page caching at the WordPress level
+ */
+Config::define('WP_CACHE', true);
+Config::define('WPCACHEHOME', $webroot_dir . '/app/plugins/wp-super-cache/');
+
 Config::apply();
 
 /**

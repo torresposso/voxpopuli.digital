@@ -29,16 +29,8 @@
   <!-- Social Share buttons that show up when FAB is open -->
   
   {{-- Copy Link (Interactive Clipboard) --}}
-  <button onclick="navigator.clipboard.writeText('{{ $url }}').then(() => { 
-            const btn = this;
-            const originalHtml = btn.innerHTML;
-            btn.classList.add('btn-success', 'text-success-content');
-            btn.innerHTML = `<svg class='h-6 w-6' fill='none' stroke='currentColor' stroke-width='2.5' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' d='M5 13l4 4L19 7'></path></svg>`;
-            setTimeout(() => { 
-              btn.classList.remove('btn-success', 'text-success-content');
-              btn.innerHTML = originalHtml;
-            }, 2000);
-          })"
+  <button type="button"
+          data-copy-url="{{ $url }}"
           class="btn btn-lg btn-circle fab-sub-button shadow-lg hover:scale-105 transition-all duration-300 tooltip tooltip-left"
           data-tip="{{ __('Copiar enlace', 'voxpopuli') }}"
           aria-label="{{ __('Copiar enlace del artículo', 'voxpopuli') }}">
@@ -101,40 +93,46 @@
     document.addEventListener('click', (e) => {
       if (!fab.contains(e.target)) {
         fab.classList.remove('fab-active');
+        trigger.blur();
       }
     });
 
-    // Close on mouse leave (hover out)
-    fab.addEventListener('mouseleave', () => {
-      fab.classList.remove('fab-active');
-      trigger.blur();
-    });
-
-    // High-performance IntersectionObserver to detect when reading is finished without layout thrashing
-    const sentinel = postContent.lastElementChild || postContent;
-    let isPostFinished = false;
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        // If the last element is intersecting, the reader is at the bottom
-        isPostFinished = entry.isIntersecting;
-        if (isPostFinished) {
-          fab.classList.add('fab-hidden');
-          fab.classList.remove('fab-active');
-          trigger.blur();
-        } else {
-          fab.classList.remove('fab-hidden');
-        }
+    // Copy link: read URL from data attribute (XSS-safe)
+    const copyBtn = fab.querySelector('[data-copy-url]');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', () => {
+        const url = copyBtn.dataset.copyUrl;
+        navigator.clipboard.writeText(url).then(() => {
+          const originalHtml = copyBtn.innerHTML;
+          copyBtn.classList.add('btn-success', 'text-success-content');
+          copyBtn.innerHTML = `<svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>`;
+          setTimeout(() => {
+            copyBtn.classList.remove('btn-success', 'text-success-content');
+            copyBtn.innerHTML = originalHtml;
+          }, 2000);
+        });
       });
-    }, {
-      root: null,
-      threshold: 0,
-      rootMargin: '0px 0px -50px 0px' // Triggers slightly before the absolute bottom
-    });
+    }
 
-    observer.observe(sentinel);
+    // Scroll-aware show/hide — never touches fab-active
+    let isPostFinished = false;
+    const sentinel = postContent.lastElementChild;
 
-    // Ultra-lightweight scroll listener to track direction (no layout thrashing, 60fps/120fps)
+    if (sentinel) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          isPostFinished = entry.isIntersecting;
+          fab.classList.toggle('fab-hidden', isPostFinished);
+        });
+      }, {
+        root: null,
+        threshold: 0,
+        rootMargin: '0px 0px -50px 0px'
+      });
+
+      observer.observe(sentinel);
+    }
+
     let lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
     window.addEventListener('scroll', () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -142,8 +140,6 @@
 
       if (isPostFinished && !isScrollingUp) {
         fab.classList.add('fab-hidden');
-        fab.classList.remove('fab-active');
-        trigger.blur();
       } else if (isScrollingUp) {
         fab.classList.remove('fab-hidden');
       }

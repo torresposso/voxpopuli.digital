@@ -444,40 +444,20 @@ a {
 .fab button,
 .fab a {
   opacity: 0;
-  transform: scale(0.8) translateY(12px);
   pointer-events: none;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.2s;
 }
 
-/* Open states */
-.fab:hover button,
-.fab:focus-within button,
-.fab:hover a,
-.fab:focus-within a,
 .fab.fab-active button,
 .fab.fab-active a {
   opacity: 1;
-  transform: scale(1) translateY(0);
   pointer-events: auto;
 }
 
-/* Staggered transition delays based on HTML order (div, button, a, a, a) */
-.fab:hover *:nth-child(2),
-.fab:focus-within *:nth-child(2) {
-  transition-delay: 200ms;
-}
-.fab:hover *:nth-child(3),
-.fab:focus-within *:nth-child(3) {
-  transition-delay: 150ms;
-}
-.fab:hover *:nth-child(4),
-.fab:focus-within *:nth-child(4) {
-  transition-delay: 100ms;
-}
-.fab:hover *:nth-child(5),
-.fab:focus-within *:nth-child(5) {
-  transition-delay: 50ms;
-}
+.fab.fab-active *:nth-child(2) { transition-delay: 0ms; }
+.fab.fab-active *:nth-child(3) { transition-delay: 0ms; }
+.fab.fab-active *:nth-child(4) { transition-delay: 0ms; }
+.fab.fab-active *:nth-child(5) { transition-delay: 0ms; }
 
 /* FAB Radial Scroll Progress Animation (Pure CSS Scroll-driven) */
 @keyframes draw-progress {
@@ -505,8 +485,8 @@ a {
   animation-range: entry 0% exit 100%; /* Tracks progress strictly while article is in scroll port */
 }
 
-/* Premium scroll-direction fade-out and fade-in states */
-.fab.fab-hidden {
+/* Scroll-direction fade-out — only when menu is NOT open */
+.fab.fab-hidden:not(.fab-active) {
   opacity: 0 !important;
   transform: scale(0.9) translateY(15px) !important;
   pointer-events: none !important;

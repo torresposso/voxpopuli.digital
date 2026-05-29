@@ -4,6 +4,10 @@
     "web/wp",
     "web/app/mu-plugins/bedrock-disallow-indexing",
     "web/app/plugins",
-    "web/app/themes/twentytwentyfive"
+    "web/app/themes/twentytwentyfive",
+    "web/app/cache",
+    "web/app/advanced-cache.php",
+    "web/app/wp-cache-config.php"
   ]
 }
+
