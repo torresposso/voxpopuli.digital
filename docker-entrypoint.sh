@@ -7,7 +7,15 @@ if [ "$(id -u)" = "0" ]; then
     fi
 
     chown -R appuser:appuser /data 2>/dev/null || true
+    
+    # Warm up and cache Acorn views and config automatically at startup
+    if [ -f /usr/local/bin/wp ]; then
+        echo "=== Warming up Acorn Cache & Optimizations ==="
+        gosu appuser wp acorn optimize --allow-root || true
+    fi
+
     exec gosu appuser "$@"
 fi
 
 exec "$@"
+

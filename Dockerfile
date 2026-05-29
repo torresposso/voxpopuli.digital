@@ -106,6 +106,8 @@ RUN set -eux; \
     wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/1.17/gosu-$dpkgArch"; \
     chmod +x /usr/local/bin/gosu; \
     gosu nobody true; \
+    wget -O /usr/local/bin/wp "https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar"; \
+    chmod +x /usr/local/bin/wp; \
     rm -rf /var/lib/apt/lists/*; \
     setcap CAP_NET_BIND_SERVICE=+eip /usr/local/bin/frankenphp; \
     mkdir -p /data/caddy /config/caddy /data/database /data/uploads; \
