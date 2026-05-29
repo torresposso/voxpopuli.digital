@@ -209,6 +209,12 @@ add_action('wp_head', function () {
     $ga_id = env('GOOGLE_ANALYTICS_ID');
     $meta_id = env('META_PIXEL_ID');
 
+    // Meta Domain Verification (requerido por Facebook para validar la propiedad del dominio)
+    echo "
+    <!-- Meta Domain Verification -->
+    <meta name=\"facebook-domain-verification\" content=\"pl4dsq30p15llps9quh6k37uq6l8hn\" />
+    ";
+
     // 2. Solo cargar en producción y si el usuario no está logueado para no ensuciar métricas
     if (WP_ENV === 'production' && !is_user_logged_in()) {
 
