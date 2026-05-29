@@ -211,7 +211,7 @@ add_action('wp_head', function () {
 
     // 2. Solo cargar en producción y si el usuario no está logueado para no ensuciar métricas
     if (WP_ENV === 'production' && !is_user_logged_in()) {
-        
+
         // Google Analytics (GA4)
         if ($ga_id) {
             echo "
@@ -250,4 +250,3 @@ add_action('wp_head', function () {
         }
     }
 }, 1); // Prioridad 1 para cargar al inicio del <head>
-
