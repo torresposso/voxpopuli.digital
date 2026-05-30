@@ -259,6 +259,7 @@ class SeoServiceProvider extends ServiceProvider
             'posts_per_page' => -1,
             'orderby' => 'modified',
             'order' => 'DESC',
+            'no_found_rows' => true,
         ]);
 
         $entries = [];

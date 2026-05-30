@@ -90,14 +90,18 @@ class Post extends Composer
      */
     public function readingTime(): string
     {
-        $content = get_post_field('post_content', get_the_ID());
-        $wordCount = str_word_count(strip_tags($content));
-        $wordsPerMinute = 200; // Average reading speed
-        $minutes = ceil($wordCount / $wordsPerMinute);
+        $minutes = get_post_meta(get_the_ID(), 'vp_reading_time', true);
+
+        if (!$minutes) {
+            $content = get_post_field('post_content', get_the_ID());
+            $wordCount = str_word_count(strip_tags($content));
+            $wordsPerMinute = 200; // Average reading speed
+            $minutes = ceil($wordCount / $wordsPerMinute);
+        }
 
         return sprintf(
-            _n('%d min de lectura', '%d min de lectura', $minutes, 'voxpopuli'),
-            $minutes,
+            _n('%d min de lectura', '%d min de lectura', (int)$minutes, 'voxpopuli'),
+            (int)$minutes,
         );
     }
 
@@ -147,6 +151,7 @@ class Post extends Composer
             'post__not_in' => [get_the_ID()],
             'orderby' => 'date',
             'order' => 'DESC',
+            'no_found_rows' => true,
         ]);
 
         $posts = [];
@@ -179,6 +184,7 @@ class Post extends Composer
             'post_type' => 'post',
             'posts_per_page' => 1,
             'post__not_in' => [get_the_ID()],
+            'no_found_rows' => true,
         ];
 
         if (!empty($sticky)) {
