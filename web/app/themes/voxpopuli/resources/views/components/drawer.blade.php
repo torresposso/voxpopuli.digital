@@ -152,7 +152,7 @@
             type="search"
             class="input input-bordered w-full bg-base-100 placeholder:text-base-content/30 focus:border-primary/50 focus:ring-2 focus:ring-primary/10 font-sans text-sm pl-10 pr-4 transition-all duration-300 rounded-lg"
             placeholder="{{ esc_attr_x('Buscar artículos…', 'placeholder', 'voxpopuli') }}"
-            value="{{ get_search_query() }}"
+            value="{{ get_search_query(false) }}"
             name="s">
           <span class="absolute left-3 text-base-content/35 flex items-center pointer-events-none">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.25">

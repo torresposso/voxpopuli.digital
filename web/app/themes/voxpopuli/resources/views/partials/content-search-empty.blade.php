@@ -12,7 +12,7 @@
 
     <form role="search" method="get" class="max-w-lg mx-auto relative group" action="{{ home_url('/') }}">
       <div class="relative">
-        <input type="search" class="w-full bg-base-100 border border-base-300 rounded-lg py-4 pl-5 pr-14 text-sm text-base-content font-sans focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all duration-300 shadow-sm" placeholder="{{ __('Buscar crónicas o investigaciones...', 'voxpopuli') }}" value="{{ get_search_query() }}" name="s" required />
+        <input type="search" class="w-full bg-base-100 border border-base-300 rounded-lg py-4 pl-5 pr-14 text-sm text-base-content font-sans focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all duration-300 shadow-sm" placeholder="{{ __('Buscar crónicas o investigaciones...', 'voxpopuli') }}" value="{{ get_search_query(false) }}" name="s" required />
         <button type="submit" class="absolute right-4 top-1/2 -translate-y-1/2 text-primary hover:text-secondary transition-colors duration-300 flex items-center justify-center p-1" aria-label="{{ __('Buscar', 'voxpopuli') }}">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5">
             <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.602 10.602Z" />

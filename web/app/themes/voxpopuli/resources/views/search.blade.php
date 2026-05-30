@@ -7,7 +7,7 @@
         {{ __('Archivo & Búsqueda', 'voxpopuli') }}
       </span>
       <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-black text-primary tracking-tight mt-2 leading-none">
-        «{!! get_search_query() !!}»<span class="text-secondary ml-1 font-display">.:</span>
+        «{{ get_search_query(false) }}»<span class="text-secondary ml-1 font-display">.:</span>
       </h1>
       <p class="font-serif text-sm md:text-base text-neutral mt-4 italic">
         @if (have_posts())
