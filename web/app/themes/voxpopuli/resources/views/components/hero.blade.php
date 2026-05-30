@@ -186,7 +186,7 @@
 
                         {{-- Detalles y Enlace --}}
                         <div class="list-col-grow flex flex-col gap-0.5 min-w-0">
-                            <span class="font-sans font-extrabold uppercase tracking-wider text-[9px] text-secondary">
+                            <span class="font-sans font-extrabold uppercase tracking-wider text-[9px] text-secondary-dark">
                                 {{ $post->category }}
                             </span>
 
