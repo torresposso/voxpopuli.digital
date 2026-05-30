@@ -21,7 +21,7 @@
             <label for="main-drawer"
                 class="btn btn-ghost btn-circle drawer-button min-w-11 min-h-11 cursor-pointer flex items-center justify-center border border-primary/10 hover:border-primary/30 hover:bg-base-200 hover:scale-105 active:scale-95 transition-all duration-300 group/burger"
                 aria-label="{{ __('Abrir menú', 'voxpopuli') }}" aria-controls="main-drawer" aria-expanded="false"
-                tabindex="0" role="button">
+                tabindex="0">
                 <svg xmlns="http://www.w3.org/2000/svg"
                     class="h-6 w-6 text-primary group-hover/burger:text-secondary transition-colors duration-300"
                     fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">

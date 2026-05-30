@@ -167,7 +167,7 @@
                         class="list-row flex-1 flex items-center gap-3 p-4 group hover:bg-base-200/60 transition-colors duration-300 relative cursor-pointer">
                         {{-- Contador visual --}}
                         <div
-                            class="text-3xl font-display font-light text-base-content/25 group-hover:text-secondary/60 transition-colors duration-300 tabular-nums shrink-0">
+                            class="text-3xl font-display font-light text-base-content/45 group-hover:text-secondary/60 transition-colors duration-300 tabular-nums shrink-0">
                             {{ sprintf('%02d', $index + 1) }}
                         </div>
 
@@ -199,7 +199,7 @@
                             </h3>
 
                             <time datetime="{{ date('Y-m-d', strtotime($post->date)) }}"
-                                class="font-sans text-[9px] text-base-content/50 font-semibold uppercase tracking-wider mt-0.5">
+                                class="font-sans text-[9px] text-base-content/65 font-semibold uppercase tracking-wider mt-0.5">
                                 {{ $post->date }}
                             </time>
                         </div>

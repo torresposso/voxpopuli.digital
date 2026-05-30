@@ -135,7 +135,7 @@
           <x-wordmark />
         </div>
         <div class="navbar-end">
-          <label for="main-drawer" class="btn btn-ghost btn-circle hover:bg-primary/10 hover:text-primary hover:scale-105 active:scale-95 text-base-content/70 cursor-pointer flex items-center justify-center transition-all duration-300" aria-label="{{ __('Cerrar menú', 'voxpopuli') }}" tabindex="0" role="button">
+          <label for="main-drawer" class="btn btn-ghost btn-circle hover:bg-primary/10 hover:text-primary hover:scale-105 active:scale-95 text-base-content/70 cursor-pointer flex items-center justify-center transition-all duration-300" aria-label="{{ __('Cerrar menú', 'voxpopuli') }}" tabindex="0">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>

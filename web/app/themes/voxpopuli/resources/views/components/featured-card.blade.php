@@ -49,7 +49,7 @@ $custom_excerpt = wp_trim_words(strip_tags($raw_content), 105, '...');
   {{-- DaisyUI Card-Body --}}
   <div class="card-body w-full lg:w-2/5 p-8 md:p-10 flex flex-col justify-between border-t lg:border-t-0 border-base-300 min-h-[320px]">
     <div>
-      <span class="font-sans text-[10px] font-extrabold uppercase tracking-[0.2em] text-secondary">
+      <span class="font-sans text-[10px] font-extrabold uppercase tracking-[0.2em] text-secondary-dark">
         {{ __('Última Publicación', 'voxpopuli') }}
       </span>
       
@@ -76,7 +76,7 @@ $custom_excerpt = wp_trim_words(strip_tags($raw_content), 105, '...');
         {{ __('Por', 'voxpopuli') }} {{ get_the_author_meta('display_name', $post->post_author) }}
       </span>
       <div class="card-actions justify-end">
-        <a href="{{ get_permalink($post) }}" class="font-sans text-[10px] font-extrabold uppercase tracking-wider text-secondary inline-flex items-center gap-1 group-hover:translate-x-1 duration-300 transition-transform">
+        <a href="{{ get_permalink($post) }}" class="font-sans text-[10px] font-extrabold uppercase tracking-wider text-secondary-dark inline-flex items-center gap-1 group-hover:translate-x-1 duration-300 transition-transform">
           {{ __('Leer crónica', 'voxpopuli') }} →
         </a>
       </div>

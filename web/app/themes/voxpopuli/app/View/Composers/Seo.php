@@ -44,10 +44,14 @@ class Seo extends Composer
             $postId = get_queried_object_id();
             $data = $this->getSeoDataForPost($postId);
         } elseif (is_front_page() || is_home()) {
+            $desc = get_bloginfo('description');
+            if (empty($desc) || $desc === 'Just another WordPress site') {
+                $desc = 'Periodismo independiente de investigación, análisis y opinión desde el Caribe colombiano. Rigor técnico y mirada progresista.';
+            }
             $data = [
                 'post_title' => get_bloginfo('name'),
                 'post_url' => home_url('/'),
-                'meta_desc' => get_bloginfo('description'),
+                'meta_desc' => $desc,
                 'is_home' => true,
                 'canonical' => home_url('/'),
             ];

@@ -53,10 +53,10 @@
     {{-- Sub-footer: Copyright and regional proud --}}
     <div class="border-t border-base-100/10">
         <div class="max-w-6xl mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-3">
-            <p class="font-sans text-xs text-base-100/40">
+            <p class="font-sans text-xs text-base-100/60">
                 &copy; {{ date('Y') }} Vox Populi Digital. Todos los derechos reservados.
             </p>
-            <p class="font-sans text-xs text-base-100/30 flex items-center gap-1.5 select-none">
+            <p class="font-sans text-xs text-base-100/50 flex items-center gap-1.5 select-none">
                 <span aria-hidden="true">🌴</span> Hecho desde el Caribe colombiano
             </p>
         </div>

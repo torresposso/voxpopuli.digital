@@ -58,7 +58,7 @@ $thumbnail_html = get_the_post_thumbnail($post->ID, 'full', [
       <span class="font-sans text-[10px] font-extrabold uppercase tracking-wider text-primary">
         {{ __('Por', 'voxpopuli') }} {{ get_the_author_meta('display_name', $post->post_author) }}
       </span>
-      <a href="{{ get_permalink($post->ID) }}" class="font-sans text-[10px] font-extrabold uppercase tracking-wider text-secondary inline-flex items-center gap-1 group-hover:translate-x-1 duration-300 transition-transform">
+      <a href="{{ get_permalink($post->ID) }}" class="font-sans text-[10px] font-extrabold uppercase tracking-wider text-secondary-dark inline-flex items-center gap-1 group-hover:translate-x-1 duration-300 transition-transform">
         {{ __('Leer crónica', 'voxpopuli') }} →
       </a>
     </div>

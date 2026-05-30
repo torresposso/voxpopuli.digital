@@ -20,7 +20,9 @@
         display: flex;
         flex-direction: column-reverse;
         align-items: center;
+        justify-content: center;
         gap: 0.75rem;
+        width: 72px;
       }
 
       .fab button,
@@ -65,6 +67,16 @@
         animation: draw-progress auto linear forwards;
         animation-timeline: --post-view;
         animation-range: entry 0% exit 100%; /* Tracks progress strictly while article is in scroll port */
+        will-change: stroke-dashoffset;
+        transform: translateZ(0);
+        backface-visibility: hidden;
+      }
+
+      .fab-progress-svg {
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        will-change: transform;
+        transform: rotate(-90deg) translate3d(0, 0, 0) !important;
       }
 
       /* Scroll-direction fade-out — only when menu is NOT open */
@@ -83,6 +95,7 @@
         backdrop-filter: blur(12px) !important;
         box-shadow: 0 8px 32px oklch(from var(--color-primary) 0.1 0.02 h / 0.06) !important;
         transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        border-radius: 9999px !important;
       }
 
       .fab-sub-button:hover {
@@ -96,9 +109,10 @@
       .fab .btn-secondary {
         background-color: var(--color-secondary) !important;
         border-color: var(--color-secondary) !important;
-        color: var(--color-secondary-content) !important;
+        color: oklch(98.7% 0.002 240) !important;
         box-shadow: 0 8px 24px oklch(from var(--color-secondary) 65% 0.16 h / 0.35) !important;
         transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        border-radius: 9999px !important;
       }
 
       .fab .btn-secondary:hover {
@@ -113,14 +127,14 @@
   <!-- Main trigger button with Radial Scroll Progress Border -->
   <div class="relative flex items-center justify-center z-50 size-[72px]">
     <!-- Radial Scroll Progress SVG -->
-    <svg class="absolute size-full -rotate-90 pointer-events-none" viewBox="0 0 72 72">
+    <svg class="absolute size-full pointer-events-none fab-progress-svg" viewBox="0 0 72 72" shape-rendering="geometricPrecision">
       <!-- Background track -->
-      <circle cx="36" cy="36" r="33.5" class="stroke-base-content/10 fill-none" stroke-width="2.5" />
+      <circle cx="36" cy="36" r="33.5" class="stroke-base-content/10 fill-none" stroke-width="2.5" shape-rendering="geometricPrecision" />
       <!-- Drawing progress circle -->
-      <circle cx="36" cy="36" r="33.5" class="stroke-primary fill-none fab-progress-circle" stroke-width="2.5" stroke-dasharray="210.49" stroke-dashoffset="210.49" stroke-linecap="round" />
+      <circle cx="36" cy="36" r="33.5" class="stroke-primary fill-none fab-progress-circle" stroke-width="2.5" stroke-dasharray="210.49" stroke-dashoffset="210.49" stroke-linecap="round" shape-rendering="geometricPrecision" />
     </svg>
 
-    <div tabindex="0" role="button" class="btn btn-lg btn-circle btn-secondary shadow-xl hover:rotate-12 hover:scale-105 transition-all duration-300 flex items-center justify-center size-16" aria-label="{{ __('Compartir artículo', 'voxpopuli') }}">
+    <div tabindex="0" role="button" class="btn btn-lg btn-circle btn-secondary rounded-full shadow-xl hover:rotate-12 hover:scale-105 transition-all duration-300 flex items-center justify-center size-16" aria-label="{{ __('Compartir artículo', 'voxpopuli') }}">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6">
         <path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" />
       </svg>
@@ -132,7 +146,7 @@
   {{-- Copy Link (Interactive Clipboard) --}}
   <button type="button"
           data-copy-url="{{ $url }}"
-          class="btn btn-lg btn-circle fab-sub-button shadow-lg hover:scale-105 transition-all duration-300 tooltip tooltip-left"
+          class="btn btn-circle rounded-full fab-sub-button shadow-lg hover:scale-105 transition-all duration-300 tooltip tooltip-left size-16 mx-auto flex items-center justify-center"
           data-tip="{{ __('Copiar enlace', 'voxpopuli') }}"
           aria-label="{{ __('Copiar enlace del artículo', 'voxpopuli') }}">
     <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -144,7 +158,7 @@
   <a href="https://api.whatsapp.com/send?text={{ $encodedTitle }}%20{{ $encodedUrl }}"
      target="_blank"
      rel="noopener noreferrer"
-     class="btn btn-lg btn-circle fab-sub-button shadow-lg hover:scale-105 transition-all duration-300 flex items-center justify-center tooltip tooltip-left"
+     class="btn btn-circle rounded-full fab-sub-button shadow-lg hover:scale-105 transition-all duration-300 flex items-center justify-center tooltip tooltip-left size-16 mx-auto"
      data-tip="{{ __('WhatsApp', 'voxpopuli') }}"
      aria-label="{{ __('Compartir en WhatsApp', 'voxpopuli') }}">
     <svg class="size-6 fill-current" viewBox="0 0 24 24">
@@ -156,7 +170,7 @@
   <a href="https://www.facebook.com/sharer/sharer.php?u={{ $encodedUrl }}"
      target="_blank"
      rel="noopener noreferrer"
-     class="btn btn-lg btn-circle fab-sub-button shadow-lg hover:scale-105 transition-all duration-300 flex items-center justify-center tooltip tooltip-left"
+     class="btn btn-circle rounded-full fab-sub-button shadow-lg hover:scale-105 transition-all duration-300 flex items-center justify-center tooltip tooltip-left size-16 mx-auto"
      data-tip="{{ __('Facebook', 'voxpopuli') }}"
      aria-label="{{ __('Compartir en Facebook', 'voxpopuli') }}">
     <svg class="size-6 fill-current" viewBox="0 0 24 24">
@@ -168,7 +182,7 @@
   <a href="https://twitter.com/intent/tweet?url={{ $encodedUrl }}&text={{ $encodedTitle }}"
      target="_blank"
      rel="noopener noreferrer"
-     class="btn btn-lg btn-circle fab-sub-button shadow-lg hover:scale-105 transition-all duration-300 flex items-center justify-center tooltip tooltip-left"
+     class="btn btn-circle rounded-full fab-sub-button shadow-lg hover:scale-105 transition-all duration-300 flex items-center justify-center tooltip tooltip-left size-16 mx-auto"
      data-tip="{{ __('Twitter / X', 'voxpopuli') }}"
      aria-label="{{ __('Compartir en Twitter', 'voxpopuli') }}">
     <svg class="size-6 fill-current" viewBox="0 0 24 24">

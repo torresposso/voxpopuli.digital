@@ -19,10 +19,10 @@
   --color-primary: oklch(34.9% 0.1206 281.85);
   --color-primary-content: oklch(98.7% 0.002 240);
   --color-secondary: oklch(71.87% 0.166 57.77);
-  --color-secondary-content: oklch(98.7% 0.002 240);
+  --color-secondary-content: oklch(20% 0.04 57.77);
   --color-accent: oklch(46% 0.14 28);
   --color-accent-content: oklch(98.7% 0.002 240);
-  --color-neutral: oklch(42% 0.007 240);
+  --color-neutral: oklch(35% 0.007 240);
   --color-neutral-content: oklch(98.7% 0.002 240);
 
   --color-info: oklch(72% 0.16 225);
@@ -49,6 +49,7 @@
   --font-serif: "Literata", serif;
   --font-sans: "Literata", serif;
   --font-logo: "Plus Jakarta Sans", sans-serif;
+  --color-secondary-dark: oklch(50% 0.15 57.77);
 }
 
 @source "../../app/**/*.php";
