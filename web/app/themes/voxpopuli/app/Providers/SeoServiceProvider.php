@@ -252,33 +252,53 @@ class SeoServiceProvider extends ServiceProvider
             return;
         }
 
-        // Fetch all published posts and pages
-        $query = new WP_Query([
+        // Fetch all published post and page IDs
+        $idQuery = new WP_Query([
             'post_type' => ['post', 'page'],
             'post_status' => 'publish',
             'posts_per_page' => -1,
             'orderby' => 'modified',
             'order' => 'DESC',
+            'fields' => 'ids',
+            'no_found_rows' => true,
+            'update_post_meta_cache' => false,
+            'update_post_term_cache' => false,
         ]);
 
         $entries = [];
 
-        while ($query->have_posts()) {
-            $query->the_post();
-            $postId = get_the_ID();
+        if (!empty($idQuery->posts)) {
+            // Process in batches of 100 to reduce memory and query size overhead
+            $batches = array_chunk($idQuery->posts, 100);
 
-            // Skip noindexed posts
-            if (get_post_meta($postId, '_voxpopuli_noindex', true) === '1') {
-                continue;
+            foreach ($batches as $batch) {
+                $batchQuery = new WP_Query([
+                    'post_type' => ['post', 'page'],
+                    'post_status' => 'publish',
+                    'posts_per_page' => -1,
+                    'post__in' => $batch,
+                    'orderby' => 'post__in', // Maintain the 'modified DESC' order from the IDs array
+                    'no_found_rows' => true,
+                ]);
+
+                while ($batchQuery->have_posts()) {
+                    $batchQuery->the_post();
+                    $postId = get_the_ID();
+
+                    // Skip noindexed posts
+                    if (get_post_meta($postId, '_voxpopuli_noindex', true) === '1') {
+                        continue;
+                    }
+
+                    $entries[] = [
+                        'loc' => get_permalink($postId),
+                        'lastmod' => get_the_modified_date('Y-m-d', $postId),
+                        'priority' => get_post_type($postId) === 'page' ? '0.8' : '0.7',
+                        'changefreq' => get_post_type($postId) === 'page' ? 'monthly' : 'weekly',
+                        'type' => get_post_type($postId),
+                    ];
+                }
             }
-
-            $entries[] = [
-                'loc' => get_permalink($postId),
-                'lastmod' => get_the_modified_date('Y-m-d', $postId),
-                'priority' => get_post_type($postId) === 'page' ? '0.8' : '0.7',
-                'changefreq' => get_post_type($postId) === 'page' ? 'monthly' : 'weekly',
-                'type' => get_post_type($postId),
-            ];
         }
 
         wp_reset_postdata();
