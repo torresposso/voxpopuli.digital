@@ -90,14 +90,19 @@ class Post extends Composer
      */
     public function readingTime(): string
     {
-        $content = get_post_field('post_content', get_the_ID());
-        $wordCount = str_word_count(strip_tags($content));
-        $wordsPerMinute = 200; // Average reading speed
-        $minutes = ceil($wordCount / $wordsPerMinute);
+        $postId = get_the_ID();
+        $readingTime = get_post_meta($postId, 'vp_reading_time', true);
+
+        if (!$readingTime) {
+            $content = get_post_field('post_content', $postId);
+            $wordCount = str_word_count(strip_tags($content));
+            $wordsPerMinute = 200; // Average reading speed
+            $readingTime = max(1, ceil($wordCount / $wordsPerMinute));
+        }
 
         return sprintf(
-            _n('%d min de lectura', '%d min de lectura', $minutes, 'voxpopuli'),
-            $minutes,
+            _n('%d min de lectura', '%d min de lectura', (int)$readingTime, 'voxpopuli'),
+            (int)$readingTime,
         );
     }
 
