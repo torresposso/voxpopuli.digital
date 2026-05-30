@@ -98,7 +98,7 @@
                         @if (!empty($post->image))
                             <img alt="{{ $post->alt ?? $post->title }}"
                                 class="w-full h-full object-cover group-hover:scale-105 transition duration-700 ease-out [backface-visibility:hidden] [transform:translate3d(0,0,0)]"
-                                src="{{ $post->image }}" loading="lazy" decoding="async" />
+                                src="{{ $post->image }}" loading="eager" fetchpriority="high" decoding="async" />
                         @else
                             <div class="w-full h-full bg-base-200 flex items-center justify-center">
                                 <span

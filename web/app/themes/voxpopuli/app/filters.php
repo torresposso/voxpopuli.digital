@@ -195,3 +195,14 @@ add_filter('wp_calculate_image_srcset', function ($sources) {
     }
     return $sources;
 }, 10, 1);
+
+/**
+ * Dequeue Gutenberg block library styles on index, home, archive, and search views to optimize CSS delivery.
+ */
+add_action('wp_enqueue_scripts', function () {
+    if (!is_single() && !is_page()) {
+        wp_dequeue_style('wp-block-library');
+        wp_dequeue_style('wp-block-library-theme');
+        wp_dequeue_style('wc-blocks-style');
+    }
+}, 100);

@@ -2,7 +2,7 @@
 
 /* Reset base para el contenedor del editor Gutenberg */
 .editor-styles-wrapper {
-  font-family: "Plus Jakarta Sans", sans-serif;
+  font-family: "Literata", serif;
   color: #111827 !important; /* Force readable dark text (gray-900) */
   background-color: #ffffff !important; /* Ensure white editing canvas */
 }
@@ -32,4 +32,75 @@
 /* Ajustes de legibilidad para bloques de imagen y placeholders */
 .editor-styles-wrapper .components-placeholder {
   color: #374151 !important;
+}
+
+/* Estilos para citas (Blockquotes) idénticos al front-end */
+.editor-styles-wrapper .wp-block-pullquote {
+  border: none !important;
+  padding: 0 !important;
+  margin-top: 2.5rem !important;
+  margin-bottom: 2.5rem !important;
+  background: transparent !important;
+}
+
+.editor-styles-wrapper blockquote,
+.editor-styles-wrapper .wp-block-quote,
+.editor-styles-wrapper .wp-block-pullquote blockquote {
+  position: relative !important;
+  padding: 3.5rem 2rem 2.5rem 2rem !important;
+  background-color: rgba(243, 244, 246, 0.5) !important; /* base-200/50 fallback */
+  border: 1px solid #e5e7eb !important; /* Premium complete 1px border */
+  border-radius: 0.5rem !important;
+  text-align: center !important;
+  margin-top: 2.5rem !important;
+  margin-bottom: 2.5rem !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  font-family: "Playfair Display", serif !important; /* Forces Playfair Display on editing area */
+  font-style: italic !important; /* Forces italic styling */
+}
+
+.editor-styles-wrapper blockquote::before,
+.editor-styles-wrapper .wp-block-quote::before {
+  content: "“" !important;
+  position: absolute !important;
+  top: 0.2rem !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  font-family: "Playfair Display", serif !important;
+  font-weight: 900 !important;
+  font-size: 5rem !important;
+  line-height: 1 !important;
+  color: #e28a2b !important; /* Secondary amber color */
+  opacity: 0.75 !important;
+}
+
+.editor-styles-wrapper blockquote p,
+.editor-styles-wrapper .wp-block-quote p,
+.editor-styles-wrapper .wp-block-pullquote p,
+.editor-styles-wrapper .wp-block-pullquote blockquote p,
+.editor-styles-wrapper .wp-block-pullquote .block-editor-rich-text__editable,
+.editor-styles-wrapper .wp-block-quote .block-editor-rich-text__editable {
+  font-family: "Playfair Display", serif !important;
+  font-style: italic !important;
+  font-size: 1.35rem !important; /* Pull-quote refined editorial text size in Playfair Display */
+  line-height: 1.6 !important;
+  color: #111827 !important; /* base-content fallback */
+  margin: 0 auto !important;
+  max-width: 32rem !important; /* Expanded box width for smoother line breaks */
+}
+
+.editor-styles-wrapper blockquote cite,
+.editor-styles-wrapper .wp-block-quote cite,
+.editor-styles-wrapper blockquote .wp-block-quote__citation,
+.editor-styles-wrapper .wp-block-quote .wp-block-quote__citation {
+  display: block !important;
+  font-family: "Literata", serif !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+  color: #4b5563 !important; /* Muted gray (gray-600) */
+  margin-top: 1.5rem !important;
+  font-style: normal !important;
 }

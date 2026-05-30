@@ -2,7 +2,7 @@
 
 <a 
   href="{{ home_url('/') }}" 
-  {{ $attributes->merge(['class' => 'group font-sans font-extrabold tracking-tighter select-none text-2xl md:text-3xl leading-none flex items-center']) }}
+  {{ $attributes->merge(['class' => 'group font-logo font-extrabold tracking-tighter select-none text-2xl md:text-3xl leading-none flex items-center']) }}
 >
   @if ($onSecondary)
     <span class="text-secondary-content group-hover:text-primary transition-colors duration-300">Vox</span>

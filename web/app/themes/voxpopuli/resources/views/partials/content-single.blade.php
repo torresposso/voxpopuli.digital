@@ -71,7 +71,7 @@
       </div>
     @endif
 
-    <div class="e-content font-serif text-base md:text-lg leading-relaxed prose prose-voxpopuli max-w-none text-base-content/90 prose-headings:font-display prose-headings:font-black prose-headings:text-base-content prose-a:text-primary prose-a:font-bold hover:prose-a:text-secondary prose-a:transition-colors prose-strong:text-base-content prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:italic prose-blockquote:bg-base-200/50 prose-blockquote:py-2 prose-blockquote:px-6 prose-blockquote:rounded-r-md">
+    <div class="e-content font-serif text-base md:text-lg leading-relaxed prose prose-voxpopuli max-w-none text-base-content/90 prose-headings:font-display prose-headings:font-black prose-headings:text-base-content prose-a:text-primary prose-a:font-bold hover:prose-a:text-secondary prose-a:transition-colors prose-strong:text-base-content">
       @php(the_content())
     </div>
 

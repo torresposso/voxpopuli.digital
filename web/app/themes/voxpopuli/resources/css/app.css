@@ -44,7 +44,8 @@
 @theme {
   --font-display: "Playfair Display", serif;
   --font-serif: "Literata", serif;
-  --font-sans: "Plus Jakarta Sans", sans-serif;
+  --font-sans: "Literata", serif;
+  --font-logo: "Plus Jakarta Sans", sans-serif;
 }
 
 @source "../../app/**/*.php";
@@ -522,6 +523,74 @@ a {
 .fab .btn-secondary:hover {
   box-shadow: 0 12px 32px oklch(from var(--color-secondary) 65% 0.16 h / 0.5) !important;
   transform: scale(1.06) rotate(12deg) !important;
+}
+
+@layer components {
+  /* Premium Editorial Pull-Quote Block (Impeccable & High-End Magazine style) */
+  .prose-voxpopuli .wp-block-pullquote {
+    border: none !important;
+    padding: 0 !important;
+    margin: 2.5rem 0 !important;
+    background: transparent !important;
+  }
+
+  .prose-voxpopuli blockquote,
+  .prose-voxpopuli .wp-block-quote,
+  .prose-voxpopuli .wp-block-pullquote blockquote {
+    position: relative !important;
+    padding: 4rem 2rem 2.5rem 2rem !important;
+    background-color: oklch(from var(--color-primary) 98.7% 0.003 281.85 / 0.5) !important; /* Soft, warm/cool tinted neutral overlay */
+    border: 1px solid oklch(from var(--color-primary) 91.5% 0.01 281.85) !important; /* Premium complete 1px border */
+    border-radius: 0.5rem !important;
+    text-align: center !important;
+    margin: 2.5rem 0 !important;
+    box-shadow: 0 4px 20px oklch(from var(--color-primary) 0.05 0.005 281.85 / 0.02) !important;
+  }
+
+  .prose-voxpopuli blockquote::before,
+  .prose-voxpopuli .wp-block-quote::before,
+  .prose-voxpopuli .wp-block-pullquote blockquote::before {
+    content: "“" !important;
+    position: absolute !important;
+    top: 0.2rem !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    font-family: var(--font-display) !important;
+    font-weight: 900 !important;
+    font-size: 5.5rem !important;
+    line-height: 1 !important;
+    color: var(--color-secondary) !important;
+    opacity: 0.8 !important;
+  }
+
+  .prose-voxpopuli blockquote p,
+  .prose-voxpopuli .wp-block-quote p,
+  .prose-voxpopuli .wp-block-pullquote blockquote p {
+    font-family: var(--font-display) !important;
+    font-style: italic !important;
+    font-size: 1.35rem !important; /* Pull-quote refined editorial text size in Playfair Display */
+    line-height: 1.6 !important;
+    color: var(--color-base-content) !important;
+    margin: 0 auto !important;
+    max-width: 32rem !important; /* Expanded box width for smoother line breaks */
+    font-weight: 600 !important; /* Elegant bold cursive weighting */
+  }
+
+  /* Support for Cite / Author element */
+  .prose-voxpopuli blockquote cite,
+  .prose-voxpopuli .wp-block-quote cite,
+  .prose-voxpopuli .wp-block-pullquote blockquote cite,
+  .prose-voxpopuli .wp-block-pullquote cite {
+    display: block !important;
+    font-family: var(--font-serif) !important; /* Literata */
+    font-size: 0.875rem !important; /* Elegant readable size */
+    font-weight: 500 !important; /* Muted regular weight, not bold */
+    text-transform: none !important; /* Clean normal case (e.g. — Álvaro Ashton) */
+    letter-spacing: normal !important;
+    color: oklch(from var(--color-base-content) l c h / 0.6) !important; /* Elegant muted text color */
+    margin-top: 1.5rem !important; /* Balanced breathing room below quote */
+    font-style: normal !important; /* Structural contrast to italicized quote text */
+  }
 }
 
 
