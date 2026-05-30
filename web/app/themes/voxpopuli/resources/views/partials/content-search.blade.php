@@ -1,9 +1,14 @@
 @php
 $categories = get_the_category();
 $category_name = !empty($categories) ? $categories[0]->name : __('Investigación', 'voxpopuli');
-$content = get_post_field('post_content', get_the_ID());
-$word_count = str_word_count(strip_tags($content));
-$reading_time = max(1, ceil($word_count / 200));
+
+// ⚡ Bolt: Use pre-computed reading time metadata instead of dynamic parsing
+$reading_time = get_post_meta(get_the_ID(), 'vp_reading_time', true);
+if (!$reading_time) {
+  $content = get_post_field('post_content', get_the_ID());
+  $word_count = str_word_count(strip_tags($content));
+  $reading_time = max(1, ceil($word_count / 200));
+}
 
 // Solicitamos el tamaño 'full' (original) y blindamos contra registros huérfanos
 $thumbnail_html = get_the_post_thumbnail(get_the_ID(), 'full', [

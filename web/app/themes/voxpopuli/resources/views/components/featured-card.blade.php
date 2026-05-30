@@ -6,9 +6,14 @@
 if (! $post) return;
 $categories = get_the_category($post->ID);
 $hasImage = has_post_thumbnail($post->ID);
-$content = get_post_field('post_content', $post->ID);
-$word_count = str_word_count(strip_tags($content));
-$reading_time = max(1, ceil($word_count / 200));
+
+// ⚡ Bolt: Use pre-computed reading time metadata instead of dynamic parsing
+$reading_time = get_post_meta($post->ID, 'vp_reading_time', true);
+if (!$reading_time) {
+  $content = get_post_field('post_content', $post->ID);
+  $word_count = str_word_count(strip_tags($content));
+  $reading_time = max(1, ceil($word_count / 200));
+}
 
 // Miniatura semántica LCP pre-cargada con alta prioridad y ajuste absoluto para evitar colapsos visuales
 // Aplicamos 'scale-100' de base para establecer el stacking context en carga y asegurar una transición fluida en hover
