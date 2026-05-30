@@ -101,8 +101,8 @@ class Post extends Composer
         }
 
         return sprintf(
-            _n('%d min de lectura', '%d min de lectura', (int)$readingTime, 'voxpopuli'),
-            (int)$readingTime,
+            _n('%d min de lectura', '%d min de lectura', (int) $readingTime, 'voxpopuli'),
+            (int) $readingTime,
         );
     }
 
