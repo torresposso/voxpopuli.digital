@@ -27,15 +27,62 @@ class Index extends Composer
         $loadedSections = \Illuminate\Support\Facades\Cache::remember('voxpopuli_homepage_sections_ids', 3600, function () use ($sections) {
             $seen = [];
             $res = [];
+
+            // Optimization: Fetch all recent posts for these categories in one query to avoid N+1 queries.
+            $slugs = array_column($sections, 'slug');
+            $all_posts = get_posts([
+                'category_name' => implode(',', $slugs),
+                'posts_per_page' => 100, // Buffer to ensure we have enough per category
+                'fields' => 'ids',
+                'no_found_rows' => true,
+            ]);
+
+            // Pre-fetch terms efficiently for mapping
+            $post_terms = wp_get_object_terms($all_posts, 'category', ['fields' => 'all_with_object_id']);
+
+            $posts_by_slug = [];
+            if (!is_wp_error($post_terms)) {
+                foreach ($post_terms as $term) {
+                    if (in_array($term->slug, $slugs, true)) {
+                        $posts_by_slug[$term->slug][] = $term->object_id;
+                    }
+                }
+            }
+
             foreach ($sections as $section) {
-                $post_ids = get_posts([
-                    'category_name' => $section['slug'],
-                    'posts_per_page' => 3,
-                    'post__not_in' => $seen,
-                    'fields' => 'ids',
-                    'no_found_rows' => true,
-                ]);
-                $seen = array_merge($seen, $post_ids);
+                $post_ids = [];
+                $slug = $section['slug'];
+
+                // Iterate through the original sorted $all_posts to maintain chronological order
+                foreach ($all_posts as $id) {
+                    // Check if this post belongs to the current category
+                    if (!empty($posts_by_slug[$slug]) && in_array($id, $posts_by_slug[$slug], true)) {
+                        if (!in_array($id, $seen, true)) {
+                            $post_ids[] = $id;
+                            $seen[] = $id;
+                            if (count($post_ids) >= 3) {
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                // Fallback for missing posts if the bulk query was dominated by other categories
+                if (count($post_ids) < 3) {
+                    $fallback_posts = get_posts([
+                        'category_name' => $slug,
+                        'posts_per_page' => 3 - count($post_ids),
+                        'post__not_in' => $seen,
+                        'fields' => 'ids',
+                        'no_found_rows' => true,
+                    ]);
+
+                    foreach ($fallback_posts as $f_id) {
+                        $post_ids[] = $f_id;
+                        $seen[] = $f_id;
+                    }
+                }
+
                 $res[] = array_merge($section, ['post_ids' => $post_ids]);
             }
             return $res;
