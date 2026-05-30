@@ -4,12 +4,49 @@ on:
   push:
     branches: [main]
     tags: ["v*"]
+  pull_request:
+    branches: [main]
 
 env:
   REGISTRY: ghcr.io
 
 jobs:
+  test:
+    name: Run Lints & Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: gd, zip, exif, mysqli, pdo_mysql, opcache, sqlite3, pdo_sqlite
+          coverage: none
+
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
+
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-progress --no-interaction
+
+      - name: Run Pint Linter
+        run: ./vendor/bin/pint --test
+
+      - name: Run Pest Tests
+        run: ./vendor/bin/pest
+
   build:
+    name: Build & Push Image
+    needs: test
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -53,7 +90,7 @@ jobs:
         with:
           context: .
           target: prod
-          push: true
+          push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha

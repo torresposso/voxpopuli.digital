@@ -8,6 +8,107 @@
   $encodedTitle = urlencode($title);
 @endphp
 
+@once
+  @push('styles')
+    <style>
+      /* Premium Floating Action Button (FAB) */
+      .fab {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        z-index: 45;
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .fab button,
+      .fab a {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s;
+      }
+
+      .fab.fab-active button,
+      .fab.fab-active a {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .fab.fab-active *:nth-child(2) { transition-delay: 0ms; }
+      .fab.fab-active *:nth-child(3) { transition-delay: 0ms; }
+      .fab.fab-active *:nth-child(4) { transition-delay: 0ms; }
+      .fab.fab-active *:nth-child(5) { transition-delay: 0ms; }
+
+      /* FAB Radial Scroll Progress Animation (Pure CSS Scroll-driven) */
+      @keyframes draw-progress {
+        from {
+          stroke-dashoffset: 210.49;
+        }
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      /* Bind progress strictly to post content view timeline */
+      .h-entry {
+        timeline-scope: --post-view;
+      }
+
+      .e-content {
+        view-timeline-name: --post-view;
+        view-timeline-axis: block;
+      }
+
+      .fab-progress-circle {
+        animation: draw-progress auto linear forwards;
+        animation-timeline: --post-view;
+        animation-range: entry 0% exit 100%; /* Tracks progress strictly while article is in scroll port */
+      }
+
+      /* Scroll-direction fade-out — only when menu is NOT open */
+      .fab.fab-hidden:not(.fab-active) {
+        opacity: 0 !important;
+        transform: scale(0.9) translateY(15px) !important;
+        pointer-events: none !important;
+        transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+
+      /* Premium OKLCH Relative Color Glassmorphism for FAB Sub-buttons */
+      .fab-sub-button {
+        background-color: oklch(from var(--color-base-100) 98% 0.005 h / 0.85) !important;
+        border: 1px solid oklch(from var(--color-primary) 70% 0.05 h / 0.25) !important;
+        color: var(--color-primary) !important;
+        backdrop-filter: blur(12px) !important;
+        box-shadow: 0 8px 32px oklch(from var(--color-primary) 0.1 0.02 h / 0.06) !important;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+
+      .fab-sub-button:hover {
+        background-color: var(--color-primary) !important;
+        border-color: var(--color-primary) !important;
+        color: var(--color-primary-content) !important;
+        box-shadow: 0 12px 30px oklch(from var(--color-primary) 0.2 0.08 h / 0.25) !important;
+      }
+
+      /* Premium OKLCH Glow Shadow for Main Trigger Button */
+      .fab .btn-secondary {
+        background-color: var(--color-secondary) !important;
+        border-color: var(--color-secondary) !important;
+        color: var(--color-secondary-content) !important;
+        box-shadow: 0 8px 24px oklch(from var(--color-secondary) 65% 0.16 h / 0.35) !important;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+
+      .fab .btn-secondary:hover {
+        box-shadow: 0 12px 32px oklch(from var(--color-secondary) 65% 0.16 h / 0.5) !important;
+        transform: scale(1.06) rotate(12deg) !important;
+      }
+    </style>
+  @endpush
+@endonce
+
 <div class="fab" data-share-container>
   <!-- Main trigger button with Radial Scroll Progress Border -->
   <div class="relative flex items-center justify-center z-50 size-[72px]">

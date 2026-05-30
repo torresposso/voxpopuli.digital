@@ -49,7 +49,7 @@ add_action('enqueue_block_editor_assets', function () {
         'voxpopuli-editor-fonts',
         'https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap',
         [],
-        null
+        null,
     );
 });
 

@@ -1,0 +1,53 @@
+# SDD Configuration — Vox Populi Digital
+# Generated: 2026-05-28
+# Mode: hybrid (Engram + openspec)
+
+context: |
+  Vox Populi Digital: A Roots Bedrock (WordPress) + Sage 11 + FrankenPHP high-performance
+  web platform. Stack: PHP 8.4, Composer, npm/Vite 8, Tailwind CSS v4, DaisyUI v5,
+  Blade templates (Acorn v6), SQLite. Runs on Railway via Docker.
+
+  Agent: always run PHP/Pest/Composer commands inside Docker (docker compose exec app ...).
+  Assets run via node service. PHP linting via Laravel Pint (preset: per).
+  Initial target: implement Caddy Cache Handler + Redis caching.
+
+strict_tdd: true
+
+testing:
+  runner:
+    command: pest
+    docker: docker compose exec app composer test
+    framework: Pest PHP v4
+  layers:
+    unit: { available: true, tool: pest }
+    integration: { available: false, tool: null }
+    e2e: { available: false, tool: null }
+  coverage:
+    available: false
+  quality:
+    linter: { available: true, command: "composer lint (docker compose exec app composer lint)" }
+    type_checker: { available: false }
+    formatter: { available: true, command: "composer lint:fix (docker compose exec app composer lint:fix)" }
+
+phases:
+  propose:
+    required: true
+    skip_if_trivial: false
+  spec:
+    required: true
+    skip_if_trivial: false
+  design:
+    required: true
+    skip_if_trivial: false
+  tasks:
+    required: true
+    skip_if_trivial: false
+  apply:
+    required: true
+    skip_if_trivial: false
+  verify:
+    required: true
+    skip_if_trivial: false
+  archive:
+    required: true
+    skip_if_trivial: false

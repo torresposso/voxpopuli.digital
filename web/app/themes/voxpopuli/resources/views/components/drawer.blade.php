@@ -1,3 +1,116 @@
+@once
+  @push('styles')
+    <style>
+      /* Drawer premium nav menu */
+      .drawer-nav-menu ul {
+        list-style: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        counter-reset: menu-counter;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      .drawer-nav-menu li {
+        position: relative;
+        counter-increment: menu-counter;
+        overflow: hidden;
+        list-style: none !important;
+        opacity: 0;
+        animation: fade-in-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+      .drawer-nav-menu li a {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding: 0.875rem 1.25rem !important;
+        font-family: var(--font-sans) !important;
+        font-size: 0.95rem !important;
+        font-weight: 800 !important;
+        color: var(--color-base-content) !important;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        border-radius: var(--radius-box) !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.1em !important;
+        border: 1px solid transparent !important;
+      }
+      .drawer-nav-menu li a::before {
+        content: "0" counter(menu-counter) ".";
+        font-family: var(--font-display) !important;
+        font-weight: 700 !important;
+        font-size: 1.1rem !important;
+        color: var(--color-secondary) !important;
+        opacity: 0.7;
+        margin-right: 0.5rem;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+      .drawer-nav-menu li a::after {
+        content: "→";
+        font-family: var(--font-sans) !important;
+        font-size: 1.2rem !important;
+        font-weight: 400 !important;
+        color: var(--color-primary) !important;
+        opacity: 0;
+        transform: translateX(-12px);
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .drawer-nav-menu li a:hover {
+        background-color: oklch(from var(--color-primary) 96.5% 0.015 281.85) !important;
+        color: var(--color-primary) !important;
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+        border-color: oklch(from var(--color-primary) 90% 0.02 281.85) !important;
+        box-shadow: 0 4px 12px oklch(from var(--color-primary) 0.05 0.01 h / 0.03);
+      }
+      .drawer-nav-menu li a:hover::before {
+        opacity: 1;
+        transform: scale(1.15) rotate(-3deg);
+        color: var(--color-primary) !important;
+      }
+      .drawer-nav-menu li a:hover::after {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      
+      /* Staggered entry animation */
+      .drawer-nav-menu li:nth-child(1) { animation-delay: 80ms; }
+      .drawer-nav-menu li:nth-child(2) { animation-delay: 140ms; }
+      .drawer-nav-menu li:nth-child(3) { animation-delay: 200ms; }
+      .drawer-nav-menu li:nth-child(4) { animation-delay: 260ms; }
+      .drawer-nav-menu li:nth-child(5) { animation-delay: 320ms; }
+      .drawer-nav-menu li:nth-child(6) { animation-delay: 380ms; }
+
+      /* Premium drawer featured post card */
+      .drawer-featured-card {
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        border: 1px solid var(--color-base-300);
+      }
+      .drawer-featured-card:hover {
+        transform: translateY(-2px);
+        border-color: oklch(from var(--color-primary) 85% 0.02 h);
+        box-shadow: 0 12px 30px oklch(from var(--color-primary) 10% 0.02 281.85 / 0.06);
+      }
+      .drawer-featured-card img {
+        transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .drawer-featured-card:hover img {
+        transform: scale(1.04);
+        filter: grayscale(0%);
+      }
+
+      /* Premium newsletter input */
+      .drawer-newsletter-input {
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .drawer-newsletter-input:focus {
+        outline: none !important;
+        border-color: var(--color-primary) !important;
+        box-shadow: 0 0 0 3px oklch(from var(--color-primary) 0.85 0.02 h / 0.15) !important;
+      }
+    </style>
+  @endpush
+@endonce
+
 <aside {{ $attributes->merge(['class' => 'drawer-side z-50']) }} aria-label="{{ __('Menú de navegación lateral', 'voxpopuli') }}">
   <label for="main-drawer" aria-label="{{ __('Cerrar menú', 'voxpopuli') }}" class="drawer-overlay"></label>
   <div class="bg-base-200 min-h-full w-full max-w-full sm:w-[460px] sm:max-w-none flex flex-col justify-between border-r border-base-300 shadow-2xl relative overflow-hidden">
