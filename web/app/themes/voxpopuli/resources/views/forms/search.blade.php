@@ -6,8 +6,8 @@
   <input
     type="search"
     class="input input-ghost w-full border-base-300"
-    placeholder="{!! esc_attr_x('Search &hellip;', 'placeholder', 'voxpopuli') !!}"
-    value="{!! get_search_query() !!}"
+    placeholder="{{ esc_attr_x('Search &hellip;', 'placeholder', 'voxpopuli') }}"
+    value="{{ get_search_query() }}"
     name="s"
   >
 
