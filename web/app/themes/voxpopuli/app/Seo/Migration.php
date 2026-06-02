@@ -119,76 +119,87 @@ class Migration
             'post_status' => 'publish',
             'posts_per_page' => -1,
             'fields' => 'ids',
+            'no_found_rows' => true,
         ]);
 
-        $total = $query->found_posts;
+        $total = count($query->posts);
         $migrated = 0;
         $skipped = 0;
 
         \WP_CLI::log("Found {$total} published posts/pages to process.");
 
-        foreach ($query->posts as $postId) {
-            $yoastMeta = [];
-            $yoastKeys = [
-                '_yoast_wpseo_metadesc',
-                '_yoast_wpseo_opengraph-title',
-                '_yoast_wpseo_opengraph-description',
-                '_yoast_wpseo_opengraph-image',
-                '_yoast_wpseo_canonical',
-                '_yoast_wpseo_robots',
-            ];
+        $postIds = $query->posts;
+        $chunks = array_chunk($postIds, 500);
 
-            foreach ($yoastKeys as $key) {
-                $value = get_post_meta($postId, $key, true);
-                if ($value !== '' && $value !== false) {
-                    $yoastMeta[$key] = $value;
+        foreach ($chunks as $chunk) {
+            // Prime caches for posts and post meta for this chunk to avoid N+1 queries.
+            if (function_exists('_prime_post_caches')) {
+                _prime_post_caches($chunk, false, true);
+            }
+
+            foreach ($chunk as $postId) {
+                $yoastMeta = [];
+                $yoastKeys = [
+                    '_yoast_wpseo_metadesc',
+                    '_yoast_wpseo_opengraph-title',
+                    '_yoast_wpseo_opengraph-description',
+                    '_yoast_wpseo_opengraph-image',
+                    '_yoast_wpseo_canonical',
+                    '_yoast_wpseo_robots',
+                ];
+
+                foreach ($yoastKeys as $key) {
+                    $value = get_post_meta($postId, $key, true);
+                    if ($value !== '' && $value !== false) {
+                        $yoastMeta[$key] = $value;
+                    }
                 }
-            }
 
-            if (empty($yoastMeta)) {
-                $skipped++;
-                continue;
-            }
-
-            // Build expansion context
-            $context = [
-                'title' => get_the_title($postId),
-                'sep' => '-',
-                'sitename' => get_bloginfo('name'),
-                'excerpt' => get_the_excerpt($postId),
-            ];
-
-            // Read existing _voxpopuli_* values to avoid overwriting
-            $existing = [];
-            foreach (self::META_MAP as $voxpopuliKey) {
-                $val = get_post_meta($postId, $voxpopuliKey, true);
-                if ($val !== '' && $val !== false) {
-                    $existing[$voxpopuliKey] = $val;
+                if (empty($yoastMeta)) {
+                    $skipped++;
+                    continue;
                 }
-            }
-            // Also check noindex
-            $noindexVal = get_post_meta($postId, '_voxpopuli_noindex', true);
-            if ($noindexVal !== '' && $noindexVal !== false) {
-                $existing['_voxpopuli_noindex'] = $noindexVal;
-            }
 
-            $mapped = self::mapYoastMeta($yoastMeta, $context, $existing);
+                // Build expansion context
+                $context = [
+                    'title' => get_the_title($postId),
+                    'sep' => '-',
+                    'sitename' => get_bloginfo('name'),
+                    'excerpt' => get_the_excerpt($postId),
+                ];
 
-            if (empty($mapped)) {
-                $skipped++;
-                continue;
-            }
-
-            if ($dryRun) {
-                \WP_CLI::log("[DRY-RUN] Post {$postId}: would write " . implode(', ', array_keys($mapped)));
-            } else {
-                foreach ($mapped as $key => $value) {
-                    update_post_meta($postId, $key, $value);
+                // Read existing _voxpopuli_* values to avoid overwriting
+                $existing = [];
+                foreach (self::META_MAP as $voxpopuliKey) {
+                    $val = get_post_meta($postId, $voxpopuliKey, true);
+                    if ($val !== '' && $val !== false) {
+                        $existing[$voxpopuliKey] = $val;
+                    }
                 }
-                \WP_CLI::log("Post {$postId}: migrated " . implode(', ', array_keys($mapped)));
-            }
+                // Also check noindex
+                $noindexVal = get_post_meta($postId, '_voxpopuli_noindex', true);
+                if ($noindexVal !== '' && $noindexVal !== false) {
+                    $existing['_voxpopuli_noindex'] = $noindexVal;
+                }
 
-            $migrated++;
+                $mapped = self::mapYoastMeta($yoastMeta, $context, $existing);
+
+                if (empty($mapped)) {
+                    $skipped++;
+                    continue;
+                }
+
+                if ($dryRun) {
+                    \WP_CLI::log("[DRY-RUN] Post {$postId}: would write " . implode(', ', array_keys($mapped)));
+                } else {
+                    foreach ($mapped as $key => $value) {
+                        update_post_meta($postId, $key, $value);
+                    }
+                    \WP_CLI::log("Post {$postId}: migrated " . implode(', ', array_keys($mapped)));
+                }
+
+                $migrated++;
+            }
         }
 
         \WP_CLI::success("Done. {$migrated} posts migrated, {$skipped} skipped (no Yoast data or already migrated).");
