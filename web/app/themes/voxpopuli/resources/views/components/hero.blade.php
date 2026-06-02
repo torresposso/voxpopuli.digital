@@ -10,7 +10,7 @@
        - Columna 3 (col 4): Sidebar de Últimos Artículos (Listado interactivo)
     --}}
     <section
-        class="w-full max-w-[1440px] mx-auto bg-base-100 animate-fade-in-up grid grid-cols-1 md:grid-cols-4 gap-2 py-2 px-4"
+        class="w-full max-w-[1440px] mx-auto bg-base-100 animate-fade-in-up grid grid-cols-1 md:grid-cols-4 gap-2 py-2 px-1 text-shadow-xs"
         aria-label="{{ __('Artículos principales destacados', 'voxpopuli') }}">
 
         {{-- Artículo Principal Destacado (LCP Candidate) --}}
@@ -58,7 +58,7 @@
 
                             {{-- Título Principal con Enlace Semántico --}}
                             <h2
-                                class="font-display text-3xl md:text-3xl lg:text-4xl xl:text-5xl text-primary-content font-black leading-[1.05] tracking-tight group-hover:text-secondary transition-colors duration-300">
+                                class="font-display text-4xl lg:text-5xl text-primary-content text-shadow-lg font-black leading-[1.05] tracking-tight group-hover:text-secondary transition-colors duration-300">
                                 <a href="{{ $main_post->url }}"
                                     class="hover:text-secondary text-primary-content transition-colors duration-300">
                                     {{ $main_post->title }}
@@ -67,7 +67,7 @@
 
                             {{-- Extracto del Artículo --}}
                             @if (!empty($main_post->excerpt))
-                                <p class="py-6 text-primary-content/85 text-base md:text-lg line-clamp-5">
+                                <p class="py-6 text-primary-content/85 text-lg lg:text-xl line-clamp-5">
                                     {{ $main_post->excerpt }}
                                 </p>
                             @endif
@@ -97,7 +97,7 @@
                     <figure class="absolute inset-0 w-full h-full m-0 z-0 overflow-hidden">
                         @if (!empty($post->image))
                             <img alt="{{ $post->alt ?? $post->title }}"
-                                class="w-full h-full object-cover group-hover:scale-105 transition duration-700 ease-out [backface-visibility:hidden] [transform:translate3d(0,0,0)]"
+                                class="w-full h-full object-cover group-hover:scale-105 transition duration-700 ease-out backface-hidden transform-[translate3d(0,0,0)]"
                                 src="{{ $post->image }}" loading="eager" fetchpriority="high" decoding="async" />
                         @else
                             <div class="w-full h-full bg-base-200 flex items-center justify-center">
@@ -108,9 +108,13 @@
                     </figure>
 
                     {{-- Degradado premium ultra-oscuro (Inline CSS para asegurar renderizado perfecto independiente del framework) --}}
-                    <div class="absolute inset-0 opacity-100 transition duration-500 ease-out pointer-events-none z-10"
-                        style="background: linear-gradient(to top, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.85) 50%, rgba(0,0,0,0.2) 100%);">
+                    <div
+                        class="absolute inset-0 bg-primary/20 mix-blend-multiply transition-colors duration-700 group-hover:bg-black/60 z-10">
                     </div>
+                    <div
+                        class="absolute inset-0 bg-linear-to-t from-black/95 via-primary/60 to-black/35 pointer-events-none z-10 transition-all duration-700 group-hover:from-black/98 group-hover:via-black/75">
+                    </div>
+                    <div class="absolute inset-0 noise-overlay opacity-50 mix-blend-overlay pointer-events-none z-10"></div>
                     {{-- Textura de ruido --}}
                     <div class="absolute inset-0 opacity-10 pointer-events-none mix-blend-overlay noise-overlay z-10">
                     </div>
@@ -120,13 +124,13 @@
                         {{-- Kicker de Categoría --}}
                         <div>
                             <span
-                                class="font-sans font-extrabold uppercase tracking-[0.2em] text-[10px] text-secondary drop-shadow-sm">
+                                class="font-sans font-extrabold uppercase tracking-[0.2em] text-xs text-secondary text-shadow-sm drop-shadow-sm">
                                 <span aria-hidden="true" class="opacity-70">//</span> {{ $post->category }}
                             </span>
                         </div>
 
                         {{-- Título Secundario con Click Area Expandida --}}
-                        <h3 class="font-display text-lg  text-white font-bold leading-tight  drop-shadow-md">
+                        <h3 class="font-display text-2xl text-white font-bold leading-tight text-shadow-md group-hover:text-shadow-lg">
                             <a href="{{ $post->url }}"
                                 class="hover:text-secondary transition-colors duration-300 after:absolute after:inset-0">
                                 {{ $post->title }}
@@ -135,7 +139,7 @@
 
                         {{-- Metadata del Artículo --}}
                         <footer
-                            class="flex items-center gap-2 font-sans text-[10px] text-white/80 font-semibold uppercase tracking-wider mt-1 drop-shadow-sm">
+                            class="flex items-center gap-2 font-sans text-[10px] text-white/90 font-semibold uppercase tracking-wider mt-1 text-shadow-sm drop-shadow-sm">
                             <span>{{ sprintf(__('Por %s', 'voxpopuli'), $post->author) }}</span>
                             <span aria-hidden="true" class="opacity-50">//</span>
                             <time datetime="{{ date('Y-m-d', strtotime($post->date)) }}">{{ $post->date }}</time>
@@ -153,18 +157,18 @@
             {{-- Encabezado del Listado --}}
             <header class="p-4 border-b border-base-300 bg-base-200/50 flex items-center justify-between shrink-0">
                 <h2 id="sidebar-title"
-                    class="font-sans font-black uppercase tracking-wider text-xs text-base-content flex items-center gap-1.5 m-0">
+                    class="font-sans font-black uppercase tracking-wider text-md text-base-content flex items-center gap-1.5 m-0">
                     <span aria-hidden="true" class="text-secondary font-black">//</span>
                     {{ __('Últimos Artículos', 'voxpopuli') }}
                 </h2>
                 <span class="badge badge-secondary badge-xs animate-pulse" aria-hidden="true"></span>
             </header>
 
-            {{-- Feed de Novedades --}}
+            {{-- Feed "últimos artículos" --}}
             <ul class="list flex flex-col flex-1 divide-y divide-base-200 bg-base-100 h-full overflow-y-auto p-0 m-0">
                 @foreach ($latest_posts as $index => $post)
                     <li
-                        class="list-row flex-1 flex items-center gap-3 p-4 group hover:bg-base-200/60 transition-colors duration-300 relative cursor-pointer">
+                        class="list-row flex-1 flex items-center gap-2 mx-2 py-1 px-2 group hover:bg-base-200/60 transition-colors duration-300 relative cursor-pointer">
                         {{-- Contador visual --}}
                         <div
                             class="text-3xl font-display font-light text-base-content/45 group-hover:text-secondary/60 transition-colors duration-300 tabular-nums shrink-0">
@@ -185,13 +189,13 @@
                         </div>
 
                         {{-- Detalles y Enlace --}}
-                        <div class="list-col-grow flex flex-col gap-0.5 min-w-0">
-                            <span class="font-sans font-extrabold uppercase tracking-wider text-[9px] text-secondary-dark">
+                        <div class="list-col-grow min-w-48 flex flex-col gap-0.5">
+                            <span class="font-sans font-extrabold uppercase tracking-wider text-xs text-secondary">
                                 {{ $post->category }}
                             </span>
 
                             <h3
-                                class="font-display text-xs md:text-sm text-base-content font-bold leading-snug group-hover:text-primary transition-colors duration-300 m-0">
+                                class="font-display text-md text-base-content text-shadow-lg font-bold leading-snug group-hover:text-primary transition-colors duration-300 m-0">
                                 <a href="{{ $post->url }}"
                                     class="after:absolute after:inset-0 hover:text-primary transition-colors duration-300">
                                     {{ $post->title }}
