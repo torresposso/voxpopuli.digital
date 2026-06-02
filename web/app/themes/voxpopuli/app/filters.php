@@ -23,8 +23,8 @@ add_filter('rest_authentication_errors', function ($result) {
         return $result;
     }
 
-    $request_uri = $_SERVER['REQUEST_URI'] ?? '';
-    $rest_route = $_GET['rest_route'] ?? '';
+    $request_uri = sanitize_text_field($_SERVER['REQUEST_URI'] ?? '');
+    $rest_route = sanitize_text_field($_GET['rest_route'] ?? '');
 
     if (! is_user_logged_in()) {
         if (str_contains($request_uri, '/wp/v2/users') || str_contains($rest_route, '/wp/v2/users')) {
