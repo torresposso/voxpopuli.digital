@@ -90,13 +90,18 @@ class Post extends Composer
      */
     public function readingTime(): string
     {
-        $minutes = get_post_meta(get_the_ID(), 'vp_reading_time', true);
+        $post_id = get_the_ID();
+        $minutes = get_post_meta($post_id, 'vp_reading_time', true);
 
         if (!$minutes) {
-            $content = get_post_field('post_content', get_the_ID());
+            $content = get_post_field('post_content', $post_id);
             $wordCount = str_word_count(strip_tags($content));
             $wordsPerMinute = 200; // Average reading speed
             $minutes = max(1, ceil($wordCount / $wordsPerMinute));
+
+            // Cache the calculated values to avoid repeating expensive calculations
+            update_post_meta($post_id, 'vp_word_count', $wordCount);
+            update_post_meta($post_id, 'vp_reading_time', $minutes);
         }
 
         return sprintf(
