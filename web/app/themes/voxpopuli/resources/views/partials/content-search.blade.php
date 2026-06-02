@@ -1,11 +1,14 @@
 @php
 $categories = get_the_category();
 $category_name = !empty($categories) ? $categories[0]->name : __('Investigación', 'voxpopuli');
-$reading_time = get_post_meta(get_the_ID(), 'vp_reading_time', true);
+$post_id = get_the_ID();
+$reading_time = get_post_meta($post_id, 'vp_reading_time', true);
 if (!$reading_time) {
-  $content = get_post_field('post_content', get_the_ID());
+  $content = get_post_field('post_content', $post_id);
   $word_count = str_word_count(strip_tags($content));
   $reading_time = max(1, ceil($word_count / 200));
+  update_post_meta($post_id, 'vp_word_count', $word_count);
+  update_post_meta($post_id, 'vp_reading_time', $reading_time);
 }
 
 // Solicitamos el tamaño 'full' (original) y blindamos contra registros huérfanos

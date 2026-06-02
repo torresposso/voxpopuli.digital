@@ -11,6 +11,8 @@ if (!$reading_time) {
     $content = get_post_field('post_content', $post->ID);
     $word_count = str_word_count(strip_tags($content));
     $reading_time = max(1, ceil($word_count / 200));
+    update_post_meta($post->ID, 'vp_word_count', $word_count);
+    update_post_meta($post->ID, 'vp_reading_time', $reading_time);
 }
 
 // Miniatura semántica LCP pre-cargada con alta prioridad y ajuste absoluto para evitar colapsos visuales

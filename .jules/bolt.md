@@ -1,0 +1,3 @@
+## 2026-06-02 - [Word Count & Reading Time Save Post Hook]
+**Learning:** Calculating word count and reading time dynamically in `the_content` or blade template loops is expensive. Implementing a "lazy cache" approach by computing these values during `save_post` and storing them in `postmeta` (and providing a fallback update on read) drastically cuts down CPU usage in loops.
+**Action:** When adding `save_post` hooks in WordPress (e.g., in `setup.php`), always include guard clauses for `DOING_AUTOSAVE` and `wp_is_post_revision()` to prevent redundant calculations and incorrect metadata updates during auto-saves or revision creations.
