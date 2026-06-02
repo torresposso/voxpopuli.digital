@@ -152,6 +152,8 @@ add_filter('the_content', function ($content) {
     $content = preg_replace_callback(
         '/https?:\/\/[^\s"\']+\/app\/uploads\/([a-zA-Z0-9_\-\/]+\-\d+x\d+\.(?:jpg|jpeg|png|gif|webp|svg|avif))/i',
         function ($m) {
+            static $file_exists_cache = [];
+
             $full_url = $m[0];
             $relative_path_with_suffix = $m[1]; // e.g. 2026/05/1993199-771x1024.jpg
 
@@ -159,11 +161,19 @@ add_filter('the_content', function ($content) {
                 $uploads_dir = WP_CONTENT_DIR . '/uploads';
                 $file_path = $uploads_dir . '/' . $relative_path_with_suffix;
 
-                if (! file_exists($file_path)) {
+                if (!isset($file_exists_cache[$file_path])) {
+                    $file_exists_cache[$file_path] = file_exists($file_path);
+                }
+
+                if (! $file_exists_cache[$file_path]) {
                     $original_relative_path = preg_replace('/-\d+x\d+(\.(?:jpg|jpeg|png|gif|webp|svg|avif))$/i', '$1', $relative_path_with_suffix);
                     $original_file_path = $uploads_dir . '/' . $original_relative_path;
 
-                    if (file_exists($original_file_path)) {
+                    if (!isset($file_exists_cache[$original_file_path])) {
+                        $file_exists_cache[$original_file_path] = file_exists($original_file_path);
+                    }
+
+                    if ($file_exists_cache[$original_file_path]) {
                         return preg_replace('/-\d+x\d+(\.(?:jpg|jpeg|png|gif|webp|svg|avif))/i', '$1', $full_url);
                     }
                 }
