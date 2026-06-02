@@ -151,6 +151,7 @@ class Post extends Composer
             'post__not_in' => [get_the_ID()],
             'orderby' => 'date',
             'order' => 'DESC',
+            'no_found_rows' => true,
         ]);
 
         $posts = [];
@@ -183,6 +184,7 @@ class Post extends Composer
             'post_type' => 'post',
             'posts_per_page' => 1,
             'post__not_in' => [get_the_ID()],
+            'no_found_rows' => true,
         ];
 
         if (!empty($sticky)) {
