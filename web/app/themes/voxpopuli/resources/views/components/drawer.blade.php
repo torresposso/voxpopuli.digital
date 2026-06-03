@@ -190,7 +190,8 @@
       @php
         $drawer_posts = get_posts([
           'numberposts' => 1,
-          'post_status' => 'publish'
+          'post_status' => 'publish',
+          'no_found_rows' => true
         ]);
       @endphp
       @if(!empty($drawer_posts))
