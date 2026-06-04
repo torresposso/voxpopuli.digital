@@ -122,7 +122,7 @@ class Migration
             'no_found_rows' => true,
         ]);
 
-        $total = count($query->posts);
+        $total = $query->post_count;
         $migrated = 0;
         $skipped = 0;
 
