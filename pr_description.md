@@ -1,8 +1,4 @@
-🎯 **What:**
-Fixed a Reflected XSS vulnerability in `web/app/themes/voxpopuli/resources/views/search.blade.php`, and extended the fix to `drawer.blade.php`, `forms/search.blade.php`, and `partials/content-search-empty.blade.php`. These files were outputting user-provided search queries either unescaped (via Blade's `{!! !!}` tags) or double-escaping them unnecessarily.
-
-⚠️ **Risk:**
-If left unfixed, an attacker could craft a malicious URL with a Javascript payload in the `s` (search) parameter. If a user clicked this link, the Javascript would execute in their browser context, potentially leading to session hijacking, defacement, or redirection to malicious sites. The blast radius could impact any user who visits a crafted search link.
-
-🛡️ **Solution:**
-Changed the output of `get_search_query()` to use Blade's native safe output tags `{{ }}`. In order to prevent double-escaping (since `get_search_query()` returns an `esc_attr` escaped string by default), the parameter `false` is passed (`get_search_query(false)`), returning the raw query string which is then properly and safely escaped by `{{ }}`.
+💡 What: Replaced a redundant array traversal count() with the natively pre-computed integer property WP_Query->post_count inside the SEO migration script. Also added 'no_found_rows' => true to the fallback recent posts WP_Query in the empty search results template.
+🎯 Why: PHP array traversals are unnecessary when the WordPress WP_Query object already maintains the exact count in its post_count property during the query execution loop. In the search template, SQL_CALC_FOUND_ROWS was executing pointlessly as the query has a strict limit and no pagination, wasting database CPU.
+📊 Impact: Avoids an unnecessary O(N) array iteration in the migration script. Saves one complete (and potentially slow) database query (SELECT FOUND_ROWS()) during the rendering of empty search results.
+🔬 Measurement: Verify that the empty search results page visually renders identically and that the wp voxpopuli migrate-seo script still outputs the correct total count.
