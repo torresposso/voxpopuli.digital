@@ -88,6 +88,17 @@ class Index extends Composer
             return $res;
         });
 
+        // Collect all IDs to batch-prime the object and meta caches, preventing N+1 queries.
+        $all_section_post_ids = [];
+        foreach ($loadedSections as $section) {
+            $all_section_post_ids = array_merge($all_section_post_ids, $section['post_ids']);
+        }
+
+        if (!empty($all_section_post_ids)) {
+            $all_section_post_ids = array_unique($all_section_post_ids);
+            _prime_post_caches($all_section_post_ids, true, true);
+        }
+
         // Map post_ids to WP_Post objects
         foreach ($loadedSections as &$section) {
             $section['posts'] = array_filter(array_map('get_post', $section['post_ids']));
