@@ -60,7 +60,7 @@ class Post extends Composer
     {
         return wp_link_pages([
             'echo' => 0,
-            'before' => '<p>' . __('Pages:', 'voxpopuli'),
+            'before' => '<p>'.__('Pages:', 'voxpopuli'),
             'after' => '</p>',
         ]);
     }
@@ -71,11 +71,12 @@ class Post extends Composer
     public function featuredImage(): ?array
     {
         $id = get_post_thumbnail_id();
-        if (!$id) {
+        if (! $id) {
             return null;
         }
 
         $src = wp_get_attachment_image_src($id, 'large');
+
         return [
             'url' => $src[0] ?? '',
             'width' => $src[1] ?? '',
@@ -93,15 +94,12 @@ class Post extends Composer
         $post_id = get_the_ID();
         $minutes = get_post_meta($post_id, 'vp_reading_time', true);
 
-        if (!$minutes) {
+        if (! $minutes) {
             $content = get_post_field('post_content', $post_id);
             $wordCount = str_word_count(strip_tags($content));
             $wordsPerMinute = 200; // Average reading speed
             $minutes = max(1, ceil($wordCount / $wordsPerMinute));
 
-            // Cache the calculated values to avoid repeating expensive calculations
-            update_post_meta($post_id, 'vp_word_count', $wordCount);
-            update_post_meta($post_id, 'vp_reading_time', $minutes);
         }
 
         return sprintf(
@@ -128,7 +126,7 @@ class Post extends Composer
         }
 
         $category = $primaryId ? get_term($primaryId) : $categories[0];
-        if (is_wp_error($category) || !$category) {
+        if (is_wp_error($category) || ! $category) {
             $category = $categories[0];
         }
 
@@ -192,7 +190,7 @@ class Post extends Composer
             'no_found_rows' => true,
         ];
 
-        if (!empty($sticky)) {
+        if (! empty($sticky)) {
             $args['post__in'] = $sticky;
             $args['ignore_sticky_posts'] = 1;
         } else {

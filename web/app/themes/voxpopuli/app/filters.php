@@ -19,7 +19,7 @@ add_filter('excerpt_more', function () {
  * Disable REST API user endpoints for anonymous users to prevent enumeration.
  */
 add_filter('rest_authentication_errors', function ($result) {
-    if (true === $result || is_wp_error($result)) {
+    if ($result === true || is_wp_error($result)) {
         return $result;
     }
 
@@ -66,6 +66,7 @@ function is_allowed_dev_host(string $host): bool
 
     // Strip port for comparison
     $hostWithoutPort = explode(':', $host)[0];
+
     return in_array($hostWithoutPort, $allowed, true);
 }
 
@@ -89,12 +90,12 @@ function rewrite_url_to_current_host(string $url): string
     }
 
     $new_scheme = is_ssl() ? 'https' : 'http';
-    $new_url = $new_scheme . '://' . $_SERVER['HTTP_HOST'];
+    $new_url = $new_scheme.'://'.$_SERVER['HTTP_HOST'];
     if (isset($parts['path'])) {
         $new_url .= $parts['path'];
     }
     if (isset($parts['query'])) {
-        $new_url .= '?' . $parts['query'];
+        $new_url .= '?'.$parts['query'];
     }
 
     return $new_url;
@@ -103,7 +104,7 @@ function rewrite_url_to_current_host(string $url): string
 /**
  * Dynamically adjust home_url in dev to match the request host.
  */
-add_filter('home_url', fn($url) => rewrite_url_to_current_host($url), 10, 1);
+add_filter('home_url', fn ($url) => rewrite_url_to_current_host($url), 10, 1);
 
 /**
  * Rewrite old image URLs in post content to match the current request host.
@@ -133,15 +134,16 @@ add_filter('the_content', function ($content) {
     $replace_host = function ($url) use ($old_hosts, $current_host, $scheme) {
         foreach ($old_hosts as $old) {
             if (str_contains($url, $old)) {
-                return str_replace($old, $current_host, str_replace('http://', $scheme . '://', $url));
+                return str_replace($old, $current_host, str_replace('http://', $scheme.'://', $url));
             }
         }
+
         return $url;
     };
 
     $content = preg_replace_callback(
         '/https?:\/\/[^\s"\']+\.(jpg|jpeg|png|gif|webp|svg|avif)(\?[^\s"\']*)?["\'\s>]/i',
-        fn($m) => $replace_host($m[0]),
+        fn ($m) => $replace_host($m[0]),
         $content,
     );
 
@@ -158,18 +160,18 @@ add_filter('the_content', function ($content) {
             $relative_path_with_suffix = $m[1]; // e.g. 2026/05/1993199-771x1024.jpg
 
             if (defined('WP_CONTENT_DIR')) {
-                $uploads_dir = WP_CONTENT_DIR . '/uploads';
-                $file_path = $uploads_dir . '/' . $relative_path_with_suffix;
+                $uploads_dir = WP_CONTENT_DIR.'/uploads';
+                $file_path = $uploads_dir.'/'.$relative_path_with_suffix;
 
-                if (!isset($file_exists_cache[$file_path])) {
+                if (! isset($file_exists_cache[$file_path])) {
                     $file_exists_cache[$file_path] = file_exists($file_path);
                 }
 
                 if (! $file_exists_cache[$file_path]) {
                     $original_relative_path = preg_replace('/-\d+x\d+(\.(?:jpg|jpeg|png|gif|webp|svg|avif))$/i', '$1', $relative_path_with_suffix);
-                    $original_file_path = $uploads_dir . '/' . $original_relative_path;
+                    $original_file_path = $uploads_dir.'/'.$original_relative_path;
 
-                    if (!isset($file_exists_cache[$original_file_path])) {
+                    if (! isset($file_exists_cache[$original_file_path])) {
                         $file_exists_cache[$original_file_path] = file_exists($original_file_path);
                     }
 
@@ -178,6 +180,7 @@ add_filter('the_content', function ($content) {
                     }
                 }
             }
+
             return $full_url;
         },
         $content,
@@ -189,12 +192,12 @@ add_filter('the_content', function ($content) {
 /**
  * Dynamically adjust site_url in dev to match the request host.
  */
-add_filter('site_url', fn($url) => rewrite_url_to_current_host($url), 10, 1);
+add_filter('site_url', fn ($url) => rewrite_url_to_current_host($url), 10, 1);
 
 /**
  * Dynamically adjust attachment URLs in dev to match the request host.
  */
-add_filter('wp_get_attachment_url', fn($url) => rewrite_url_to_current_host($url), 10, 1);
+add_filter('wp_get_attachment_url', fn ($url) => rewrite_url_to_current_host($url), 10, 1);
 
 /**
  * Dynamically adjust image srcset URLs in dev to match the request host.
@@ -203,6 +206,7 @@ add_filter('wp_calculate_image_srcset', function ($sources) {
     foreach ($sources as &$source) {
         $source['url'] = rewrite_url_to_current_host($source['url']);
     }
+
     return $sources;
 }, 10, 1);
 
@@ -210,7 +214,7 @@ add_filter('wp_calculate_image_srcset', function ($sources) {
  * Dequeue Gutenberg block library styles on index, home, archive, and search views to optimize CSS delivery.
  */
 add_action('wp_enqueue_scripts', function () {
-    if (!is_single() && !is_page()) {
+    if (! is_single() && ! is_page()) {
         wp_dequeue_style('wp-block-library');
         wp_dequeue_style('wp-block-library-theme');
         wp_dequeue_style('wc-blocks-style');

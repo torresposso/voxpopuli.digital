@@ -75,6 +75,7 @@ class Archive extends Composer
     public function postCount(): int
     {
         global $wp_query;
+
         return $wp_query->found_posts ?? 0;
     }
 }

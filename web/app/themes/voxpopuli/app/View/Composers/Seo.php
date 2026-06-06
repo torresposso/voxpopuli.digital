@@ -132,7 +132,7 @@ class Seo extends Composer
         $siteConfig = apply_filters('voxpopuli/seo/social', [
             'name' => $siteName,
             'url' => $siteUrl,
-            'search_url' => $siteUrl . '/?s={search_term_string}',
+            'search_url' => $siteUrl.'/?s={search_term_string}',
         ]);
 
         $site = $jsonld->website($siteConfig);

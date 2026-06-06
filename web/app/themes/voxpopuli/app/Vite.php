@@ -22,7 +22,7 @@ class Vite extends SageVite
             $requestHost = $_SERVER['HTTP_HOST'];
 
             // Remove port from host if it exists to get just the hostname/IP
-            $requestHostName = parse_url('http://' . $requestHost, PHP_URL_HOST);
+            $requestHostName = parse_url('http://'.$requestHost, PHP_URL_HOST);
 
             if ($requestHostName) {
                 $urlParts = parse_url($url);
@@ -30,7 +30,8 @@ class Vite extends SageVite
                     $scheme = $urlParts['scheme'] ?? 'http';
                     $port = $urlParts['port'] ?? 5174;
                     $path = $urlParts['path'] ?? '';
-                    $query = isset($urlParts['query']) ? '?' . $urlParts['query'] : '';
+                    $query = isset($urlParts['query']) ? '?'.$urlParts['query'] : '';
+
                     return "{$scheme}://{$requestHostName}:{$port}{$path}{$query}";
                 }
             }

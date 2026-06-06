@@ -17,7 +17,7 @@ class SeoServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(JsonLd::class, function () {
-            return new JsonLd();
+            return new JsonLd;
         });
     }
 
@@ -203,6 +203,7 @@ class SeoServiceProvider extends ServiceProvider
                     if ($value !== '' && (! filter_var($value, FILTER_VALIDATE_URL)
                         || ! (str_starts_with($value, 'http://') || str_starts_with($value, 'https://')))) {
                         delete_post_meta($postId, $field);
+
                         continue;
                     }
                     $value = esc_url_raw($value);
@@ -267,7 +268,7 @@ class SeoServiceProvider extends ServiceProvider
 
         $entries = [];
 
-        if (!empty($idQuery->posts)) {
+        if (! empty($idQuery->posts)) {
             // Process in batches of 100 to reduce memory and query size overhead
             $batches = array_chunk($idQuery->posts, 100);
 
@@ -307,12 +308,12 @@ class SeoServiceProvider extends ServiceProvider
 
         // Set headers
         status_header(200);
-        header('Content-Type: ' . $sitemap->getContentType() . '; charset=UTF-8');
-        header('Cache-Control: ' . $sitemap->getCacheControl());
+        header('Content-Type: '.$sitemap->getContentType().'; charset=UTF-8');
+        header('Cache-Control: '.$sitemap->getCacheControl());
 
         $lastMod = $sitemap->getLastModified();
         if ($lastMod !== null) {
-            header('Last-Modified: ' . gmdate('D, d M Y H:i:s', strtotime($lastMod)) . ' GMT');
+            header('Last-Modified: '.gmdate('D, d M Y H:i:s', strtotime($lastMod)).' GMT');
         }
 
         echo $sitemap->toXml();
