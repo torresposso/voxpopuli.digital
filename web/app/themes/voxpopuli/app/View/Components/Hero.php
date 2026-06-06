@@ -74,7 +74,7 @@ class Hero extends Component
 
         // Fallback: If less than 4 posts, fill the rest with the latest general posts
         if (count($featured) < 4) {
-            $excludeIds = array_map(fn ($p) => $p->ID, $featured);
+            $excludeIds = array_map(fn($p) => $p->ID, $featured);
             $fallbacks = get_posts([
                 'post_type' => 'post',
                 'posts_per_page' => 4 - count($featured),
@@ -87,7 +87,7 @@ class Hero extends Component
         }
 
         // 2. Fetch exactly 5 latest posts, excluding featured IDs
-        $featuredIds = array_map(fn ($p) => $p->ID, $featured);
+        $featuredIds = array_map(fn($p) => $p->ID, $featured);
         $latest = get_posts([
             'post_type' => 'post',
             'posts_per_page' => 5,

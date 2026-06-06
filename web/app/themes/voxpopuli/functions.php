@@ -4,7 +4,7 @@ use App\Providers\SeoServiceProvider;
 use Roots\Acorn\Application;
 use Roots\Acorn\Sage\SageServiceProvider;
 
-if (! file_exists($composer = __DIR__.'/vendor/autoload.php')) {
+if (! file_exists($composer = __DIR__ . '/vendor/autoload.php')) {
     wp_die(__('Error locating autoloader. Please run <code>composer install</code>.', 'voxpopuli'));
 }
 
@@ -19,11 +19,11 @@ $app = Application::configure()
     ->boot();
 
 // Load theme configurations
-if (file_exists($setup = __DIR__.'/app/setup.php')) {
+if (file_exists($setup = __DIR__ . '/app/setup.php')) {
     require_once $setup;
 }
 
-if (file_exists($filters = __DIR__.'/app/filters.php')) {
+if (file_exists($filters = __DIR__ . '/app/filters.php')) {
     require_once $filters;
 }
 

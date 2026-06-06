@@ -12,17 +12,17 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Vite;
 
 // Register our custom Vite class to dynamically rewrite Hot Asset URLs in memory
-$vite = new \App\Vite;
-$vite->useHotFile(__DIR__.'/../public/hot');
+$vite = new \App\Vite();
+$vite->useHotFile(__DIR__ . '/../public/hot');
 
 // Set both bindings and instances to override any previously resolved instances in Acorn/Laravel
 app()->instance(\Roots\Acorn\Assets\Vite::class, $vite);
 app()->instance(\Illuminate\Foundation\Vite::class, $vite);
 app()->instance('assets.vite', $vite);
 
-app()->singleton(\Roots\Acorn\Assets\Vite::class, fn () => $vite);
-app()->singleton(\Illuminate\Foundation\Vite::class, fn () => $vite);
-app()->singleton('assets.vite', fn () => $vite);
+app()->singleton(\Roots\Acorn\Assets\Vite::class, fn() => $vite);
+app()->singleton(\Illuminate\Foundation\Vite::class, fn() => $vite);
+app()->singleton('assets.vite', fn() => $vite);
 
 // Register class-based Blade components explicitly
 Blade::component(Hero::class, 'hero');
@@ -230,11 +230,11 @@ add_action('save_post', function ($post_id) {
  */
 add_action('save_post', function () {
     delete_transient(Hero::getCacheKey());
-    (new Index)->bustCache();
+    (new Index())->bustCache();
 });
 add_action('deleted_post', function () {
     delete_transient(Hero::getCacheKey());
-    (new Index)->bustCache();
+    (new Index())->bustCache();
 });
 
 /**

@@ -17,7 +17,7 @@ class SeoServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(JsonLd::class, function () {
-            return new JsonLd;
+            return new JsonLd();
         });
     }
 
@@ -308,12 +308,12 @@ class SeoServiceProvider extends ServiceProvider
 
         // Set headers
         status_header(200);
-        header('Content-Type: '.$sitemap->getContentType().'; charset=UTF-8');
-        header('Cache-Control: '.$sitemap->getCacheControl());
+        header('Content-Type: ' . $sitemap->getContentType() . '; charset=UTF-8');
+        header('Cache-Control: ' . $sitemap->getCacheControl());
 
         $lastMod = $sitemap->getLastModified();
         if ($lastMod !== null) {
-            header('Last-Modified: '.gmdate('D, d M Y H:i:s', strtotime($lastMod)).' GMT');
+            header('Last-Modified: ' . gmdate('D, d M Y H:i:s', strtotime($lastMod)) . ' GMT');
         }
 
         echo $sitemap->toXml();

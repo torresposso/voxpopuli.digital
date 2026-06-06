@@ -60,7 +60,7 @@ class Post extends Composer
     {
         return wp_link_pages([
             'echo' => 0,
-            'before' => '<p>'.__('Pages:', 'voxpopuli'),
+            'before' => '<p>' . __('Pages:', 'voxpopuli'),
             'after' => '</p>',
         ]);
     }

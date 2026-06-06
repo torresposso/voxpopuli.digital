@@ -193,12 +193,12 @@ class Migration
                 }
 
                 if ($dryRun) {
-                    \WP_CLI::log("[DRY-RUN] Post {$postId}: would write ".implode(', ', array_keys($mapped)));
+                    \WP_CLI::log("[DRY-RUN] Post {$postId}: would write " . implode(', ', array_keys($mapped)));
                 } else {
                     foreach ($mapped as $key => $value) {
                         update_post_meta($postId, $key, $value);
                     }
-                    \WP_CLI::log("Post {$postId}: migrated ".implode(', ', array_keys($mapped)));
+                    \WP_CLI::log("Post {$postId}: migrated " . implode(', ', array_keys($mapped)));
                 }
 
                 $migrated++;
