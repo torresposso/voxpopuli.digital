@@ -43,3 +43,6 @@ wp-cli.local.yml
 composer-setup.php
 missing-batch-*.json
 *.xml
+
+# Reportes de gestión
+/reportes/
