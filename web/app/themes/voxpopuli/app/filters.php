@@ -19,7 +19,7 @@ add_filter('excerpt_more', function () {
  * Disable REST API user endpoints for anonymous users to prevent enumeration.
  */
 add_filter('rest_authentication_errors', function ($result) {
-    if ($result === true || is_wp_error($result)) {
+    if (true === $result || is_wp_error($result)) {
         return $result;
     }
 
@@ -66,7 +66,6 @@ function is_allowed_dev_host(string $host): bool
 
     // Strip port for comparison
     $hostWithoutPort = explode(':', $host)[0];
-
     return in_array($hostWithoutPort, $allowed, true);
 }
 
@@ -137,7 +136,6 @@ add_filter('the_content', function ($content) {
                 return str_replace($old, $current_host, str_replace('http://', $scheme . '://', $url));
             }
         }
-
         return $url;
     };
 
@@ -163,7 +161,7 @@ add_filter('the_content', function ($content) {
                 $uploads_dir = WP_CONTENT_DIR . '/uploads';
                 $file_path = $uploads_dir . '/' . $relative_path_with_suffix;
 
-                if (! isset($file_exists_cache[$file_path])) {
+                if (!isset($file_exists_cache[$file_path])) {
                     $file_exists_cache[$file_path] = file_exists($file_path);
                 }
 
@@ -171,7 +169,7 @@ add_filter('the_content', function ($content) {
                     $original_relative_path = preg_replace('/-\d+x\d+(\.(?:jpg|jpeg|png|gif|webp|svg|avif))$/i', '$1', $relative_path_with_suffix);
                     $original_file_path = $uploads_dir . '/' . $original_relative_path;
 
-                    if (! isset($file_exists_cache[$original_file_path])) {
+                    if (!isset($file_exists_cache[$original_file_path])) {
                         $file_exists_cache[$original_file_path] = file_exists($original_file_path);
                     }
 
@@ -180,7 +178,6 @@ add_filter('the_content', function ($content) {
                     }
                 }
             }
-
             return $full_url;
         },
         $content,
@@ -206,7 +203,6 @@ add_filter('wp_calculate_image_srcset', function ($sources) {
     foreach ($sources as &$source) {
         $source['url'] = rewrite_url_to_current_host($source['url']);
     }
-
     return $sources;
 }, 10, 1);
 
@@ -214,7 +210,7 @@ add_filter('wp_calculate_image_srcset', function ($sources) {
  * Dequeue Gutenberg block library styles on index, home, archive, and search views to optimize CSS delivery.
  */
 add_action('wp_enqueue_scripts', function () {
-    if (! is_single() && ! is_page()) {
+    if (!is_single() && !is_page()) {
         wp_dequeue_style('wp-block-library');
         wp_dequeue_style('wp-block-library-theme');
         wp_dequeue_style('wc-blocks-style');

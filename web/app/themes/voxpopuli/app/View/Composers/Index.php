@@ -2,7 +2,6 @@
 
 namespace App\View\Composers;
 
-use Illuminate\Support\Facades\Cache;
 use Roots\Acorn\View\Composer;
 
 class Index extends Composer
@@ -13,17 +12,19 @@ class Index extends Composer
 
     /**
      * Safely and surgically bust the composer cache without side effects.
+     *
+     * @return void
      */
     public function bustCache(): void
     {
-        Cache::forget('voxpopuli_homepage_sections_ids');
+        \Illuminate\Support\Facades\Cache::forget('voxpopuli_homepage_sections_ids');
     }
 
     public function with()
     {
         $sections = $this->getSections();
 
-        $loadedSections = Cache::remember('voxpopuli_homepage_sections_ids', 3600, function () use ($sections) {
+        $loadedSections = \Illuminate\Support\Facades\Cache::remember('voxpopuli_homepage_sections_ids', 3600, function () use ($sections) {
             $seen = [];
             $res = [];
 
@@ -40,7 +41,7 @@ class Index extends Composer
             $post_terms = wp_get_object_terms($all_posts, 'category', ['fields' => 'all_with_object_id']);
 
             $posts_by_slug = [];
-            if (! is_wp_error($post_terms)) {
+            if (!is_wp_error($post_terms)) {
                 foreach ($post_terms as $term) {
                     if (in_array($term->slug, $slugs, true)) {
                         $posts_by_slug[$term->slug][] = $term->object_id;
@@ -55,8 +56,8 @@ class Index extends Composer
                 // Iterate through the original sorted $all_posts to maintain chronological order
                 foreach ($all_posts as $id) {
                     // Check if this post belongs to the current category
-                    if (! empty($posts_by_slug[$slug]) && in_array($id, $posts_by_slug[$slug], true)) {
-                        if (! in_array($id, $seen, true)) {
+                    if (!empty($posts_by_slug[$slug]) && in_array($id, $posts_by_slug[$slug], true)) {
+                        if (!in_array($id, $seen, true)) {
                             $post_ids[] = $id;
                             $seen[] = $id;
                             if (count($post_ids) >= 3) {
@@ -84,7 +85,6 @@ class Index extends Composer
 
                 $res[] = array_merge($section, ['post_ids' => $post_ids]);
             }
-
             return $res;
         });
 
@@ -102,7 +102,7 @@ class Index extends Composer
     {
         return [
             ['slug' => 'analisis',     'name' => 'Análisis',      'desc' => 'Lectura profunda de la coyuntura política, económica y social.',       'icon' => '📊'],
-            ['slug' => 'investigacion', 'name' => 'Investigación',  'desc' => 'Reportajes de investigación con fuentes documentales y testimonios.',  'icon' => '🔍'],
+            ['slug' => 'investigacion','name' => 'Investigación',  'desc' => 'Reportajes de investigación con fuentes documentales y testimonios.',  'icon' => '🔍'],
             ['slug' => 'opinion',      'name' => 'Opinión',       'desc' => 'Columnas firmadas con postura explícita y análisis crítico.',          'icon' => '✍️'],
             ['slug' => 'deportes',     'name' => 'Deportes',      'desc' => 'Sociología, política y cultura del fenómeno deportivo caribeño.',     'icon' => '🏃'],
             ['slug' => 'ahora',        'name' => 'Ahora',         'desc' => 'Noticias de última hora y flashes de actualización rápida.',          'icon' => '⚡'],

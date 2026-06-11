@@ -6,9 +6,6 @@
 
 namespace App;
 
-use App\View\Components\Hero;
-use App\View\Composers\Index;
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Vite;
 
 // Register our custom Vite class to dynamically rewrite Hot Asset URLs in memory
@@ -25,7 +22,7 @@ app()->singleton(\Illuminate\Foundation\Vite::class, fn() => $vite);
 app()->singleton('assets.vite', fn() => $vite);
 
 // Register class-based Blade components explicitly
-Blade::component(Hero::class, 'hero');
+\Illuminate\Support\Facades\Blade::component(\App\View\Components\Hero::class, 'hero');
 
 /**
  * Inject styles into the block editor.
@@ -229,12 +226,12 @@ add_action('save_post', function ($post_id) {
  * Invalidate Hero and Homepage sections caches when a post is saved or deleted.
  */
 add_action('save_post', function () {
-    delete_transient(Hero::getCacheKey());
-    (new Index())->bustCache();
+    delete_transient(\App\View\Components\Hero::getCacheKey());
+    (new \App\View\Composers\Index())->bustCache();
 });
 add_action('deleted_post', function () {
-    delete_transient(Hero::getCacheKey());
-    (new Index())->bustCache();
+    delete_transient(\App\View\Components\Hero::getCacheKey());
+    (new \App\View\Composers\Index())->bustCache();
 });
 
 /**
@@ -246,13 +243,13 @@ add_action('wp_head', function () {
     $meta_id = env('META_PIXEL_ID');
 
     // Meta Domain Verification (requerido por Facebook para validar la propiedad del dominio)
-    echo '
+    echo "
     <!-- Meta Domain Verification -->
-    <meta name="facebook-domain-verification" content="pl4dsq30p15llps9quh6k37uq6l8hn" />
-    ';
+    <meta name=\"facebook-domain-verification\" content=\"pl4dsq30p15llps9quh6k37uq6l8hn\" />
+    ";
 
     // 2. Solo cargar en producción y si el usuario no está logueado para no ensuciar métricas
-    if (WP_ENV === 'production' && ! is_user_logged_in()) {
+    if (WP_ENV === 'production' && !is_user_logged_in()) {
 
         // Google Analytics (GA4)
         if ($ga_id) {

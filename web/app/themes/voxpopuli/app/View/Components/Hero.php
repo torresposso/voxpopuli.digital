@@ -2,7 +2,6 @@
 
 namespace App\View\Components;
 
-use Illuminate\Contracts\View\View;
 use Roots\Acorn\View\Component;
 
 class Hero extends Component
@@ -33,15 +32,15 @@ class Hero extends Component
 
     /**
      * Get the unified cache key for the hero component.
+     *
+     * @return string
      */
     public static function getCacheKey(): string
     {
         if (defined('WP_ENV') && WP_ENV === 'development') {
             $hostHash = substr(md5($_SERVER['HTTP_HOST'] ?? 'default'), 0, 20);
-
             return "vp_hero_data_v2_{$hostHash}";
         }
-
         return 'voxpopuli_hero_data_cache_v2';
     }
 
@@ -55,7 +54,7 @@ class Hero extends Component
         $cacheKey = self::getCacheKey();
 
         // Try to retrieve cached hero data only in production to ensure instant feedback in development
-        if (! defined('WP_ENV') || (WP_ENV !== 'development' && WP_ENV !== 'local')) {
+        if (!defined('WP_ENV') || (WP_ENV !== 'development' && WP_ENV !== 'local')) {
             $cached = get_transient($cacheKey);
             if ($cached !== false && is_array($cached) && isset($cached['featured'], $cached['latest'])) {
                 return $cached;
@@ -150,7 +149,7 @@ class Hero extends Component
     /**
      * Get the view / contents that represent the component.
      *
-     * @return View|string
+     * @return \Illuminate\Contracts\View\View|string
      */
     public function render()
     {

@@ -31,7 +31,6 @@ class Vite extends SageVite
                     $port = $urlParts['port'] ?? 5174;
                     $path = $urlParts['path'] ?? '';
                     $query = isset($urlParts['query']) ? '?' . $urlParts['query'] : '';
-
                     return "{$scheme}://{$requestHostName}:{$port}{$path}{$query}";
                 }
             }

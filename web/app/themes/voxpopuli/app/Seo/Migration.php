@@ -47,7 +47,7 @@ class Migration
      * @param  array<string, string>  $yoastMeta  Yoast meta key-value pairs
      * @param  array<string, mixed>  $context  Expansion context (title, sep, sitename, etc.)
      * @param  array<string, string>  $existing  Existing _voxpopuli_* values (to skip)
-     * @return array<string, string> Mapped voxpopuli meta key-value pairs
+     * @return array<string, string>  Mapped voxpopuli meta key-value pairs
      */
     public static function mapYoastMeta(
         array $yoastMeta,
@@ -71,7 +71,6 @@ class Migration
             // Do not overwrite existing values — include existing in result
             if (isset($existing[$voxpopuliKey]) && $existing[$voxpopuliKey] !== '') {
                 $mapped[$voxpopuliKey] = $existing[$voxpopuliKey];
-
                 continue;
             }
 
@@ -158,7 +157,6 @@ class Migration
 
                 if (empty($yoastMeta)) {
                     $skipped++;
-
                     continue;
                 }
 
@@ -188,7 +186,6 @@ class Migration
 
                 if (empty($mapped)) {
                     $skipped++;
-
                     continue;
                 }
 
