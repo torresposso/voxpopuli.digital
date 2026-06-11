@@ -73,43 +73,24 @@ class JsonLd
      */
     public function article(array $data): array
     {
-        $schema = [
+        return array_merge([
             '@context' => 'https://schema.org',
             '@type' => 'Article',
             'headline' => $data['headline'] ?? '',
-        ];
-
-        if (! empty($data['description'])) {
-            $schema['description'] = $data['description'];
-        }
-
-        if (! empty($data['datePublished'])) {
-            $schema['datePublished'] = $data['datePublished'];
-        }
-
-        if (! empty($data['dateModified'])) {
-            $schema['dateModified'] = $data['dateModified'];
-        }
-
-        if (! empty($data['author'])) {
-            $schema['author'] = [
+        ], array_filter([
+            'description' => $data['description'] ?? null,
+            'datePublished' => $data['datePublished'] ?? null,
+            'dateModified' => $data['dateModified'] ?? null,
+            'image' => $data['image'] ?? null,
+            'author' => ! empty($data['author']) ? [
                 '@type' => 'Person',
                 'name' => $data['author'],
-            ];
-        }
-
-        if (! empty($data['image'])) {
-            $schema['image'] = $data['image'];
-        }
-
-        if (! empty($data['url'])) {
-            $schema['mainEntityOfPage'] = [
+            ] : null,
+            'mainEntityOfPage' => ! empty($data['url']) ? [
                 '@type' => 'WebPage',
                 '@id' => $data['url'],
-            ];
-        }
-
-        return $schema;
+            ] : null,
+        ]));
     }
 
     /**

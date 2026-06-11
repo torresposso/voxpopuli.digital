@@ -101,14 +101,6 @@ add_filter('should_load_separate_core_block_assets', '__return_false');
  * @return void
  */
 add_action('after_setup_theme', function () {
-    /**
-     * Disable intermediate image sizes (thumbnails).
-     *
-     * @link https://developer.wordpress.org/reference/hooks/intermediate_image_sizes/
-     */
-    // add_filter('intermediate_image_sizes', function ($sizes) {
-    //     return ['thumbnail'];
-    // });
     // Scale oversized uploads down to 2560px (WordPress default)
     // Remove the filter that returned false to restore default behavior
 
