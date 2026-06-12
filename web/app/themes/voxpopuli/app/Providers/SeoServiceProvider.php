@@ -272,19 +272,12 @@ class SeoServiceProvider extends ServiceProvider
             $batches = array_chunk($idQuery->posts, 100);
 
             foreach ($batches as $batch) {
-                $batchQuery = new WP_Query([
-                    'post_type' => ['post', 'page'],
-                    'post_status' => 'publish',
-                    'posts_per_page' => -1,
-                    'post__in' => $batch,
-                    'orderby' => 'post__in', // Maintain the 'modified DESC' order from the IDs array
-                    'no_found_rows' => true,
-                ]);
+                // Prime caches for posts and post meta for this batch to avoid N+1 queries.
+                if (function_exists('_prime_post_caches')) {
+                    _prime_post_caches($batch, false, true);
+                }
 
-                while ($batchQuery->have_posts()) {
-                    $batchQuery->the_post();
-                    $postId = get_the_ID();
-
+                foreach ($batch as $postId) {
                     // Skip noindexed posts
                     if (get_post_meta($postId, '_voxpopuli_noindex', true) === '1') {
                         continue;
@@ -300,8 +293,6 @@ class SeoServiceProvider extends ServiceProvider
                 }
             }
         }
-
-        wp_reset_postdata();
 
         $sitemap = new Sitemap($entries);
 

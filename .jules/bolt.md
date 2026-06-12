@@ -9,3 +9,9 @@
 **Learning:** When calculating fallbacks for missing metadata (like reading time or word count) in View Composers or Blade templates, saving the calculated result back to the database using `update_post_meta` inside the render loop causes severe N+1 database write bottlenecks during page loads. These writes block the main thread and significantly degrade Time to First Byte (TTFB) on archive pages where multiple posts are rendered. The data calculation and caching should be handled asynchronously or hooked into the backend (e.g., `save_post` action), not during frontend presentation.
 
 **Action:** Never perform database write operations (e.g., `update_post_meta`) inside the presentation layer. Compute fallbacks dynamically in memory during the request, but rely on backend hooks (`save_post`) or CLI scripts to persist the data to the database.
+
+## 2024-08-11 - Batch Prime Caches for Sitemap Generation
+
+**Learning:** When generating sitemaps or processing large numbers of posts sequentially in batches (where fields 'ids' were fetched initially), instantiating a secondary `WP_Query` inside the batch loop causes high memory and CPU overhead. Setting up the WP_Query class is heavy even when passing `post__in`.
+
+**Action:** When you already have an array of post IDs chunked into batches, do not use a secondary `WP_Query` to loop through them. Instead, use `_prime_post_caches($batch, false, true)` to batch-load the post and meta caches in a single query, and iterate directly over the IDs using `foreach`. This eliminates WP_Query instantiation overhead and avoids N+1 queries.
