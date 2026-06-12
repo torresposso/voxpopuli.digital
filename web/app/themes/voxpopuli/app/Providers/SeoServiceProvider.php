@@ -267,7 +267,7 @@ class SeoServiceProvider extends ServiceProvider
 
         $entries = [];
 
-        if (!empty($idQuery->posts)) {
+        if ($idQuery->post_count > 0) {
             // Process in batches of 100 to reduce memory and query size overhead
             $batches = array_chunk($idQuery->posts, 100);
 
