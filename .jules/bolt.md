@@ -15,3 +15,8 @@
 **Learning:** When generating sitemaps or processing large numbers of posts sequentially in batches (where fields 'ids' were fetched initially), instantiating a secondary `WP_Query` inside the batch loop causes high memory and CPU overhead. Setting up the WP_Query class is heavy even when passing `post__in`.
 
 **Action:** When you already have an array of post IDs chunked into batches, do not use a secondary `WP_Query` to loop through them. Instead, use `_prime_post_caches($batch, false, true)` to batch-load the post and meta caches in a single query, and iterate directly over the IDs using `foreach`. This eliminates WP_Query instantiation overhead and avoids N+1 queries.
+
+## 2024-08-14 - Prefer get_posts() over new WP_Query() for unpaginated lists
+
+**Learning:** Instantiating `new WP_Query()` for simple, unpaginated lists of posts (like "recent posts" fallbacks in Blade templates) introduces unnecessary overhead from setting up the full query object, main loop variables, and potentially executing `SQL_CALC_FOUND_ROWS` if not explicitly disabled.
+**Action:** Always prefer `get_posts()` over `new WP_Query()` when fetching simple arrays of posts for presentation, as it inherently defaults to `'no_found_rows' => true` and `'suppress_filters' => true`, significantly reducing CPU and memory overhead.
