@@ -22,8 +22,14 @@
     </form>
   </div>
 
+  {{--
+    ⚡ BOLT OPTIMIZATION:
+    Replaced new WP_Query with get_posts() for retrieving recent posts.
+    get_posts() avoids the overhead of instantiating the full WP_Query class
+    and running all its internal setup for main loops when we only need an array of posts.
+  --}}
   @php
-  $recent_posts = new WP_Query([
+  $recent_posts = get_posts([
     'post_type' => 'post',
     'posts_per_page' => 3,
     'post_status' => 'publish',
@@ -31,7 +37,7 @@
   ]);
   @endphp
 
-  @if ($recent_posts->have_posts())
+  @if (!empty($recent_posts))
     <div class="mt-20 border-t border-base-300 pt-16">
       <div class="text-center mb-12">
         <span class="font-sans text-[10px] font-extrabold uppercase tracking-[0.25em] text-secondary block mb-2">
@@ -43,9 +49,10 @@
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
-        @while ($recent_posts->have_posts()) @php($recent_posts->the_post())
+        @foreach ($recent_posts as $post)
+          @php(setup_postdata($GLOBALS['post'] = $post))
           @include('partials.content-search')
-        @endwhile
+        @endforeach
       </div>
     </div>
     @php(wp_reset_postdata())
