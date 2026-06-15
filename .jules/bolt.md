@@ -20,3 +20,8 @@
 
 **Learning:** Instantiating `new WP_Query()` for simple, unpaginated lists of posts (like "recent posts" fallbacks in Blade templates) introduces unnecessary overhead from setting up the full query object, main loop variables, and potentially executing `SQL_CALC_FOUND_ROWS` if not explicitly disabled.
 **Action:** Always prefer `get_posts()` over `new WP_Query()` when fetching simple arrays of posts for presentation, as it inherently defaults to `'no_found_rows' => true` and `'suppress_filters' => true`, significantly reducing CPU and memory overhead.
+
+## 2024-08-15 - Cache expensive function calls locally
+
+**Learning:** Calling functions like `get_comments_number()` multiple times within a single View Composer method (like `title()`) causes redundant database queries or cache reads, slightly degrading performance.
+**Action:** Always assign the result of frequently called functions to a local variable if used multiple times within the same method or loop. Also, be careful with strict type checks (`===`) against WordPress function returns, as functions like `get_comments_number()` can return numeric strings instead of integers depending on context. Use casting `(int)` before strict comparisons.

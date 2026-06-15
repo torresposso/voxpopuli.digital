@@ -145,31 +145,28 @@ class Post extends Composer
             return [];
         }
 
-        $query = new \WP_Query([
+        // ⚡ Bolt: Replaced new WP_Query with get_posts() for better performance on unpaginated queries
+        $suggested_posts = get_posts([
             'post_type' => 'post',
             'posts_per_page' => 2,
             'category__in' => $categories,
             'post__not_in' => [get_the_ID()],
             'orderby' => 'date',
             'order' => 'DESC',
-            'no_found_rows' => true,
         ]);
 
         $posts = [];
-        if ($query->have_posts()) {
-            while ($query->have_posts()) {
-                $query->the_post();
-                $imgId = get_post_thumbnail_id();
-                $imgUrl = $imgId ? wp_get_attachment_image_url($imgId, 'medium') : '';
-                $posts[] = [
-                    'title' => get_the_title(),
-                    'link' => get_permalink(),
-                    'date' => get_the_date(),
-                    'image' => $imgUrl,
-                    'category' => get_the_category()[0]->name ?? '',
-                ];
-            }
-            wp_reset_postdata();
+        foreach ($suggested_posts as $post) {
+            $imgId = get_post_thumbnail_id($post);
+            $imgUrl = $imgId ? wp_get_attachment_image_url($imgId, 'medium') : '';
+            $post_categories = get_the_category($post->ID);
+            $posts[] = [
+                'title' => get_the_title($post),
+                'link' => get_permalink($post),
+                'date' => get_the_date('', $post),
+                'image' => $imgUrl,
+                'category' => !empty($post_categories) ? $post_categories[0]->name : '',
+            ];
         }
 
         return $posts;
@@ -185,7 +182,6 @@ class Post extends Composer
             'post_type' => 'post',
             'posts_per_page' => 1,
             'post__not_in' => [get_the_ID()],
-            'no_found_rows' => true,
         ];
 
         if (!empty($sticky)) {
@@ -196,22 +192,23 @@ class Post extends Composer
             $args['order'] = 'DESC';
         }
 
-        $query = new \WP_Query($args);
+        // ⚡ Bolt: Replaced new WP_Query with get_posts() for better performance on unpaginated queries
+        $latest_posts = get_posts($args);
         $featured = null;
 
-        if ($query->have_posts()) {
-            $query->the_post();
-            $imgId = get_post_thumbnail_id();
+        if (!empty($latest_posts)) {
+            $post = $latest_posts[0];
+            $imgId = get_post_thumbnail_id($post);
             $imgUrl = $imgId ? wp_get_attachment_image_url($imgId, 'large') : '';
+            $post_categories = get_the_category($post->ID);
             $featured = [
-                'title' => get_the_title(),
-                'link' => get_permalink(),
-                'date' => get_the_date(),
-                'excerpt' => get_the_excerpt(),
+                'title' => get_the_title($post),
+                'link' => get_permalink($post),
+                'date' => get_the_date('', $post),
+                'excerpt' => get_the_excerpt($post),
                 'image' => $imgUrl,
-                'category' => get_the_category()[0]->name ?? '',
+                'category' => !empty($post_categories) ? $post_categories[0]->name : '',
             ];
-            wp_reset_postdata();
         }
 
         return $featured;
