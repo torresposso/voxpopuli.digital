@@ -16,7 +16,7 @@ if (! defined('WPCACHEHOME')) {
 }
 
 $cache_compression = 1; // Super cache compression
-$cache_enabled = false;
+$cache_enabled = (getenv('WP_ENV') === 'production');
 $super_cache_enabled = true;
 $cache_max_time = 1800;
 //$use_flock = true; // Set it true or false if you know what to use
