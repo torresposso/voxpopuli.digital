@@ -39,7 +39,7 @@
                     class="p-name font-display text-4xl md:text-5xl lg:text-6xl text-shadow-lg font-extrabold text-white leading-[1.05] tracking-tighter mb-6 animate-fade-in-up drop-shadow-lg flex items-start gap-3">
                     <span
                         class="text-secondary text-shadow-lg select-none font-sans font-black tracking-widest mt-1 opacity-90">.:</span>
-                    <span>{!! $title !!}</span>
+                    <span>{{ $title }}</span>
                 </h1>
 
                 <x-entry-meta :reading-time="$readingTime()" class="text-white/90 border-white/20 mb-6" />
@@ -63,7 +63,7 @@
             <h1
                 class="p-name font-display text-3xl md:text-5xl lg:text-6xl font-extrabold text-base-content leading-[1.05] tracking-tighter mb-6 animate-fade-in-up flex items-start gap-3">
                 <span class="text-secondary select-none font-sans font-black tracking-widest mt-1">.:</span>
-                <span>{!! $title !!}</span>
+                <span>{{ $title }}</span>
             </h1>
 
             <x-entry-meta :reading-time="$readingTime()" class="mb-6" />
