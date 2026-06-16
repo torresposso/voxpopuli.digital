@@ -85,6 +85,13 @@
 	}
 	respond @php_in_uploads "Access Denied" 403
 
+	# Block access to XML-RPC completely
+	@xmlrpc {
+		path */xmlrpc.php
+		path /xmlrpc.php
+	}
+	respond @xmlrpc "Access Denied" 403
+
 	{$CADDY_SERVER_EXTRA_DIRECTIVES}
 
 	php_server
