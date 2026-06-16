@@ -20,3 +20,6 @@
 
 **Learning:** Instantiating `new WP_Query()` for simple, unpaginated lists of posts (like "recent posts" fallbacks in Blade templates) introduces unnecessary overhead from setting up the full query object, main loop variables, and potentially executing `SQL_CALC_FOUND_ROWS` if not explicitly disabled.
 **Action:** Always prefer `get_posts()` over `new WP_Query()` when fetching simple arrays of posts for presentation, as it inherently defaults to `'no_found_rows' => true` and `'suppress_filters' => true`, significantly reducing CPU and memory overhead.
+## 2024-05-19 - Index Composer: Optimize batch-prime ID collection loop
+**Learning:** Using `array_merge` inside a `foreach` loop to flatten nested arrays causes significant performance degradation in PHP (O(N²) complexity) due to repeated array allocations and copying.
+**Action:** Replace `array_merge` in loops with a nested `foreach` that pushes elements individually (`$arr[] = $val`), which performs an order of magnitude faster.
