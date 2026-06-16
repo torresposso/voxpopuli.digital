@@ -20,3 +20,7 @@
 
 **Learning:** Instantiating `new WP_Query()` for simple, unpaginated lists of posts (like "recent posts" fallbacks in Blade templates) introduces unnecessary overhead from setting up the full query object, main loop variables, and potentially executing `SQL_CALC_FOUND_ROWS` if not explicitly disabled.
 **Action:** Always prefer `get_posts()` over `new WP_Query()` when fetching simple arrays of posts for presentation, as it inherently defaults to `'no_found_rows' => true` and `'suppress_filters' => true`, significantly reducing CPU and memory overhead.
+
+## 2024-06-16 - Sitemap Generation Optimization
+**Learning:** Calling `get_post_type($postId)` multiple times in a loop over post IDs can cause CPU and database overhead.
+**Action:** Always assign the result of `get_post_type` or similar functions to a variable once per iteration and reuse that variable to prevent N+1 queries or redundant function calls.
