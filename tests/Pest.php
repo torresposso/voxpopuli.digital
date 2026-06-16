@@ -103,7 +103,8 @@ if (! function_exists('get_the_author_meta')) {
 if (! function_exists('get_the_title')) {
     function get_the_title($post = 0)
     {
-        return '';
+        global $mock_get_the_title;
+        return $mock_get_the_title ?? '';
     }
 }
 if (! function_exists('get_permalink')) {
