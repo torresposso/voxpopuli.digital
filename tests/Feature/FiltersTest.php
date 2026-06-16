@@ -1,6 +1,6 @@
 <?php
 
-use function App\is_allowed_dev_host;
+use function App\Filters\is_allowed_dev_host;
 
 // Mock necessary WordPress functions
 if (!function_exists('add_filter')) {
