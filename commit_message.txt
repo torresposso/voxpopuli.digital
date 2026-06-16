@@ -1,5 +1,0 @@
-🧪 [Vite] Add test coverage for hotAsset URL replacement
-
-🎯 What: Added test coverage for the `App\Vite::hotAsset` method to ensure it correctly modifies asset URLs based on `$_SERVER['HTTP_HOST']` when in HMR mode.
-📊 Coverage: Added tests for replacing `0.0.0.0` with the correct host, handling missing `HTTP_HOST`, preserving URL components (scheme, port, query), and handling IPv4 hosts.
-✨ Result: Improved test coverage and reliability for the Vite asset loading process.
