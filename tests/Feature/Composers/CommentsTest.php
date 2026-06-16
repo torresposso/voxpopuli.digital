@@ -7,13 +7,13 @@ if (!function_exists('get_comments_number')) {
     function get_comments_number($post_id = 0)
     {
         global $mock_get_comments_number;
-        return $mock_get_comments_number ?? 0;
+        return $mock_get_comments_number ?? '0';
     }
 }
 if (!function_exists('_nx')) {
     function _nx($single, $plural, $number, $context, $domain)
     {
-        return $number === 1 ? $single : $plural;
+        return (int) $number === 1 ? $single : $plural;
     }
 }
 if (!function_exists('_x')) {
@@ -109,7 +109,7 @@ uses()->beforeEach(function () {
     $mock_get_option_page_comments, $mock_comments_open, $mock_post_type_supports, $mock_get_post_type;
 
     // Reset mocks before each test
-    $mock_get_comments_number = 0;
+    $mock_get_comments_number = '0';
     $mock_get_the_title = 'Test Post';
     $mock_have_comments = false;
     $mock_wp_list_comments = 'List of comments';
@@ -126,7 +126,7 @@ uses()->beforeEach(function () {
 
 it('formats title correctly for zero comments', function () {
     global $mock_get_comments_number, $mock_get_the_title;
-    $mock_get_comments_number = 0;
+    $mock_get_comments_number = '0';
     $mock_get_the_title = 'My Post';
 
     $title = $this->composer->title();
@@ -136,7 +136,7 @@ it('formats title correctly for zero comments', function () {
 
 it('formats title correctly for one comment', function () {
     global $mock_get_comments_number, $mock_get_the_title;
-    $mock_get_comments_number = 1;
+    $mock_get_comments_number = '1';
     $mock_get_the_title = 'My Post';
 
     $title = $this->composer->title();
@@ -146,7 +146,7 @@ it('formats title correctly for one comment', function () {
 
 it('formats title correctly for multiple comments', function () {
     global $mock_get_comments_number, $mock_get_the_title;
-    $mock_get_comments_number = 5;
+    $mock_get_comments_number = '5';
     $mock_get_the_title = 'My Post';
 
     $title = $this->composer->title();
@@ -221,25 +221,25 @@ it('determines if comments are closed', function () {
 
     // Open
     $mock_comments_open = true;
-    $mock_get_comments_number = 5;
+    $mock_get_comments_number = '5';
     $mock_post_type_supports = true;
     expect($this->composer->closed())->toBeFalse();
 
     // Closed, but no comments
     $mock_comments_open = false;
-    $mock_get_comments_number = 0;
+    $mock_get_comments_number = '0';
     $mock_post_type_supports = true;
     expect($this->composer->closed())->toBeFalse();
 
     // Closed, comments exist, but post type doesn't support comments
     $mock_comments_open = false;
-    $mock_get_comments_number = 5;
+    $mock_get_comments_number = '5';
     $mock_post_type_supports = false;
     expect($this->composer->closed())->toBeFalse();
 
     // Closed, comments exist, post type supports comments
     $mock_comments_open = false;
-    $mock_get_comments_number = 5;
+    $mock_get_comments_number = '5';
     $mock_post_type_supports = true;
     expect($this->composer->closed())->toBeTrue();
 });
