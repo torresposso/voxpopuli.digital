@@ -23,7 +23,7 @@ $thumbnail_html = get_the_post_thumbnail($post->ID, 'full', [
 
 <article @php(post_class('card bg-base-100 border border-base-300 rounded-lg overflow-hidden transition-all duration-500 hover:shadow-xl hover:border-primary/20 group search-card-scroll-anim', $post->ID))>
   <figure class="w-full relative aspect-video overflow-hidden bg-base-200 border-b border-base-200">
-    <a href="{{ get_permalink($post->ID) }}" class="absolute inset-0 w-full h-full block z-10" aria-label="{!! get_the_title($post->ID) !!}">
+    <a href="{{ get_permalink($post->ID) }}" class="absolute inset-0 w-full h-full block z-10" aria-label="{{ get_the_title($post->ID) }}">
       @if (!empty($thumbnail_html))
         {!! $thumbnail_html !!}
       @else
@@ -48,7 +48,7 @@ $thumbnail_html = get_the_post_thumbnail($post->ID, 'full', [
 
       <h2 class="card-title font-display text-xl font-bold text-primary mt-3 mb-4 leading-snug group-hover:text-secondary transition-colors duration-300">
         <a href="{{ get_permalink($post->ID) }}" class="text-primary hover:text-secondary duration-300">
-          {!! get_the_title($post->ID) !!}
+          {{ get_the_title($post->ID) }}
         </a>
       </h2>
 

@@ -131,6 +131,9 @@ class Migration
         $postIds = $query->posts;
         $chunks = array_chunk($postIds, 500);
 
+        // Cache bloginfo to avoid repeated options table lookups inside the loop
+        $siteName = get_bloginfo('name');
+
         foreach ($chunks as $chunk) {
             // Prime caches for posts and post meta for this chunk to avoid N+1 queries.
             if (function_exists('_prime_post_caches')) {
@@ -160,12 +163,17 @@ class Migration
                     continue;
                 }
 
+                // Retrieve post object directly from cache since _prime_post_caches was called.
+                // This avoids the overhead of get_the_title() and get_the_excerpt() which apply expensive filters.
+                $post = get_post($postId);
+                $excerpt = $post->post_excerpt ?: wp_trim_words(strip_shortcodes($post->post_content), 55, '');
+
                 // Build expansion context
                 $context = [
-                    'title' => get_the_title($postId),
+                    'title' => $post->post_title,
                     'sep' => '-',
-                    'sitename' => get_bloginfo('name'),
-                    'excerpt' => get_the_excerpt($postId),
+                    'sitename' => $siteName,
+                    'excerpt' => $excerpt,
                 ];
 
                 // Read existing _voxpopuli_* values to avoid overwriting

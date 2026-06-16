@@ -283,12 +283,13 @@ class SeoServiceProvider extends ServiceProvider
                         continue;
                     }
 
+                    $postType = get_post_type($postId);
                     $entries[] = [
                         'loc' => get_permalink($postId),
                         'lastmod' => get_the_modified_date('Y-m-d', $postId),
-                        'priority' => get_post_type($postId) === 'page' ? '0.8' : '0.7',
-                        'changefreq' => get_post_type($postId) === 'page' ? 'monthly' : 'weekly',
-                        'type' => get_post_type($postId),
+                        'priority' => $postType === 'page' ? '0.8' : '0.7',
+                        'changefreq' => $postType === 'page' ? 'monthly' : 'weekly',
+                        'type' => $postType,
                     ];
                 }
             }

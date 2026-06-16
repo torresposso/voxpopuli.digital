@@ -42,7 +42,7 @@ $thumbnail_html = get_the_post_thumbnail(get_the_ID(), 'full', [
 
       <h2 class="card-title font-display text-xl font-bold text-primary mt-3 mb-4 leading-snug group-hover:text-secondary transition-colors duration-300">
         <a href="{{ get_permalink() }}" class="text-primary hover:text-secondary duration-300">
-          {!! $title !!}
+          {{ $title }}
         </a>
       </h2>
 
