@@ -6,11 +6,16 @@ use App\View\Composers\Post;
 use Illuminate\View\View;
 use Mockery;
 
+beforeEach(function () {
+    global $mock_get_the_title;
+    $mock_get_the_title = null;
+});
+
 afterEach(function () {
     Mockery::close();
 
     // Reset global state
-    global $wp_is_home, $wp_is_archive, $wp_is_search, $wp_is_404, $wp_options, $wp_archive_title, $wp_search_query, $wp_titles, $wp_post_thumbnail_id, $wp_attachment_image_src, $wp_post_meta_map, $wp_attachment_caption;
+    global $wp_is_home, $wp_is_archive, $wp_is_search, $wp_is_404, $wp_options, $wp_archive_title, $wp_search_query, $wp_titles, $wp_post_thumbnail_id, $wp_attachment_image_src, $wp_post_meta_map, $wp_attachment_caption, $mock_get_the_title;
     $wp_is_home = false;
     $wp_is_archive = false;
     $wp_is_search = false;
@@ -23,6 +28,7 @@ afterEach(function () {
     $wp_attachment_image_src = null;
     $wp_post_meta_map = [];
     $wp_attachment_caption = null;
+    $mock_get_the_title = null;
 });
 
 it('returns post title when view is not page-header', function () {

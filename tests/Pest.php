@@ -128,7 +128,19 @@ if (! function_exists('is_home')) {
     function is_home() { global $wp_is_home; return $wp_is_home ?? false; }
 }
 if (! function_exists('get_option')) {
-    function get_option($option, $default = false) { global $wp_options; return $wp_options[$option] ?? $default; }
+    function get_option($option, $default = false) {
+        global $wp_options, $mock_get_option_page_comments;
+        if ($option === 'page_comments' && isset($mock_get_option_page_comments)) {
+            return $mock_get_option_page_comments;
+        }
+        return $wp_options[$option] ?? $default;
+    }
+}
+if (! function_exists('esc_html')) {
+    function esc_html(string $text): string
+    {
+        return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+    }
 }
 if (! function_exists('__')) {
     function __($text, $domain = 'default') { return $text; }
