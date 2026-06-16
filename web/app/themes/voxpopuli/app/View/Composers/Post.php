@@ -42,7 +42,7 @@ class Post extends Composer
             return sprintf(
                 /* translators: %s is replaced with the search query */
                 __('Search Results for %s', 'voxpopuli'),
-                get_search_query(),
+                get_search_query(false),
             );
         }
 
