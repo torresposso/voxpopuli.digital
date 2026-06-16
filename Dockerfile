@@ -59,6 +59,8 @@ RUN apk add --no-cache git curl sqlite bash unzip \
     && chmod +x wp-cli.phar \
     && mv wp-cli.phar /usr/local/bin/wp
 
+COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
+
 EXPOSE 8080
 
 RUN setcap CAP_NET_BIND_SERVICE=+eip /usr/local/bin/frankenphp \
