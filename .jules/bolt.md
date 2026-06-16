@@ -24,3 +24,7 @@
 ## 2024-06-16 - Sitemap Generation Optimization
 **Learning:** Calling `get_post_type($postId)` multiple times in a loop over post IDs can cause CPU and database overhead.
 **Action:** Always assign the result of `get_post_type` or similar functions to a variable once per iteration and reuse that variable to prevent N+1 queries or redundant function calls.
+
+## 2024-06-16 - [WP-CLI SEO Migration N+1 Bottlenecks]
+**Learning:** `get_the_title()` and `get_the_excerpt()` are highly inefficient in bulk scripts because they trigger the entire WordPress filter cascade. Relying on `get_bloginfo('name')` inside a large loop also redundantly triggers options table checks, further exacerbating performance drops.
+**Action:** Always fetch properties via `$post = get_post($postId);` leveraging primed object cache during migrations, avoiding filter cascades. Hoist static values like `get_bloginfo('name')` outside loops.
