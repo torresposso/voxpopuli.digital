@@ -76,7 +76,7 @@
         @if ($img && $img['caption'])
             <div
                 class="font-sans text-xs text-muted/80 mb-10 -mt-6 px-6 py-2.5 border-l-2 border-secondary/50 italic text-left bg-base-200/40 rounded-r-md">
-                {!! $img['caption'] !!}
+                {!! wp_kses_post($img['caption']) !!}
             </div>
         @endif
 
