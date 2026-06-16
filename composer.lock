@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "63b23c42798b37363953fd819c5caeee",
+    "content-hash": "b16be896234c334410a379ec88b823ac",
     "packages": [
         {
             "name": "brick/math",
@@ -6955,6 +6955,36 @@
                 }
             ],
             "time": "2026-04-26T05:33:54+00:00"
+        },
+        {
+            "name": "wp-plugin/limit-login-attempts-reloaded",
+            "version": "3.3.1",
+            "source": {
+                "type": "svn",
+                "url": "https://plugins.svn.wordpress.org/limit-login-attempts-reloaded/",
+                "reference": "tags/3.3.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/limit-login-attempts-reloaded.3.3.1.zip"
+            },
+            "require": {
+                "composer/installers": "~1.0|~2.0"
+            },
+            "type": "wordpress-plugin",
+            "notification-url": "https://wp-packages.org/downloads",
+            "authors": [
+                {
+                    "name": "WPChef"
+                }
+            ],
+            "description": "WordPress login security with brute force protection, Two-factor authentication (2FA/MFA), firewall, IP/country blocking, and login monitoring",
+            "support": {
+                "changelog": "https://wordpress.org/plugins/limit-login-attempts-reloaded/#developers",
+                "issues": "https://wordpress.org/support/plugin/limit-login-attempts-reloaded",
+                "source": "https://plugins.svn.wordpress.org/limit-login-attempts-reloaded"
+            },
+            "time": "2026-06-16T07:35:59+00:00"
         },
         {
             "name": "wp-plugin/sqlite-database-integration",
