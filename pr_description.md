@@ -1,4 +1,3 @@
-💡 What: Replaced a redundant array traversal count() with the natively pre-computed integer property WP_Query->post_count inside the SEO migration script. Also added 'no_found_rows' => true to the fallback recent posts WP_Query in the empty search results template.
-🎯 Why: PHP array traversals are unnecessary when the WordPress WP_Query object already maintains the exact count in its post_count property during the query execution loop. In the search template, SQL_CALC_FOUND_ROWS was executing pointlessly as the query has a strict limit and no pagination, wasting database CPU.
-📊 Impact: Avoids an unnecessary O(N) array iteration in the migration script. Saves one complete (and potentially slow) database query (SELECT FOUND_ROWS()) during the rendering of empty search results.
-🔬 Measurement: Verify that the empty search results page visually renders identically and that the wp voxpopuli migrate-seo script still outputs the correct total count.
+🎯 What: Fixed a Cross-Site Scripting (XSS) vulnerability in `post-card.blade.php` and `featured-card.blade.php`.
+⚠️ Risk: Unescaped rendering of post titles allowed malicious HTML/JavaScript to be injected and executed on the frontend when rendering post lists or grids. This is a severe Reflected/Stored XSS risk depending on how titles are updated.
+🛡️ Solution: Swapped the raw Blade output syntax `{!! !!}` with the safe escaping syntax `{{ }}` for `get_the_title()` calls, ensuring the data is processed through `htmlspecialchars` before reaching the browser.

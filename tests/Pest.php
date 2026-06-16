@@ -95,7 +95,15 @@ if (! function_exists('get_the_author_meta')) {
     }
 }
 if (! function_exists('get_the_title')) {
-    function get_the_title($post = 0) { global $wp_titles, $wp_current_post_id; $id = $post ?: ($wp_current_post_id ?? 0); return $wp_titles[$id] ?? ''; }
+    function get_the_title($post = 0)
+    {
+        global $mock_get_the_title, $wp_titles, $wp_current_post_id;
+        if (isset($mock_get_the_title)) {
+            return $mock_get_the_title;
+        }
+        $id = $post ?: ($wp_current_post_id ?? 0);
+        return $wp_titles[$id] ?? '';
+    }
 }
 if (! function_exists('get_permalink')) {
     function get_permalink($post = 0, bool $leavename = false) { global $wp_permalinks, $wp_current_post_id; $id = $post ?: ($wp_current_post_id ?? 0); return $wp_permalinks[$id] ?? ''; }

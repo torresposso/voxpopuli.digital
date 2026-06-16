@@ -31,7 +31,7 @@ $custom_excerpt = wp_trim_words(strip_tags($raw_content), 105, '...');
 <article @php(post_class('card lg:card-side bg-base-100 border border-base-300 rounded-xl overflow-hidden shadow-lg mb-16 border-t-4 border-primary group search-card-scroll-anim relative', $post->ID))>
   {{-- DaisyUI Figure --}}
   <figure class="w-full lg:w-3/5 relative aspect-video lg:aspect-auto min-h-[300px] lg:min-h-[360px] overflow-hidden bg-base-200 border-b lg:border-b-0 lg:border-r border-base-300 rounded-none">
-    <a href="{{ get_permalink($post) }}" class="absolute inset-0 w-full h-full block z-10" aria-label="{!! get_the_title($post) !!}">
+    <a href="{{ get_permalink($post) }}" class="absolute inset-0 w-full h-full block z-10" aria-label="{{ get_the_title($post) }}">
       @if (!empty($thumbnail_html))
         {!! $thumbnail_html !!}
       @else
@@ -64,7 +64,7 @@ $custom_excerpt = wp_trim_words(strip_tags($raw_content), 105, '...');
 
       <h2 class="card-title font-display text-2xl md:text-3xl font-black text-primary mt-4 mb-4 leading-tight group-hover:text-secondary duration-300 transition-colors">
         <a href="{{ get_permalink($post) }}" class="text-primary hover:text-secondary focus:outline-none after:absolute after:inset-0 after:z-10 focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:rounded-lg duration-300 transition-colors">
-          {!! get_the_title($post) !!}<span class="text-secondary font-sans font-bold ml-1">.:</span>
+          {{ get_the_title($post) }}<span class="text-secondary font-sans font-bold ml-1">.:</span>
         </a>
       </h2>
 
