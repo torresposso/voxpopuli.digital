@@ -10,7 +10,7 @@
 
 	frankenphp {
 		num_threads 1
-		max_threads 4
+		max_threads 2
 		max_requests 1000
 		php_ini memory_limit 128M
 		php_ini max_execution_time 30
