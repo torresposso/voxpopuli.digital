@@ -28,3 +28,7 @@
 ## 2024-06-16 - [WP-CLI SEO Migration N+1 Bottlenecks]
 **Learning:** `get_the_title()` and `get_the_excerpt()` are highly inefficient in bulk scripts because they trigger the entire WordPress filter cascade. Relying on `get_bloginfo('name')` inside a large loop also redundantly triggers options table checks, further exacerbating performance drops.
 **Action:** Always fetch properties via `$post = get_post($postId);` leveraging primed object cache during migrations, avoiding filter cascades. Hoist static values like `get_bloginfo('name')` outside loops.
+
+## 2024-06-17 - array_merge Bottlenecks in Composer Loops
+**Learning:** Using `array_merge()` inside a `foreach` loop to aggregate elements from nested arrays (e.g., when collecting post IDs from multiple section arrays in a View Composer) causes an O(N^2) memory reallocation bottleneck in PHP. The array is duplicated and reallocated on every iteration, leading to exponential memory usage and slower execution times for larger datasets.
+**Action:** Always use a nested `foreach` loop to append elements individually (`$array[] = $val;`) instead of `array_merge()` when aggregating data in a loop.
