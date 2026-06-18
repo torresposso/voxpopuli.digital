@@ -29,13 +29,16 @@
       .fab a {
         opacity: 0;
         pointer-events: none;
-        transition: opacity 0.2s;
+        visibility: hidden;
+        transition: opacity 0.2s, visibility 0s linear 0.2s;
       }
 
       .fab.fab-active button,
       .fab.fab-active a {
         opacity: 1;
         pointer-events: auto;
+        visibility: visible;
+        transition: opacity 0.2s, visibility 0s linear 0s;
       }
 
       .fab.fab-active *:nth-child(2) { transition-delay: 0ms; }
@@ -94,7 +97,7 @@
         color: var(--color-primary) !important;
         backdrop-filter: blur(12px) !important;
         box-shadow: 0 8px 32px oklch(from var(--color-primary) 0.1 0.02 h / 0.06) !important;
-        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        transition: opacity 0.2s, background-color 0.4s, border-color 0.4s, color 0.4s, box-shadow 0.4s, transform 0.2s;
         border-radius: 9999px !important;
       }
 
