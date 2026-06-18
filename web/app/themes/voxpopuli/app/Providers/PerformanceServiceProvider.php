@@ -44,12 +44,10 @@ class PerformanceServiceProvider extends ServiceProvider
                 return;
             }
 
-            $content = get_post_field('post_content', $post_id);
-            $word_count = str_word_count(strip_tags($content));
-            $reading_time = max(1, ceil($word_count / 200));
-
-            update_post_meta($post_id, 'vp_word_count', $word_count);
-            update_post_meta($post_id, 'vp_reading_time', $reading_time);
+            self::calculateAndPersistReadingMeta(
+                $post_id,
+                get_post_field('post_content', $post_id),
+            );
         }, 10, 1);
 
         /**
@@ -108,6 +106,23 @@ class PerformanceServiceProvider extends ServiceProvider
         $dbh->execute_sqlite_query('PRAGMA busy_timeout = 5000');
 
         self::$pragmasApplied = true;
+    }
+
+    /**
+     * Calculate word count and reading time (200 wpm) for a post and
+     * persist them as post meta. Extracted from the save_post hook so
+     * the calculation logic is unit-testable.
+     *
+     * Reading time is floored at 1 minute even for empty content so
+     * cards and previews always have a meaningful value to display.
+     */
+    public static function calculateAndPersistReadingMeta(int $post_id, string $content): void
+    {
+        $word_count = str_word_count(strip_tags($content));
+        $reading_time = max(1, (int) ceil($word_count / 200));
+
+        update_post_meta($post_id, 'vp_word_count', $word_count);
+        update_post_meta($post_id, 'vp_reading_time', $reading_time);
     }
 
     /**

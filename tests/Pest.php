@@ -141,6 +141,14 @@ if (! function_exists('get_post_meta')) {
         return $wp_post_meta_map[$post_id][$key] ?? '';
     }
 }
+if (! function_exists('update_post_meta')) {
+    function update_post_meta($post_id, string $key, $value, $prev_value = ''): int|bool
+    {
+        global $wp_post_meta_map;
+        $wp_post_meta_map[$post_id][$key] = $value;
+        return true;
+    }
+}
 if (! function_exists('get_the_date')) {
     function get_the_date(string $format = '', $post = null)
     {
