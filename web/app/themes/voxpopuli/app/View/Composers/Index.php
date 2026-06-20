@@ -91,7 +91,10 @@ class Index extends Composer
         // Collect all IDs to batch-prime the object and meta caches, preventing N+1 queries.
         $all_section_post_ids = [];
         foreach ($loadedSections as $section) {
-            $all_section_post_ids = array_merge($all_section_post_ids, $section['post_ids']);
+            // Optimization: Use nested foreach instead of array_merge in loop to avoid O(N^2) memory reallocation bottleneck
+            foreach ($section['post_ids'] as $id) {
+                $all_section_post_ids[] = $id;
+            }
         }
 
         if (!empty($all_section_post_ids)) {
