@@ -89,9 +89,12 @@ class Index extends Composer
         });
 
         // Collect all IDs to batch-prime the object and meta caches, preventing N+1 queries.
+        // ⚡ Bolt Optimization: Replace O(N²) array_merge with O(N) nested loop for memory and CPU efficiency
         $all_section_post_ids = [];
         foreach ($loadedSections as $section) {
-            $all_section_post_ids = array_merge($all_section_post_ids, $section['post_ids']);
+            foreach ($section['post_ids'] as $post_id) {
+                $all_section_post_ids[] = $post_id;
+            }
         }
 
         if (!empty($all_section_post_ids)) {
