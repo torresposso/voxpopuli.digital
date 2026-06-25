@@ -28,3 +28,7 @@
 ## 2024-06-16 - [WP-CLI SEO Migration N+1 Bottlenecks]
 **Learning:** `get_the_title()` and `get_the_excerpt()` are highly inefficient in bulk scripts because they trigger the entire WordPress filter cascade. Relying on `get_bloginfo('name')` inside a large loop also redundantly triggers options table checks, further exacerbating performance drops.
 **Action:** Always fetch properties via `$post = get_post($postId);` leveraging primed object cache during migrations, avoiding filter cascades. Hoist static values like `get_bloginfo('name')` outside loops.
+
+## 2024-11-20 - [Redundant function calls causing performance bottleneck]
+**Learning:** `get_the_title()` can trigger multiple filter cascades when called repeatedly for the same post in components or composers, impacting performance. Additionally, performing variable assignment inside a ternary operation like `($thumbnailId = get_post_thumbnail_id($post))` makes code harder to read.
+**Action:** Extract expensive calls like `get_the_title($post)` and `get_post_thumbnail_id($post)` into local variables before their usage, especially when they are needed multiple times or used within complex ternary operations, to prevent redundant filter executions and DB lookups.
