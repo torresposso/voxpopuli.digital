@@ -4,6 +4,11 @@
 
 @php
 if (! $post) return;
+
+// ⚡ Bolt: Cache expensive function calls to prevent redundant filter executions and DB lookups
+$title = get_the_title($post);
+$permalink = get_permalink($post);
+
 $categories = get_the_category($post->ID);
 $hasImage = has_post_thumbnail($post->ID);
 $reading_time = get_post_meta($post->ID, 'vp_reading_time', true);
@@ -31,7 +36,7 @@ $custom_excerpt = wp_trim_words(strip_tags($raw_content), 105, '...');
 <article @php(post_class('card lg:card-side bg-base-100 border border-base-300 rounded-xl overflow-hidden shadow-lg mb-16 border-t-4 border-primary group search-card-scroll-anim relative', $post->ID))>
   {{-- DaisyUI Figure --}}
   <figure class="w-full lg:w-3/5 relative aspect-video lg:aspect-auto min-h-[300px] lg:min-h-[360px] overflow-hidden bg-base-200 border-b lg:border-b-0 lg:border-r border-base-300 rounded-none">
-    <a href="{{ get_permalink($post) }}" class="absolute inset-0 w-full h-full block z-10" aria-label="{{ get_the_title($post) }}">
+    <a href="{{ $permalink }}" class="absolute inset-0 w-full h-full block z-10" aria-label="{{ $title }}">
       @if (!empty($thumbnail_html))
         {!! $thumbnail_html !!}
       @else
@@ -63,8 +68,8 @@ $custom_excerpt = wp_trim_words(strip_tags($raw_content), 105, '...');
       </div>
 
       <h2 class="card-title font-display text-2xl md:text-3xl font-black text-primary mt-4 mb-4 leading-tight group-hover:text-secondary duration-300 transition-colors">
-        <a href="{{ get_permalink($post) }}" class="text-primary hover:text-secondary focus:outline-none after:absolute after:inset-0 after:z-10 focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:rounded-lg duration-300 transition-colors">
-          {{ get_the_title($post) }}<span class="text-secondary font-sans font-bold ml-1">.:</span>
+        <a href="{{ $permalink }}" class="text-primary hover:text-secondary focus:outline-none after:absolute after:inset-0 after:z-10 focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:rounded-lg duration-300 transition-colors">
+          {{ $title }}<span class="text-secondary font-sans font-bold ml-1">.:</span>
         </a>
       </h2>
 
@@ -79,7 +84,7 @@ $custom_excerpt = wp_trim_words(strip_tags($raw_content), 105, '...');
         {{ __('Por', 'voxpopuli') }} {{ get_the_author_meta('display_name', $post->post_author) }}
       </span>
       <div class="card-actions justify-end">
-        <a href="{{ get_permalink($post) }}" class="font-sans text-[10px] font-extrabold uppercase tracking-wider text-secondary-dark inline-flex items-center gap-1 group-hover:translate-x-1 duration-300 transition-transform">
+        <a href="{{ $permalink }}" class="font-sans text-[10px] font-extrabold uppercase tracking-wider text-secondary-dark inline-flex items-center gap-1 group-hover:translate-x-1 duration-300 transition-transform">
           {{ __('Leer crónica', 'voxpopuli') }} →
         </a>
       </div>
