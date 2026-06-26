@@ -117,15 +117,19 @@ class Hero extends Component
             $authorId = get_post_field('post_author', $post->ID);
             $authorName = get_the_author_meta('display_name', $authorId) ?: 'Vox Redacción';
 
+            // ⚡ Bolt: Cache expensive function calls to prevent redundant filter executions and DB lookups
+            $postTitle = get_the_title($post);
+            $thumbnailId = get_post_thumbnail_id($post);
+
             return (object) [
                 'id' => $post->ID,
-                'title' => get_the_title($post),
+                'title' => $postTitle,
                 'excerpt' => $excerpt,
                 'url' => get_permalink($post),
                 'image' => get_the_post_thumbnail_url($post->ID, 'full') ?: '',
-                'alt' => ($thumbnailId = get_post_thumbnail_id($post))
-                    ? (get_post_meta($thumbnailId, '_wp_attachment_image_alt', true) ?: get_the_title($post))
-                    : get_the_title($post),
+                'alt' => $thumbnailId
+                    ? (get_post_meta($thumbnailId, '_wp_attachment_image_alt', true) ?: $postTitle)
+                    : $postTitle,
                 'date' => get_the_date('', $post),
                 'category' => $visibleCategory,
                 'author' => $authorName,
