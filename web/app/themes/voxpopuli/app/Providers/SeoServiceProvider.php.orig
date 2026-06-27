@@ -283,11 +283,7 @@ class SeoServiceProvider extends ServiceProvider
                         continue;
                     }
 
-                    // ⚡ Bolt: Fetch the post object once and use raw property access to bypass
-                    // the expensive WP filter cascade in get_the_modified_date() for bulk processing.
-                    // We also pass the $post object to get_permalink() to skip internal lookups.
                     $post = get_post($postId);
-
                     $entries[] = [
                         'loc' => get_permalink($post),
                         'lastmod' => substr($post->post_modified, 0, 10),
