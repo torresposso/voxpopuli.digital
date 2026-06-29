@@ -32,3 +32,7 @@
 ## 2024-11-20 - [Redundant function calls causing performance bottleneck]
 **Learning:** `get_the_title()` can trigger multiple filter cascades when called repeatedly for the same post in components or composers, impacting performance. Additionally, performing variable assignment inside a ternary operation like `($thumbnailId = get_post_thumbnail_id($post))` makes code harder to read.
 **Action:** Extract expensive calls like `get_the_title($post)` and `get_post_thumbnail_id($post)` into local variables before their usage, especially when they are needed multiple times or used within complex ternary operations, to prevent redundant filter executions and DB lookups.
+
+## 2024-11-20 - Sitemap Generation Bulk Loop Bottlenecks
+**Learning:** In bulk processing loops (e.g., sitemap generation), using formatting functions like `get_the_modified_date()` or ID-based functions like `get_post_type($postId)` causes redundant database lookups and expensive WP filter cascades, even if caches are primed.
+**Action:** Always fetch the `$post` object (`$post = get_post($postId);`) and pass it directly to functions like `get_permalink($post)`. For properties, access raw values (e.g., `substr($post->post_modified, 0, 10)`, `$post->post_type`) instead of formatting functions to completely bypass expensive WP filter cascades.

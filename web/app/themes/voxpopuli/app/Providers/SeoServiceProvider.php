@@ -283,10 +283,16 @@ class SeoServiceProvider extends ServiceProvider
                         continue;
                     }
 
-                    $postType = get_post_type($postId);
+                    // ⚡ Bolt: Fetch post object to bypass expensive DB lookups and filter cascades
+                    $post = get_post($postId);
+                    if (!$post) {
+                        continue;
+                    }
+
+                    $postType = $post->post_type;
                     $entries[] = [
-                        'loc' => get_permalink($postId),
-                        'lastmod' => get_the_modified_date('Y-m-d', $postId),
+                        'loc' => get_permalink($post),
+                        'lastmod' => substr($post->post_modified, 0, 10),
                         'priority' => $postType === 'page' ? '0.8' : '0.7',
                         'changefreq' => $postType === 'page' ? 'monthly' : 'weekly',
                         'type' => $postType,
