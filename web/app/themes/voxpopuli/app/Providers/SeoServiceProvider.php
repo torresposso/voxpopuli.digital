@@ -283,10 +283,13 @@ class SeoServiceProvider extends ServiceProvider
                         continue;
                     }
 
-                    $postType = get_post_type($postId);
+                    // Retrieve post object directly from cache since _prime_post_caches was called.
+                    // This avoids redundant get_post() lookups and bypasses expensive WP filter cascades.
+                    $post = get_post($postId);
+                    $postType = $post->post_type;
                     $entries[] = [
-                        'loc' => get_permalink($postId),
-                        'lastmod' => get_the_modified_date('Y-m-d', $postId),
+                        'loc' => get_permalink($post),
+                        'lastmod' => substr($post->post_modified, 0, 10),
                         'priority' => $postType === 'page' ? '0.8' : '0.7',
                         'changefreq' => $postType === 'page' ? 'monthly' : 'weekly',
                         'type' => $postType,

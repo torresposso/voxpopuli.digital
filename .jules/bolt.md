@@ -32,3 +32,7 @@
 ## 2024-11-20 - [Redundant function calls causing performance bottleneck]
 **Learning:** `get_the_title()` can trigger multiple filter cascades when called repeatedly for the same post in components or composers, impacting performance. Additionally, performing variable assignment inside a ternary operation like `($thumbnailId = get_post_thumbnail_id($post))` makes code harder to read.
 **Action:** Extract expensive calls like `get_the_title($post)` and `get_post_thumbnail_id($post)` into local variables before their usage, especially when they are needed multiple times or used within complex ternary operations, to prevent redundant filter executions and DB lookups.
+
+## 2024-11-21 - Bypass expensive WP filter cascades in bulk processing loops
+**Learning:** In bulk processing loops (like sitemap generation or WP-CLI migrations), repeatedly passing post IDs to functions like `get_permalink($postId)`, `get_post_type($postId)`, or formatting functions like `get_the_modified_date()` causes severe performance overhead. It triggers redundant internal `get_post()` lookups and expensive WordPress filter cascades for every iteration.
+**Action:** When iterating over post IDs, fetch the post object once using `$post = get_post($postId);` (assuming caches are primed). Pass the `$post` object directly to functions that support it (e.g., `get_permalink($post)`), and access raw properties (e.g., `$post->post_type`, `substr($post->post_modified, 0, 10)`) to bypass formatting filters completely.
