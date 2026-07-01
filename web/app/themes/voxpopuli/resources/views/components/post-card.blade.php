@@ -4,6 +4,11 @@
 
 @php
 if (! $post) return;
+
+// ⚡ Bolt: Cache expensive function calls to prevent redundant filter executions and DB lookups
+$title = get_the_title($post->ID);
+$permalink = get_permalink($post->ID);
+
 $categories = get_the_category($post->ID);
 $category_name = !empty($categories) ? $categories[0]->name : __('Investigación', 'voxpopuli');
 $reading_time = get_post_meta($post->ID, 'vp_reading_time', true);
@@ -23,7 +28,7 @@ $thumbnail_html = get_the_post_thumbnail($post->ID, 'full', [
 
 <article @php(post_class('card bg-base-100 border border-base-300 rounded-lg overflow-hidden transition-all duration-500 hover:shadow-xl hover:border-primary/20 group search-card-scroll-anim', $post->ID))>
   <figure class="w-full relative aspect-video overflow-hidden bg-base-200 border-b border-base-200">
-    <a href="{{ get_permalink($post->ID) }}" class="absolute inset-0 w-full h-full block z-10" aria-label="{{ get_the_title($post->ID) }}">
+    <a href="{{ $permalink }}" class="absolute inset-0 w-full h-full block z-10" aria-label="{{ $title }}">
       @if (!empty($thumbnail_html))
         {!! $thumbnail_html !!}
       @else
@@ -47,8 +52,8 @@ $thumbnail_html = get_the_post_thumbnail($post->ID, 'full', [
       </div>
 
       <h2 class="card-title font-display text-xl font-bold text-primary mt-3 mb-4 leading-snug group-hover:text-secondary transition-colors duration-300">
-        <a href="{{ get_permalink($post->ID) }}" class="text-primary hover:text-secondary duration-300">
-          {{ get_the_title($post->ID) }}
+        <a href="{{ $permalink }}" class="text-primary hover:text-secondary duration-300">
+          {{ $title }}
         </a>
       </h2>
 
@@ -61,7 +66,7 @@ $thumbnail_html = get_the_post_thumbnail($post->ID, 'full', [
       <span class="font-sans text-[10px] font-extrabold uppercase tracking-wider text-primary">
         {{ __('Por', 'voxpopuli') }} {{ get_the_author_meta('display_name', $post->post_author) }}
       </span>
-      <a href="{{ get_permalink($post->ID) }}" class="font-sans text-[10px] font-extrabold uppercase tracking-wider text-secondary-dark inline-flex items-center gap-1 group-hover:translate-x-1 duration-300 transition-transform">
+      <a href="{{ $permalink }}" class="font-sans text-[10px] font-extrabold uppercase tracking-wider text-secondary-dark inline-flex items-center gap-1 group-hover:translate-x-1 duration-300 transition-transform">
         {{ __('Leer crónica', 'voxpopuli') }} →
       </a>
     </div>
