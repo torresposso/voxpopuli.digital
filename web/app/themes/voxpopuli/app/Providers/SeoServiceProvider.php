@@ -178,6 +178,10 @@ class SeoServiceProvider extends ServiceProvider
             return;
         }
 
+        if (wp_is_post_revision($postId)) {
+            return;
+        }
+
         // Check user capability
         if (! current_user_can('edit_post', $postId)) {
             return;
