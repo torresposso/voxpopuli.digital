@@ -37,3 +37,8 @@
 
 **Learning:** When processing many WordPress posts in loops (like sitemap generation), using standard formatting functions such as `get_the_modified_date()` introduces significant CPU and database overhead because it applies the full WordPress filter cascade on every iteration. Calling functions like `get_permalink($postId)` or `get_post_type($postId)` also redundantly re-fetches the post from the cache internally.
 **Action:** When iterating over a batch of IDs that have had their caches primed, always fetch the raw `$post = get_post($postId)` object. Then, pass that `$post` object to functions like `get_permalink($post)`, and access properties like `$post->post_modified` directly instead of using formatting functions, completely bypassing expensive filter cascades.
+
+## 2024-11-21 - Prevent Cache Stampedes During Autosaves
+
+**Learning:** View Composer and Component caching strategies can be silently undermined by WordPress background autosaves and revision creations if `save_post` invalidation hooks are left un-guarded. This causes continuous cache destruction on production while editors draft content, negating the performance benefits of caching.
+**Action:** Always add guard clauses for `DOING_AUTOSAVE` and `wp_is_post_revision()` inside `save_post` hooks when used for cache invalidation or metadata updates to prevent redundant processing and cache stampedes.

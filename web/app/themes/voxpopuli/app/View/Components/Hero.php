@@ -126,7 +126,7 @@ class Hero extends Component
                 'title' => $postTitle,
                 'excerpt' => $excerpt,
                 'url' => get_permalink($post),
-                'image' => get_the_post_thumbnail_url($post->ID, 'full') ?: '',
+                'image' => $thumbnailId ? (wp_get_attachment_image_url($thumbnailId, 'full') ?: '') : '',
                 'alt' => $thumbnailId
                     ? (get_post_meta($thumbnailId, '_wp_attachment_image_alt', true) ?: $postTitle)
                     : $postTitle,
