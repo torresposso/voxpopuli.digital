@@ -10,16 +10,16 @@
 
 	frankenphp {
 		num_threads 1
-		max_threads 2
+		max_threads 1
 		max_requests 1000
-		php_ini memory_limit 128M
+		php_ini memory_limit 96M
 		php_ini max_execution_time 30
 		php_ini max_input_vars 5000
 
 		# Optimización de OPcache y Preloading
 		php_ini opcache.enable 1
 		php_ini opcache.enable_cli 1
-		php_ini opcache.memory_consumption 64
+		php_ini opcache.memory_consumption 32
 		php_ini opcache.interned_strings_buffer 8
 		php_ini opcache.max_accelerated_files 30000
 		php_ini opcache.revalidate_freq 0
