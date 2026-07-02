@@ -37,3 +37,7 @@
 
 **Learning:** When processing many WordPress posts in loops (like sitemap generation), using standard formatting functions such as `get_the_modified_date()` introduces significant CPU and database overhead because it applies the full WordPress filter cascade on every iteration. Calling functions like `get_permalink($postId)` or `get_post_type($postId)` also redundantly re-fetches the post from the cache internally.
 **Action:** When iterating over a batch of IDs that have had their caches primed, always fetch the raw `$post = get_post($postId)` object. Then, pass that `$post` object to functions like `get_permalink($post)`, and access properties like `$post->post_modified` directly instead of using formatting functions, completely bypassing expensive filter cascades.
+
+## 2024-11-22 - Avoid redundant thumbnail lookups
+**Learning:** When generating a post's thumbnail URL with `get_the_post_thumbnail_url()`, WordPress internally triggers another `get_post_thumbnail_id()` lookup. If the thumbnail ID has already been retrieved and stored in a variable, this secondary lookup causes unnecessary database querying overhead.
+**Action:** When a post's thumbnail ID is already cached in local scope, prefer using `wp_get_attachment_image_url($thumbnailId, $size)` to generate the image URL instead of calling `get_the_post_thumbnail_url($post->ID, $size)`.
