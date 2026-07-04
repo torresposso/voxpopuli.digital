@@ -121,12 +121,13 @@ class Hero extends Component
             $postTitle = get_the_title($post);
             $thumbnailId = get_post_thumbnail_id($post);
 
+            // ⚡ Bolt: Use wp_get_attachment_image_url with the already fetched $thumbnailId to avoid redundant lookups
             return (object) [
                 'id' => $post->ID,
                 'title' => $postTitle,
                 'excerpt' => $excerpt,
                 'url' => get_permalink($post),
-                'image' => get_the_post_thumbnail_url($post->ID, 'full') ?: '',
+                'image' => $thumbnailId ? wp_get_attachment_image_url($thumbnailId, 'full') : '',
                 'alt' => $thumbnailId
                     ? (get_post_meta($thumbnailId, '_wp_attachment_image_alt', true) ?: $postTitle)
                     : $postTitle,
