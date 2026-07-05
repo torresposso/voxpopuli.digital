@@ -53,10 +53,17 @@ class PerformanceServiceProvider extends ServiceProvider
         /**
          * Invalidate Hero and Homepage sections caches when a post is saved or deleted.
          */
-        add_action('save_post', function () {
+        add_action('save_post', function ($post_id) {
+            if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+                return;
+            }
+            if (wp_is_post_revision($post_id)) {
+                return;
+            }
+
             delete_transient(\App\View\Components\Hero::getCacheKey());
             (new \App\View\Composers\Index())->bustCache();
-        });
+        }, 10, 1);
         add_action('deleted_post', function () {
             delete_transient(\App\View\Components\Hero::getCacheKey());
             (new \App\View\Composers\Index())->bustCache();
