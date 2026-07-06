@@ -256,11 +256,11 @@ class SeoServiceProvider extends ServiceProvider
             return;
         }
 
-        // Fetch all published post and page IDs
+        // Fetch published post and page IDs (capped at 50,000 as recommended by search engine standards)
         $idQuery = new WP_Query([
             'post_type' => ['post', 'page'],
             'post_status' => 'publish',
-            'posts_per_page' => -1,
+            'posts_per_page' => 50000,
             'orderby' => 'modified',
             'order' => 'DESC',
             'fields' => 'ids',

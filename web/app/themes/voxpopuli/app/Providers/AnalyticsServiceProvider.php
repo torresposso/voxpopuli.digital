@@ -30,20 +30,22 @@ class AnalyticsServiceProvider extends ServiceProvider
 
                 // Google Analytics (GA4)
                 if ($ga_id) {
+                    $escaped_ga_id = esc_attr($ga_id);
                     echo "
                     <!-- Google tag (gtag.js) -->
-                    <script async src=\"https://www.googletagmanager.com/gtag/js?id={$ga_id}\"></script>
+                    <script async src=\"https://www.googletagmanager.com/gtag/js?id={$escaped_ga_id}\"></script>
                     <script>
                       window.dataLayer = window.dataLayer || [];
                       function gtag(){dataLayer.push(arguments);}
                       gtag('js', new Date());
-                      gtag('config', '{$ga_id}', { 'anonymize_ip': true });
+                      gtag('config', '{$escaped_ga_id}', { 'anonymize_ip': true });
                     </script>
                     ";
                 }
 
                 // Meta Pixel (Facebook / Instagram)
                 if ($meta_id) {
+                    $escaped_meta_id = esc_attr($meta_id);
                     echo "
                     <!-- Meta Pixel Code -->
                     <script>
@@ -55,11 +57,11 @@ class AnalyticsServiceProvider extends ServiceProvider
                     t.src=v;s=b.getElementsByTagName(e)[0];
                     s.parentNode.insertBefore(t,s)}(window, document,'script',
                     'https://connect.facebook.net/en_US/fbevents.js');
-                    fbq('init', '{$meta_id}');
+                    fbq('init', '{$escaped_meta_id}');
                     fbq('track', 'PageView');
                     </script>
                     <noscript><img height=\"1\" width=\"1\" style=\"display:none\"
-                    src=\"https://www.facebook.com/tr?id={$meta_id}&ev=PageView&noscript=1\"
+                    src=\"https://www.facebook.com/tr?id={$escaped_meta_id}&ev=PageView&noscript=1\"
                     /></noscript>
                     <!-- End Meta Pixel Code -->
                     ";

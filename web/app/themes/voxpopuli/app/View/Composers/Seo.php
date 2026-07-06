@@ -55,6 +55,28 @@ class Seo extends Composer
                 'is_home' => true,
                 'canonical' => home_url('/'),
             ];
+        } elseif (is_archive()) {
+            $data = [
+                'post_title' => get_the_archive_title(),
+                'post_url' => get_archive_link(get_query_var('post_type') ?: 'post', get_query_var('year'), get_query_var('monthnum'), get_query_var('day')),
+                'meta_desc' => get_the_archive_description() ?: get_bloginfo('description'),
+                'canonical' => home_url($_SERVER['REQUEST_URI'] ?? ''),
+            ];
+        } elseif (is_search()) {
+            $query = get_search_query(false);
+            $data = [
+                'post_title' => sprintf(__('Resultados de búsqueda para: %s', 'voxpopuli'), $query),
+                'post_url' => home_url('/?s=' . urlencode($query)),
+                'meta_desc' => sprintf(__('Resultados de búsqueda en Vox Populi para: %s', 'voxpopuli'), $query),
+                'canonical' => home_url('/?s=' . urlencode($query)),
+            ];
+        } elseif (is_404()) {
+            $data = [
+                'post_title' => __('Página no encontrada - 404', 'voxpopuli'),
+                'post_url' => home_url($_SERVER['REQUEST_URI'] ?? ''),
+                'meta_desc' => __('La página que buscas no existe o ha sido movida.', 'voxpopuli'),
+                'noindex' => true,
+            ];
         }
 
         return new SeoMeta($data, true);

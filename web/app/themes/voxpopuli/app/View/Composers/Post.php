@@ -162,12 +162,13 @@ class Post extends Composer
                 $query->the_post();
                 $imgId = get_post_thumbnail_id();
                 $imgUrl = $imgId ? wp_get_attachment_image_url($imgId, 'medium') : '';
+                $cats = get_the_category();
                 $posts[] = [
                     'title' => get_the_title(),
                     'link' => get_permalink(),
                     'date' => get_the_date(),
                     'image' => $imgUrl,
-                    'category' => get_the_category()[0]->name ?? '',
+                    'category' => !empty($cats) ? $cats[0]->name : '',
                 ];
             }
             wp_reset_postdata();
@@ -198,19 +199,30 @@ class Post extends Composer
         }
 
         $query = new \WP_Query($args);
+
+        // Fallback: Si el query con stickies da vacío (ej. todos los stickies son el post actual),
+        // volvemos a buscar sin la restricción post__in
+        if (!$query->have_posts() && !empty($sticky)) {
+            unset($args['post__in']);
+            $args['orderby'] = 'date';
+            $args['order'] = 'DESC';
+            $query = new \WP_Query($args);
+        }
+
         $featured = null;
 
         if ($query->have_posts()) {
             $query->the_post();
             $imgId = get_post_thumbnail_id();
             $imgUrl = $imgId ? wp_get_attachment_image_url($imgId, 'large') : '';
+            $cats = get_the_category();
             $featured = [
                 'title' => get_the_title(),
                 'link' => get_permalink(),
                 'date' => get_the_date(),
                 'excerpt' => get_the_excerpt(),
                 'image' => $imgUrl,
-                'category' => get_the_category()[0]->name ?? '',
+                'category' => !empty($cats) ? $cats[0]->name : '',
             ];
             wp_reset_postdata();
         }
