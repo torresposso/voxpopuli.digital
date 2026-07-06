@@ -86,7 +86,7 @@
                             <span>{{ sprintf(__('Por %s', 'voxpopuli'), $main_post->author) }}</span>
                             <span aria-hidden="true" class="opacity-40">//</span>
                             <time
-                                datetime="{{ date('Y-m-d', strtotime($main_post->date)) }}">{{ $main_post->date }}</time>
+                                datetime="{{ $main_post->machine_date }}">{{ $main_post->date }}</time>
                         </footer>
                     </div>
                 </div>
@@ -156,7 +156,7 @@
                             class="flex items-center gap-2 font-sans text-[10px] text-white/90 font-semibold uppercase tracking-wider mt-1 text-shadow-sm drop-shadow-sm">
                             <span>{{ sprintf(__('Por %s', 'voxpopuli'), $post->author) }}</span>
                             <span aria-hidden="true" class="opacity-50">//</span>
-                            <time datetime="{{ date('Y-m-d', strtotime($post->date)) }}">{{ $post->date }}</time>
+                            <time datetime="{{ $post->machine_date }}">{{ $post->date }}</time>
                         </footer>
                     </div>
                 </article>
@@ -209,7 +209,7 @@
 
                         {{-- Detalles y Enlace --}}
                         <div class="list-col-grow min-w-48 flex flex-col gap-0.5">
-                            <span class="font-sans font-extrabold uppercase tracking-wider text-xs text-secondary">
+                            <span class="font-sans font-extrabold uppercase tracking-wider text-xs text-secondary-dark">
                                 {{ $post->category }}
                             </span>
 
@@ -221,7 +221,7 @@
                                 </a>
                             </h3>
 
-                            <time datetime="{{ date('Y-m-d', strtotime($post->date)) }}"
+                            <time datetime="{{ $post->machine_date }}"
                                 class="font-sans text-[9px] text-base-content/65 font-semibold uppercase tracking-wider mt-0.5">
                                 {{ $post->date }}
                             </time>

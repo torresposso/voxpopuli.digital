@@ -132,6 +132,7 @@ class Hero extends Component
                     ? (get_post_meta($thumbnailId, '_wp_attachment_image_alt', true) ?: $postTitle)
                     : $postTitle,
                 'date' => get_the_date('', $post),
+                'machine_date' => get_the_date('c', $post),
                 'category' => $visibleCategory,
                 'author' => $authorName,
             ];
