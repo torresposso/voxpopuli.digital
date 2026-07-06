@@ -36,7 +36,7 @@ test('it uses WP_ENV logic for cache keys correctly', function () {
 
     $key = Hero::getCacheKey();
 
-    expect($key)->toStartWith('vp_hero_data_v2_');
+    expect($key)->toStartWith('vp_hero_data_v3_');
 });
 
 test('it renders the component view', function () {

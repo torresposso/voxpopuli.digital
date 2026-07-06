@@ -19,7 +19,14 @@
             <div class="h-full flex flex-col">
                 {{-- Contenedor de Imagen Destacada (Optimizada para LCP) --}}
                 <figure class="relative w-full aspect-video overflow-hidden bg-base-200 rounded-none shrink-0 m-0">
-                    @if (!empty($main_post->image))
+                    @if (!empty($main_post->thumbnail_id))
+                        {!! wp_get_attachment_image($main_post->thumbnail_id, 'large', false, [
+                            'alt' => $main_post->alt ?? $main_post->title,
+                            'class' => 'w-full h-full object-cover group-hover:scale-105 transition duration-500 ease-out',
+                            'loading' => 'eager',
+                            'fetchpriority' => 'high',
+                        ]) !!}
+                    @elseif (!empty($main_post->image))
                         <img alt="{{ $main_post->alt ?? $main_post->title }}"
                             class="w-full h-full object-cover group-hover:scale-105 transition duration-500 ease-out"
                             src="{{ $main_post->image }}" loading="eager" fetchpriority="high" decoding="async" />
@@ -95,7 +102,14 @@
 
                     {{-- Capa de Imagen de Fondo (Optimizada contra aliasing mediante GPU transform) --}}
                     <figure class="absolute inset-0 w-full h-full m-0 z-0 overflow-hidden">
-                        @if (!empty($post->image))
+                        @if (!empty($post->thumbnail_id))
+                            {!! wp_get_attachment_image($post->thumbnail_id, 'medium_large', false, [
+                                'alt' => $post->alt ?? $post->title,
+                                'class' => 'w-full h-full object-cover group-hover:scale-105 transition duration-700 ease-out backface-hidden transform-[translate3d(0,0,0)]',
+                                'loading' => 'eager',
+                                'fetchpriority' => 'high',
+                            ]) !!}
+                        @elseif (!empty($post->image))
                             <img alt="{{ $post->alt ?? $post->title }}"
                                 class="w-full h-full object-cover group-hover:scale-105 transition duration-700 ease-out backface-hidden transform-[translate3d(0,0,0)]"
                                 src="{{ $post->image }}" loading="eager" fetchpriority="high" decoding="async" />
@@ -177,7 +191,12 @@
 
                         {{-- Miniatura del Artículo --}}
                         <div class="size-16 rounded-box overflow-hidden bg-base-200 shrink-0 relative">
-                            @if (!empty($post->image))
+                            @if (!empty($post->thumbnail_id))
+                                {!! wp_get_attachment_image($post->thumbnail_id, 'thumbnail', false, [
+                                    'alt' => $post->alt ?? $post->title,
+                                    'class' => 'w-full h-full object-cover group-hover:scale-105 transition duration-300 ease-out',
+                                ]) !!}
+                            @elseif (!empty($post->image))
                                 <img src="{{ $post->image }}" alt="{{ $post->alt ?? $post->title }}"
                                     class="w-full h-full object-cover group-hover:scale-105 transition duration-300 ease-out" />
                             @else

@@ -14,10 +14,12 @@
             <div class="absolute top-0 left-0 w-full h-1.5 bg-primary z-20"></div>
 
             <div class="absolute inset-0 w-full h-full">
-                <img src="{{ $img['url'] }}" alt="{{ $img['alt'] }}" width="{{ $img['width'] }}"
-                    height="{{ $img['height'] }}"
-                    class="w-full h-full object-cover sepia transition-all duration-700 ease-out group-hover:grayscale-0 group-hover:scale-105"
-                    loading="eager" fetchpriority="high" />
+                {!! wp_get_attachment_image($img['id'], 'large', false, [
+                    'alt' => $img['alt'],
+                    'class' => 'w-full h-full object-cover sepia transition-all duration-700 ease-out group-hover:grayscale-0 group-hover:scale-105',
+                    'loading' => 'eager',
+                    'fetchpriority' => 'high',
+                ]) !!}
                 <div
                     class="absolute inset-0 bg-primary/75   mix-blend-multiply transition-colors duration-700 group-hover:bg-black/50">
                 </div>

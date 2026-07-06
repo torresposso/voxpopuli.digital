@@ -68,6 +68,61 @@ class PerformanceServiceProvider extends ServiceProvider
             delete_transient(\App\View\Components\Hero::getCacheKey());
             (new \App\View\Composers\Index())->bustCache();
         });
+
+        /**
+         * Scale down big images uploaded by users/authors to a max of 2048px and convert to WebP.
+         */
+        add_filter('wp_handle_upload', function (array $upload) {
+            if (empty($upload['file']) || empty($upload['type'])) {
+                return $upload;
+            }
+
+            $file_path = $upload['file'];
+            $mime_type = $upload['type'];
+
+            // Only process JPEG and PNG
+            if (! in_array($mime_type, ['image/jpeg', 'image/png'], true)) {
+                return $upload;
+            }
+
+            // Avoid failures and keep original if editor is not available
+            $editor = wp_get_image_editor($file_path);
+            if (is_wp_error($editor)) {
+                return $upload;
+            }
+
+            // 1. Resize if image exceeds 2048px
+            $size = $editor->get_size();
+            if ($size) {
+                $max_dim = 2048;
+                if ($size['width'] > $max_dim || $size['height'] > $max_dim) {
+                    $editor->resize($max_dim, $max_dim, false);
+                }
+            }
+
+            // 2. Build destination WebP path and save
+            $webp_file_path = preg_replace('/\.(jpe?g|png)$/i', '.webp', $file_path);
+            $saved = $editor->save($webp_file_path, 'image/webp');
+
+            if (! is_wp_error($saved) && ! empty($saved['path'])) {
+                // Delete original file to prevent duplicates
+                if (file_exists($file_path)) {
+                    @unlink($file_path);
+                }
+
+                // Update the upload details so WordPress registers the WebP file
+                $upload['file'] = $saved['path'];
+                $upload['url'] = preg_replace('/\.(jpe?g|png)$/i', '.webp', $upload['url']);
+                $upload['type'] = 'image/webp';
+            }
+
+            return $upload;
+        }, 10, 1);
+
+        /**
+         * Lower the big image threshold size to 2048px.
+         */
+        add_filter('big_image_size_threshold', fn() => 2048);
     }
 
     /**

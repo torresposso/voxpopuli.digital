@@ -77,6 +77,7 @@ class Post extends Composer
 
         $src = wp_get_attachment_image_src($id, 'large');
         return [
+            'id' => $id,
             'url' => $src[0] ?? '',
             'width' => $src[1] ?? '',
             'height' => $src[2] ?? '',

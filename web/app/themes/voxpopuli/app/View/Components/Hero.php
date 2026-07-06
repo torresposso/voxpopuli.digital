@@ -39,9 +39,9 @@ class Hero extends Component
     {
         if (defined('WP_ENV') && WP_ENV === 'development') {
             $hostHash = substr(md5($_SERVER['HTTP_HOST'] ?? 'default'), 0, 20);
-            return "vp_hero_data_v2_{$hostHash}";
+            return "vp_hero_data_v3_{$hostHash}";
         }
-        return 'voxpopuli_hero_data_cache_v2';
+        return 'voxpopuli_hero_data_cache_v3';
     }
 
     /**
@@ -127,6 +127,7 @@ class Hero extends Component
                 'excerpt' => $excerpt,
                 'url' => get_permalink($post),
                 'image' => $thumbnailId ? (wp_get_attachment_image_url($thumbnailId, 'full') ?: '') : '',
+                'thumbnail_id' => $thumbnailId,
                 'alt' => $thumbnailId
                     ? (get_post_meta($thumbnailId, '_wp_attachment_image_alt', true) ?: $postTitle)
                     : $postTitle,
