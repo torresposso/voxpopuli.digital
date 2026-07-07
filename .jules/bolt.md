@@ -42,3 +42,7 @@
 
 **Learning:** View Composer and Component caching strategies can be silently undermined by WordPress background autosaves and revision creations if `save_post` invalidation hooks are left un-guarded. This causes continuous cache destruction on production while editors draft content, negating the performance benefits of caching.
 **Action:** Always add guard clauses for `DOING_AUTOSAVE` and `wp_is_post_revision()` inside `save_post` hooks when used for cache invalidation or metadata updates to prevent redundant processing and cache stampedes.
+
+## 2024-11-21 - [Prevent Redundant Disk I/O in Filters]
+**Learning:** Checking for file existence using `file_exists()` directly within frequently triggered WordPress filters (like `wp_get_attachment_image_src` or `the_content`) causes severe synchronous I/O bottlenecks. These disk operations block the main thread, increasing response time especially on pages with many images.
+**Action:** Implement an in-memory cache using a `static` array variable inside the filter closure to memoize the results of disk checks like `file_exists()`. This ensures that across a single request lifecycle, each file path is only checked against the disk once.
