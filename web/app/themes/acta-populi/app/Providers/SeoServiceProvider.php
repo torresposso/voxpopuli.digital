@@ -1,0 +1,325 @@
+<?php
+
+namespace App\Providers;
+
+use App\Seo\JsonLd;
+use App\Seo\Migration;
+use App\Seo\Sitemap;
+use App\View\Composers\Seo as SeoComposer;
+use Illuminate\Support\ServiceProvider;
+use WP_Query;
+
+class SeoServiceProvider extends ServiceProvider
+{
+    /**
+     * Register any application services.
+     */
+    public function register(): void
+    {
+        $this->app->singleton(JsonLd::class, function () {
+            return new JsonLd();
+        });
+    }
+
+    /**
+     * Bootstrap any application services.
+     */
+    public function boot(): void
+    {
+        // Register the View Composer for SEO data injection
+        $this->app->make('view')->composer('layouts.app', SeoComposer::class);
+
+        // Register admin meta boxes
+        add_action('add_meta_boxes', function () {
+            $this->registerMetaBoxes();
+        });
+
+        // Handle meta box field saving
+        add_action('save_post', function (int $postId) {
+            $this->saveMetaBoxFields($postId);
+        });
+
+        // Register sitemap rewrite rule
+        add_action('init', function () {
+            $this->registerSitemapRewrite();
+        });
+
+        // Handle sitemap requests
+        add_action('template_redirect', function () {
+            $this->handleSitemapRequest();
+        });
+
+        // Flush rewrite rules on theme activation
+        add_action('after_switch_theme', function () {
+            $this->registerSitemapRewrite();
+            flush_rewrite_rules();
+        });
+
+        // Register WP-CLI command
+        if (defined('WP_CLI') && \WP_CLI) {
+            \WP_CLI::add_command('acta-populi migrate-seo', [Migration::class, 'handle']);
+        }
+    }
+
+    /**
+     * Register SEO meta boxes on post and page edit screens.
+     */
+    private function registerMetaBoxes(): void
+    {
+        $screens = ['post', 'page'];
+
+        foreach ($screens as $screen) {
+            add_meta_box(
+                'voxpopuli_seo',
+                'Vox Populi SEO',
+                function ($post) {
+                    $this->renderMetaBox($post);
+                },
+                $screen,
+                'normal',
+                'high',
+            );
+        }
+    }
+
+    /**
+     * Render the SEO meta box fields.
+     *
+     * @param  \WP_Post  $post
+     */
+    private function renderMetaBox($post): void
+    {
+        wp_nonce_field('voxpopuli_seo_save', 'voxpopuli_seo_nonce');
+
+        $metaDesc = get_post_meta($post->ID, '_voxpopuli_meta_desc', true);
+        $ogTitle = get_post_meta($post->ID, '_voxpopuli_og_title', true);
+        $ogDesc = get_post_meta($post->ID, '_voxpopuli_og_desc', true);
+        $ogImage = get_post_meta($post->ID, '_voxpopuli_og_image', true);
+        $noindex = get_post_meta($post->ID, '_voxpopuli_noindex', true);
+        $canonical = get_post_meta($post->ID, '_voxpopuli_canonical', true);
+        ?>
+        <table class="form-table">
+            <tr>
+                <th scope="row"><label for="voxpopuli_meta_desc">Meta Description</label></th>
+                <td>
+                    <textarea id="voxpopuli_meta_desc" name="_voxpopuli_meta_desc" rows="3" class="large-text" maxlength="160"><?php echo esc_textarea($metaDesc); ?></textarea>
+                    <p class="description">Maximum 160 characters.</p>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row"><label for="voxpopuli_og_title">OG Title</label></th>
+                <td>
+                    <input type="text" id="voxpopuli_og_title" name="_voxpopuli_og_title" value="<?php echo esc_attr($ogTitle); ?>" class="large-text">
+                </td>
+            </tr>
+            <tr>
+                <th scope="row"><label for="voxpopuli_og_desc">OG Description</label></th>
+                <td>
+                    <textarea id="voxpopuli_og_desc" name="_voxpopuli_og_desc" rows="3" class="large-text"><?php echo esc_textarea($ogDesc); ?></textarea>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row"><label for="voxpopuli_og_image">OG Image</label></th>
+                <td>
+                    <input type="text" id="voxpopuli_og_image" name="_voxpopuli_og_image" value="<?php echo esc_attr($ogImage); ?>" class="large-text">
+                    <button type="button" class="button" id="voxpopuli_og_image_button">Select Image</button>
+                    <p class="description">Enter attachment ID or use the media button.</p>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row"><label for="voxpopuli_noindex">Noindex</label></th>
+                <td>
+                    <label>
+                        <input type="checkbox" id="voxpopuli_noindex" name="_voxpopuli_noindex" value="1" <?php checked($noindex, '1'); ?>>
+                        Prevent search engines from indexing this page
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row"><label for="voxpopuli_canonical">Canonical URL</label></th>
+                <td>
+                    <input type="url" id="voxpopuli_canonical" name="_voxpopuli_canonical" value="<?php echo esc_attr($canonical); ?>" class="large-text">
+                </td>
+            </tr>
+        </table>
+        <script>
+        (function($) {
+            $('#voxpopuli_og_image_button').on('click', function(e) {
+                e.preventDefault();
+                var frame = wp.media({
+                    title: 'Select OG Image',
+                    multiple: false,
+                    library: { type: 'image' }
+                });
+                frame.on('select', function() {
+                    var attachment = frame.state().get('selection').first().toJSON();
+                    $('#voxpopuli_og_image').val(attachment.id);
+                });
+                frame.open();
+            });
+        })(jQuery);
+        </script>
+        <?php
+    }
+
+    /**
+     * Save meta box fields.
+     */
+    private function saveMetaBoxFields(int $postId): void
+    {
+        // Verify nonce
+        if (! isset($_POST['voxpopuli_seo_nonce'])
+            || ! wp_verify_nonce($_POST['voxpopuli_seo_nonce'], 'voxpopuli_seo_save')) {
+            return;
+        }
+
+        // Check autosave
+        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+            return;
+        }
+
+        if (wp_is_post_revision($postId)) {
+            return;
+        }
+
+        // Check user capability
+        if (! current_user_can('edit_post', $postId)) {
+            return;
+        }
+
+        $fields = [
+            '_voxpopuli_meta_desc',
+            '_voxpopuli_og_title',
+            '_voxpopuli_og_desc',
+            '_voxpopuli_og_image',
+            '_voxpopuli_noindex',
+            '_voxpopuli_canonical',
+        ];
+
+        foreach ($fields as $field) {
+            if (isset($_POST[$field])) {
+                $value = wp_unslash($_POST[$field]);
+
+                // Sanitize by field type
+                if ($field === '_voxpopuli_meta_desc' || $field === '_voxpopuli_og_desc') {
+                    $value = sanitize_textarea_field($value);
+                } elseif ($field === '_voxpopuli_canonical') {
+                    if ($value !== '' && (! filter_var($value, FILTER_VALIDATE_URL)
+                        || ! (str_starts_with($value, 'http://') || str_starts_with($value, 'https://')))) {
+                        delete_post_meta($postId, $field);
+                        continue;
+                    }
+                    $value = esc_url_raw($value);
+                } elseif ($field === '_voxpopuli_og_image') {
+                    $value = absint($value);
+                } elseif ($field === '_voxpopuli_noindex') {
+                    $value = '1';
+                } else {
+                    $value = sanitize_text_field($value);
+                }
+
+                // Truncate meta description
+                if ($field === '_voxpopuli_meta_desc' && mb_strlen($value) > 160) {
+                    $value = mb_substr($value, 0, 160);
+                }
+
+                update_post_meta($postId, $field, $value);
+            } else {
+                // Checkbox not checked → delete noindex
+                if ($field === '_voxpopuli_noindex') {
+                    delete_post_meta($postId, $field);
+                }
+            }
+        }
+    }
+
+    /**
+     * Register rewrite rule for /sitemap.xml.
+     */
+    private function registerSitemapRewrite(): void
+    {
+        add_rewrite_rule(
+            '^sitemap\.xml$',
+            'index.php?vox_sitemap=1',
+            'top',
+        );
+
+        add_rewrite_tag('%vox_sitemap%', '1');
+    }
+
+    /**
+     * Handle sitemap requests.
+     */
+    private function handleSitemapRequest(): void
+    {
+        if (get_query_var('vox_sitemap') !== '1') {
+            return;
+        }
+
+        // Fetch published post and page IDs (capped at 50,000 as recommended by search engine standards)
+        $idQuery = new WP_Query([
+            'post_type' => ['post', 'page'],
+            'post_status' => 'publish',
+            'posts_per_page' => 50000,
+            'orderby' => 'modified',
+            'order' => 'DESC',
+            'fields' => 'ids',
+            'no_found_rows' => true,
+            'update_post_meta_cache' => false,
+            'update_post_term_cache' => false,
+        ]);
+
+        $entries = [];
+
+        if ($idQuery->post_count > 0) {
+            // Process in batches of 100 to reduce memory and query size overhead
+            $batches = array_chunk($idQuery->posts, 100);
+
+            foreach ($batches as $batch) {
+                // Prime caches for posts and post meta for this batch to avoid N+1 queries.
+                if (function_exists('_prime_post_caches')) {
+                    _prime_post_caches($batch, false, true);
+                }
+
+                foreach ($batch as $postId) {
+                    // Skip noindexed posts
+                    if (get_post_meta($postId, '_voxpopuli_noindex', true) === '1') {
+                        continue;
+                    }
+
+                    // ⚡ Bolt: Pass raw post object directly to avoid N+1 internal WP lookups
+                    // and access post_modified directly to bypass expensive filter cascades
+                    $post = get_post($postId);
+                    if (! $post) {
+                        continue;
+                    }
+
+                    $postType = $post->post_type;
+
+                    $entries[] = [
+                        'loc' => get_permalink($post),
+                        'lastmod' => substr($post->post_modified, 0, 10), // Extract YYYY-MM-DD
+                        'priority' => $postType === 'page' ? '0.8' : '0.7',
+                        'changefreq' => $postType === 'page' ? 'monthly' : 'weekly',
+                        'type' => $postType,
+                    ];
+                }
+            }
+        }
+
+        $sitemap = new Sitemap($entries);
+
+        // Set headers
+        status_header(200);
+        header('Content-Type: ' . $sitemap->getContentType() . '; charset=UTF-8');
+        header('Cache-Control: ' . $sitemap->getCacheControl());
+
+        $lastMod = $sitemap->getLastModified();
+        if ($lastMod !== null) {
+            header('Last-Modified: ' . gmdate('D, d M Y H:i:s', strtotime($lastMod)) . ' GMT');
+        }
+
+        echo $sitemap->toXml();
+        exit;
+    }
+}
