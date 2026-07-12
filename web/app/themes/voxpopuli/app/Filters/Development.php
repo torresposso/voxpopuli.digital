@@ -164,6 +164,8 @@ add_filter('wp_calculate_image_srcset', function ($sources) {
  * does not exist on disk, fall back to the original full-sized image to prevent broken images.
  */
 add_filter('wp_get_attachment_image_src', function ($image, $attachment_id, $size, $icon) {
+    static $file_exists_cache = [];
+
     $env = function_exists('wp_get_environment_type') ? wp_get_environment_type() : '';
     if (! in_array($env, ['local', 'development'], true)) {
         return $image;
@@ -182,12 +184,21 @@ add_filter('wp_get_attachment_image_src', function ($image, $attachment_id, $siz
             $relative_path_with_suffix = $matches[1];
             $file_path = $uploads_dir . '/' . $relative_path_with_suffix;
 
-            if (! file_exists($file_path)) {
+            // ⚡ Bolt: Cache disk I/O to avoid redundant checks during frequent filter executions
+            if (!isset($file_exists_cache[$file_path])) {
+                $file_exists_cache[$file_path] = file_exists($file_path);
+            }
+
+            if (! $file_exists_cache[$file_path]) {
                 // Resized file does not exist locally. Check if original exists.
                 $original_relative_path = preg_replace('/-\d+x\d+(\.(?:jpg|jpeg|png|gif|webp|svg|avif))$/i', '$1', $relative_path_with_suffix);
                 $original_file_path = $uploads_dir . '/' . $original_relative_path;
 
-                if (file_exists($original_file_path)) {
+                if (!isset($file_exists_cache[$original_file_path])) {
+                    $file_exists_cache[$original_file_path] = file_exists($original_file_path);
+                }
+
+                if ($file_exists_cache[$original_file_path]) {
                     // Fall back to original file source (guards against recursion because size is 'full')
                     $original_image = wp_get_attachment_image_src($attachment_id, 'full', $icon);
                     if ($original_image) {
