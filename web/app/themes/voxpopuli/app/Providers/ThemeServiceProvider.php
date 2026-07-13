@@ -100,7 +100,18 @@ class ThemeServiceProvider extends ServiceProvider
             \Illuminate\Support\Facades\Cache::forget('voxpopuli_homepage_sections_ids');
         };
 
-        add_action('save_post', $invalidateCache);
+        add_action('save_post', function ($post_id) use ($invalidateCache) {
+            // ⚡ Bolt: Prevent cache stampedes during autosaves and revisions
+            if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+                return;
+            }
+            if (wp_is_post_revision($post_id)) {
+                return;
+            }
+
+            $invalidateCache();
+        }, 10, 1);
+
         add_action('transition_post_status', function ($new_status, $old_status) use ($invalidateCache) {
             if ($new_status !== $old_status) {
                 $invalidateCache();
