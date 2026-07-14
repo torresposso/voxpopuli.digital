@@ -188,21 +188,37 @@
 
       {{-- Premium Dynamic Featured Post Section --}}
       @php
-        $drawer_posts = get_posts([
-          'numberposts' => 1,
-          'post_status' => 'publish',
-          'no_found_rows' => true
-        ]);
-      @endphp
-      @if(!empty($drawer_posts))
-        @php
+        // ⚡ Bolt: Cache expensive database query and filter executions for the global drawer component
+        $drawer_featured_data = \Illuminate\Support\Facades\Cache::remember('voxpopuli_drawer_featured_post', 3600, function () {
+          $drawer_posts = get_posts([
+            'numberposts' => 1,
+            'post_status' => 'publish',
+            'no_found_rows' => true
+          ]);
+
+          if (empty($drawer_posts)) {
+            return null;
+          }
+
           $feat_post = $drawer_posts[0];
-          $feat_title = get_the_title($feat_post);
-          $feat_link = get_permalink($feat_post);
-          $feat_date = get_the_date('', $feat_post);
           $feat_cats = get_the_category($feat_post);
-          $feat_cat_name = !empty($feat_cats) ? $feat_cats[0]->name : __('Destacado', 'voxpopuli');
-          $feat_thumb = get_the_post_thumbnail_url($feat_post, 'medium');
+
+          return [
+            'title' => get_the_title($feat_post),
+            'link' => get_permalink($feat_post),
+            'date' => get_the_date('', $feat_post),
+            'cat_name' => !empty($feat_cats) ? $feat_cats[0]->name : __('Destacado', 'voxpopuli'),
+            'thumb' => get_the_post_thumbnail_url($feat_post, 'medium'),
+          ];
+        });
+      @endphp
+      @if($drawer_featured_data)
+        @php
+          $feat_title = $drawer_featured_data['title'];
+          $feat_link = $drawer_featured_data['link'];
+          $feat_date = $drawer_featured_data['date'];
+          $feat_cat_name = $drawer_featured_data['cat_name'];
+          $feat_thumb = $drawer_featured_data['thumb'];
         @endphp
         <div class="px-6 py-6 bg-base-100/30 border-b border-base-300/40 shrink-0">
           <h3 class="font-sans text-[9px] uppercase tracking-[0.2em] text-primary font-extrabold mb-4 flex items-center gap-2">
