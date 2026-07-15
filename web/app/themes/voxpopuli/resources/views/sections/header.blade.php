@@ -46,10 +46,10 @@
                 </span>
             @endif
 
-            {{-- Social icons --}}
-            <div class="flex items-center gap-1.5">
+            {{-- Social icons — 44x44px touch targets per WCAG 2.5.8 --}}
+            <div class="flex items-center gap-1">
                 {{-- X/Twitter --}}
-                <a href="#" class="text-base-content hover:text-accent transition-colors" aria-label="X">
+                <a href="#" class="flex items-center justify-center w-11 h-11 text-base-content hover:text-accent transition-colors" aria-label="X">
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
                         fill="currentColor">
                         <path
@@ -57,7 +57,7 @@
                     </svg>
                 </a>
                 {{-- Instagram --}}
-                <a href="#" class="text-base-content hover:text-accent transition-colors" aria-label="Instagram">
+                <a href="#" class="flex items-center justify-center w-11 h-11 text-base-content hover:text-accent transition-colors" aria-label="Instagram">
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
@@ -67,7 +67,7 @@
                     </svg>
                 </a>
                 {{-- YouTube --}}
-                <a href="#" class="text-base-content hover:text-accent transition-colors" aria-label="YouTube">
+                <a href="#" class="flex items-center justify-center w-11 h-11 text-base-content hover:text-accent transition-colors" aria-label="YouTube">
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">

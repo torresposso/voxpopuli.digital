@@ -95,11 +95,25 @@ La paleta se ancla en dos colores caribeños deliberadamente no obvios: un azul 
 **Character:** Sans geométrica para titulares y UI + serif ergonómica para lectura. Plus Jakarta Sans unifica toda la interfaz — titulares, navegación, badges — con una sola voz sans que transmite claridad documental y modernidad sobria. Newsreader (diseñada por Production Type) está optimizada para lectura digital prolongada, con pesos ópticos que se ajustan automáticamente al tamaño de texto.
 
 ### Hierarchy
-- **Display** (800, clamp(2rem, 5vw, 2.75rem), line-height 1): Titulares de artículos destacados en portada. Plus Jakarta Sans. `tracking-tight`.
+
+**Display Scale** (titulares principales):
+- **Display-xl** (800, clamp(2.375rem, 5.4vw, 4.25rem), line-height 1.02): Hero headline en portada. Plus Jakarta Sans. `tracking-tight`.
+- **Display** (800, clamp(2rem, 5vw, 2.75rem), line-height 1): Titulares de artículos destacados. Plus Jakarta Sans. `tracking-tight`.
+- **Title-lg** (800, 2.25rem, line-height 0.85): Wordmark stacked en footer. Plus Jakarta Sans. `tracking-tight`.
+
+**Heading Scale** (encabezados de sección):
 - **Headline** (700, 1.75rem, line-height 1.25): Encabezados de sección (h2). Plus Jakarta Sans. `tracking-tight`.
 - **Title** (700, 1.5rem, line-height 1.25): Títulos de tarjetas de artículo. Plus Jakarta Sans. `tracking-tight`.
-- **Body** (400, 1.25rem, line-height 1.75): Cuerpo de artículos flagship. Newsreader. Ancho máximo de 75ch (`max-w-prose`). Para notas breves ("Ahora"): 1rem manteniendo la misma familia.
+
+**Body Scale** (texto de lectura):
+- **Body** (400, 1.25rem, line-height 1.75): Cuerpo de artículos flagship. Newsreader. Ancho máximo de 75ch (`max-w-prose`).
+- **Body-sm** (400, 1rem, line-height 1.5): Texto secundario, notas breves. Newsreader.
+
+**UI Scale** (elementos de interfaz):
+- **Caption** (700, 0.8125rem, line-height 1.5): Navegación de categorías. Plus Jakarta Sans.
 - **Label** (800, 0.75rem, letter-spacing 0.2em, uppercase): Categorías, badges, botones, metadatos. Plus Jakarta Sans.
+- **Small** (700, 0.6875rem, letter-spacing 0.15em, uppercase): Utilidad, copyright, fecha. Plus Jakarta Sans.
+- **Micro** (700, 0.625rem, letter-spacing 0.14em, uppercase): Etiquetas tiny, timestamps. Plus Jakarta Sans.
 
 ### Named Rules
 **The Reading Ergonomics Rule.** Todo artículo flagship usa Newsreader a 20px con `leading-relaxed` (1.75), ancho máximo de 75 caracteres. Los pesos ópticos de Newsreader se ajustan automáticamente al tamaño, mejorando la legibilidad en pantallas pequeñas con luz ambiente intensa del trópico.
