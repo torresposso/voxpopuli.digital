@@ -98,6 +98,7 @@ class ThemeServiceProvider extends ServiceProvider
         $invalidateCache = function () {
             delete_transient(\App\View\Components\Hero::getCacheKey());
             \Illuminate\Support\Facades\Cache::forget('voxpopuli_homepage_sections_ids');
+            \Illuminate\Support\Facades\Cache::forget('voxpopuli_drawer_featured_post');
         };
 
         add_action('save_post', $invalidateCache);
