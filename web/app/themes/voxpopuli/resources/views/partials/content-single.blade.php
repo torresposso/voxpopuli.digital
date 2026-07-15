@@ -1,21 +1,20 @@
-@php($pag = $pagination())
-<article @php(post_class('h-entry max-w-3xl mx-auto'))>
-  <header class="mb-8">
-    <h1 class="p-name font-display text-3xl md:text-4xl lg:text-5xl font-black text-base-content leading-tight tracking-tighter">
+<article @php(post_class('h-entry'))>
+  <header>
+    <h1 class="p-name font-display font-extrabold text-[clamp(2rem,5vw,2.75rem)] tracking-tighter">
       {!! $title !!}
     </h1>
 
     @include('partials.entry-meta')
   </header>
 
-  <div class="e-content font-serif text-base text-base-content/90 leading-relaxed prose prose-sage">
+  <x-prose as="div" class="e-content">
     @php(the_content())
-  </div>
+  </x-prose>
 
-  @if ($pag)
-    <footer>
+  @if ($pagination())
+    <footer class="border-t-2 border-base-300 pt-8">
       <nav class="page-nav" aria-label="Page">
-        {!! $pag !!}
+        {!! $pagination !!}
       </nav>
     </footer>
   @endif

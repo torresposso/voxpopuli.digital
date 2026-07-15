@@ -3,9 +3,14 @@
 use App\Seo\MetaRenderer;
 use App\Seo\SeoMeta;
 
+function renderer(SeoMeta $seo): MetaRenderer
+{
+    return new MetaRenderer($seo, 'Test Site', 'en_US');
+}
+
 it('renders OG title tag', function () {
     $seo = new SeoMeta(['og_title' => 'OG Title']);
-    $renderer = new MetaRenderer($seo);
+    $renderer = renderer($seo);
 
     $output = $renderer->render();
 
@@ -14,7 +19,7 @@ it('renders OG title tag', function () {
 
 it('renders OG description tag', function () {
     $seo = new SeoMeta(['og_desc' => 'OG Description']);
-    $renderer = new MetaRenderer($seo);
+    $renderer = renderer($seo);
 
     $output = $renderer->render();
 
@@ -26,7 +31,7 @@ it('renders OG image tag with absolute URL', function () {
         'og_image_id' => 42,
         'og_image_url' => 'https://example.com/image.jpg',
     ]);
-    $renderer = new MetaRenderer($seo);
+    $renderer = renderer($seo);
 
     $output = $renderer->render();
 
@@ -35,7 +40,7 @@ it('renders OG image tag with absolute URL', function () {
 
 it('renders OG url tag', function () {
     $seo = new SeoMeta(['post_url' => 'https://example.com/post']);
-    $renderer = new MetaRenderer($seo);
+    $renderer = renderer($seo);
 
     $output = $renderer->render();
 
@@ -44,7 +49,7 @@ it('renders OG url tag', function () {
 
 it('renders OG type tag defaulting to article', function () {
     $seo = new SeoMeta([]);
-    $renderer = new MetaRenderer($seo);
+    $renderer = renderer($seo);
 
     $output = $renderer->render();
 
@@ -53,7 +58,7 @@ it('renders OG type tag defaulting to article', function () {
 
 it('renders OG type as website for homepage', function () {
     $seo = new SeoMeta(['is_home' => true]);
-    $renderer = new MetaRenderer($seo);
+    $renderer = renderer($seo);
 
     $output = $renderer->render();
 
@@ -62,7 +67,7 @@ it('renders OG type as website for homepage', function () {
 
 it('renders Twitter card tag', function () {
     $seo = new SeoMeta([]);
-    $renderer = new MetaRenderer($seo);
+    $renderer = renderer($seo);
 
     $output = $renderer->render();
 
@@ -71,7 +76,7 @@ it('renders Twitter card tag', function () {
 
 it('renders Twitter title matching OG title', function () {
     $seo = new SeoMeta(['og_title' => 'OG Title']);
-    $renderer = new MetaRenderer($seo);
+    $renderer = renderer($seo);
 
     $output = $renderer->render();
 
@@ -80,7 +85,7 @@ it('renders Twitter title matching OG title', function () {
 
 it('renders Twitter description matching OG description', function () {
     $seo = new SeoMeta(['og_desc' => 'OG Desc']);
-    $renderer = new MetaRenderer($seo);
+    $renderer = renderer($seo);
 
     $output = $renderer->render();
 
@@ -92,7 +97,7 @@ it('renders Twitter image matching OG image', function () {
         'og_image_id' => 42,
         'og_image_url' => 'https://example.com/image.jpg',
     ]);
-    $renderer = new MetaRenderer($seo);
+    $renderer = renderer($seo);
 
     $output = $renderer->render();
 
@@ -101,7 +106,7 @@ it('renders Twitter image matching OG image', function () {
 
 it('renders meta description tag', function () {
     $seo = new SeoMeta(['meta_desc' => 'Meta Description']);
-    $renderer = new MetaRenderer($seo);
+    $renderer = renderer($seo);
 
     $output = $renderer->render();
 
@@ -110,7 +115,7 @@ it('renders meta description tag', function () {
 
 it('omits meta description tag when empty', function () {
     $seo = new SeoMeta([]);
-    $renderer = new MetaRenderer($seo);
+    $renderer = renderer($seo);
 
     $output = $renderer->render();
 
@@ -119,7 +124,7 @@ it('omits meta description tag when empty', function () {
 
 it('renders canonical link tag', function () {
     $seo = new SeoMeta(['canonical' => 'https://example.com/canonical']);
-    $renderer = new MetaRenderer($seo);
+    $renderer = renderer($seo);
 
     $output = $renderer->render();
 
@@ -128,7 +133,7 @@ it('renders canonical link tag', function () {
 
 it('omits canonical tag when empty', function () {
     $seo = new SeoMeta([]);
-    $renderer = new MetaRenderer($seo);
+    $renderer = renderer($seo);
 
     $output = $renderer->render();
 
@@ -137,7 +142,7 @@ it('omits canonical tag when empty', function () {
 
 it('renders noindex robots tag when noindex is true', function () {
     $seo = new SeoMeta(['noindex' => true]);
-    $renderer = new MetaRenderer($seo);
+    $renderer = renderer($seo);
 
     $output = $renderer->render();
 
@@ -146,7 +151,7 @@ it('renders noindex robots tag when noindex is true', function () {
 
 it('omits noindex robots tag when noindex is false', function () {
     $seo = new SeoMeta([]);
-    $renderer = new MetaRenderer($seo);
+    $renderer = renderer($seo);
 
     $output = $renderer->render();
 
@@ -155,7 +160,7 @@ it('omits noindex robots tag when noindex is false', function () {
 
 it('omits OG image tag when no image set', function () {
     $seo = new SeoMeta([]);
-    $renderer = new MetaRenderer($seo);
+    $renderer = renderer($seo);
 
     $output = $renderer->render();
 
@@ -164,7 +169,7 @@ it('omits OG image tag when no image set', function () {
 
 it('omits OG url tag when no post URL set', function () {
     $seo = new SeoMeta([]);
-    $renderer = new MetaRenderer($seo);
+    $renderer = renderer($seo);
 
     $output = $renderer->render();
 
@@ -179,7 +184,7 @@ it('renders multiple tags in one output', function () {
         'canonical' => 'https://example.com',
         'post_url' => 'https://example.com/post',
     ]);
-    $renderer = new MetaRenderer($seo);
+    $renderer = renderer($seo);
 
     $output = $renderer->render();
 

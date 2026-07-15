@@ -1,48 +1,49 @@
 <!doctype html>
-<html <?php language_attributes(); ?> data-theme="voxpopuli">
-  <head>
+<html @php(language_attributes()) data-theme="voxpopuli">
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/svg+xml" href="{{ \Illuminate\Support\Facades\Vite::asset('resources/images/favicon.svg') }}">
-    <?php do_action('get_header'); ?>
-    <?php wp_head(); ?>
-    @include('partials.seo-head')
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-  </head>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    @php(do_action('get_header'))
+    @php(wp_head())
 
-  <body <?php body_class(); ?>>
-    <?php wp_body_open(); ?>
+    @if (isset($seoMetaTags))
+        {!! $seoMetaTags !!}
+    @endif
 
-    <div id="app" class="drawer drawer-end">
-      <input id="main-drawer" type="checkbox" class="drawer-toggle" />
-      
-      <div class="drawer-content flex flex-col min-h-screen">
-        <a class="sr-only focus:not-sr-only" href="#main">
-          {{ __('Skip to content', 'voxpopuli') }}
-        </a>
+    @if (isset($seoJsonLd))
+        {!! $seoJsonLd !!}
+    @endif
 
-        <x-navbar />
+    @vite(['resources/css/app.css'])
+</head>
 
-        <main id="main" class="flex-1 pt-16">
-          @yield('content')
+<body @php(body_class()) class="bg-base-100 text-base-content antialiased">
+    @php(wp_body_open())
+
+    <a class="sr-only focus:not-sr-only focus:absolute focus:z-999 btn btn-sm btn-primary top-4 left-4" href="#main">
+        {{ __('Saltar al contenido', 'voxpopuli') }}
+    </a>
+
+    <x-drawer id="main-navigation-drawer">
+        @include('sections.header')
+
+        <main id="main">
+            @yield('content')
         </main>
 
-        @hasSection('sidebar')
-          <aside class="sidebar">
-            @yield('sidebar')
-          </aside>
+        @if (isset($footer))
+            {{ $footer }}
+        @else
+            @include('sections.footer')
         @endif
+    </x-drawer>
 
-        @include('sections.footer')
-      </div>
+    @php(do_action('get_footer'))
+    @php(wp_footer())
+</body>
 
-      <x-drawer />
-    </div>
-
-    <?php do_action('get_footer'); ?>
-    <?php wp_footer(); ?>
-  </body>
 </html>

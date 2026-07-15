@@ -10,6 +10,6 @@
   default => 'alert-info',
 })
 
-<div {{ $attributes->merge(['class' => "alert {$class}"]) }}>
+<div {{ $attributes->merge(["class" => "alert {$class} rounded-box"]) }}>
   {!! $message ?? $slot !!}
 </div>

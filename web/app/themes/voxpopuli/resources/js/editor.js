@@ -1,1 +1,5 @@
-// Editor-specific JavaScript
+import domReady from '@wordpress/dom-ready';
+
+domReady(() => {
+  //
+});

@@ -8,22 +8,6 @@ namespace App;
 
 use Illuminate\Support\Facades\Vite;
 
-// Register our custom Vite class to dynamically rewrite Hot Asset URLs in memory
-$vite = new \App\Vite();
-$vite->useHotFile(__DIR__ . '/../public/hot');
-
-// Set both bindings and instances to override any previously resolved instances in Acorn/Laravel
-app()->instance(\Roots\Acorn\Assets\Vite::class, $vite);
-app()->instance(\Illuminate\Foundation\Vite::class, $vite);
-app()->instance('assets.vite', $vite);
-
-app()->singleton(\Roots\Acorn\Assets\Vite::class, fn () => $vite);
-app()->singleton(\Illuminate\Foundation\Vite::class, fn () => $vite);
-app()->singleton('assets.vite', fn () => $vite);
-
-// Register class-based Blade components explicitly
-\Illuminate\Support\Facades\Blade::component(\App\View\Components\Hero::class, 'hero');
-
 /**
  * Inject styles into the block editor.
  *
@@ -49,18 +33,12 @@ add_action('admin_head', function () {
         return;
     }
 
-    if (! Vite::isRunningHot()) {
-        $dependencies = json_decode(Vite::content('editor.deps.json'));
-
-        foreach ($dependencies as $dependency) {
-            if (! wp_script_is($dependency)) {
-                wp_enqueue_script($dependency);
-            }
-        }
+    if (file_exists(get_theme_file_path('resources/js/editor.js'))
+        && filesize(get_theme_file_path('resources/js/editor.js')) > 0) {
+        echo Vite::withEntryPoints([
+            'resources/js/editor.js',
+        ])->toHtml();
     }
-    echo Vite::withEntryPoints([
-        'resources/js/editor.js',
-    ])->toHtml();
 });
 
 /**
@@ -88,17 +66,6 @@ add_filter('should_load_separate_core_block_assets', '__return_false');
  */
 add_action('after_setup_theme', function () {
     /**
-     * Disable intermediate image sizes (thumbnails).
-     *
-     * @link https://developer.wordpress.org/reference/hooks/intermediate_image_sizes/
-     */
-    // add_filter('intermediate_image_sizes', function ($sizes) {
-    //     return ['thumbnail'];
-    // });
-    // Scale oversized uploads down to 2560px (WordPress default)
-    // Remove the filter that returned false to restore default behavior
-
-    /**
      * Disable full-site editing support.
      *
      * @link https://wptavern.com/gutenberg-10-5-embeds-pdfs-adds-verse-block-color-options-and-introduces-new-patterns
@@ -112,6 +79,7 @@ add_action('after_setup_theme', function () {
      */
     register_nav_menus([
         'primary_navigation' => __('Primary Navigation', 'voxpopuli'),
+        'secondary_navigation' => __('Secondary Navigation', 'voxpopuli'),
     ]);
 
     /**
@@ -188,14 +156,3 @@ add_action('widgets_init', function () {
         'id' => 'sidebar-footer',
     ] + $config);
 });
-
-/**
- * Invalidate Hero featured posts cache transient when a post is saved or deleted.
- */
-add_action('save_post', function () {
-    delete_transient('voxpopuli_hero_featured_posts');
-});
-add_action('deleted_post', function () {
-    delete_transient('voxpopuli_hero_featured_posts');
-});
-

@@ -23,10 +23,10 @@ add_filter('rest_authentication_errors', function ($result) {
         return $result;
     }
 
-    $request_uri = $_SERVER['REQUEST_URI'] ?? '';
-    $rest_route = $_GET['rest_route'] ?? '';
-
     if (! is_user_logged_in()) {
+        $request_uri = $_SERVER['REQUEST_URI'] ?? '';
+        $rest_route = $_GET['rest_route'] ?? '';
+
         if (str_contains($request_uri, '/wp/v2/users') || str_contains($rest_route, '/wp/v2/users')) {
             return new \WP_Error(
                 'rest_cannot_access',
@@ -153,7 +153,7 @@ add_filter('the_content', function ($content) {
         '/https?:\/\/[^\s"\']+\/app\/uploads\/([a-zA-Z0-9_\-\/]+\-\d+x\d+\.(?:jpg|jpeg|png|gif|webp|svg|avif))/i',
         function ($m) {
             $full_url = $m[0];
-            $relative_path_with_suffix = $m[1]; // e.g. 2026/05/1993199-771x1024.jpg
+            $relative_path_with_suffix = $m[1];
 
             if (defined('WP_CONTENT_DIR')) {
                 $uploads_dir = WP_CONTENT_DIR . '/uploads';
@@ -195,5 +195,3 @@ add_filter('wp_calculate_image_srcset', function ($sources) {
     }
     return $sources;
 }, 10, 1);
-
-

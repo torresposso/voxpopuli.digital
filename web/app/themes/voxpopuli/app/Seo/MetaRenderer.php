@@ -11,9 +11,15 @@ class MetaRenderer
 {
     private SeoMeta $seo;
 
-    public function __construct(SeoMeta $seo)
+    private string $siteName;
+
+    private string $locale;
+
+    public function __construct(SeoMeta $seo, ?string $siteName = null, ?string $locale = null)
     {
         $this->seo = $seo;
+        $this->siteName = $siteName ?? get_bloginfo('name');
+        $this->locale = $locale ?? get_locale();
     }
 
     /**
@@ -41,8 +47,8 @@ class MetaRenderer
         }
 
         $tags[] = $this->metaTag('property="og:type"', $this->seo->isHome() ? 'website' : 'article');
-        $tags[] = $this->metaTag('property="og:site_name"', get_bloginfo('name'));
-        $tags[] = $this->metaTag('property="og:locale"', get_locale());
+        $tags[] = $this->metaTag('property="og:site_name"', $this->siteName);
+                $tags[] = $this->metaTag('property="og:locale"', $this->locale);
 
         // Twitter Cards
         $tags[] = $this->metaTag('name="twitter:card"', 'summary_large_image');

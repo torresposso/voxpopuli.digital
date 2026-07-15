@@ -6,7 +6,7 @@ brand
 
 ## Users
 
-Ciudadanía general del Caribe colombiano y de toda Colombia, con interés en política, investigación y análisis social profundo. Rango etario 25–60 años (foco estratégico 28–48). Consumo prioritariamente mobile vía WhatsApp como canal de distribución. Nivel educativo desde secundaria hasta universitario y profesional. Posición política progresista, centro-izquierda, ciudadanía crítica del establishment regional.
+Ciudadanía general del Caribe colombiano y de Colombia, con interés en política, investigación y análisis social profundo. Rango etario 25–60 años (foco estratégico 28–48). Consumo prioritariamente mobile vía WhatsApp como canal de distribución. Nivel educativo desde secundaria hasta universitario y profesional. Posición política progresista, centro-izquierda, ciudadanía crítica del establishment regional.
 
 Audiencia secundaria: académicos e investigadores que usan el medio como fuente de consulta, periodistas y comunicadores como referente metodológico, tomadores de decisión que monitorean el impacto de las publicaciones, y movimientos sociales/ONGs que aportan fuentes documentales.
 
@@ -16,7 +16,7 @@ Producir periodismo independiente de investigación, análisis y opinión con ri
 
 ## Brand Personality
 
-Sabia — conoce la historia y la usa para explicar el presente. Valiente — denuncia el poder sin titubeos. Caribeña — orgullosa de su tierra, su cultura y su gente. Exigente — no se conforma con la superficie, busca las capas profundas. Serena — sin estridencias, pero con determinación.
+**Sabia** — conoce la historia y la usa para explicar el presente. **Valiente** — denuncia el poder sin titubeos. **Caribeña** — orgullosa de su tierra, su cultura y su gente. **Exigente** — no se conforma con la superficie, busca las capas profundas. **Serena** — sin estridencias, pero con determinación.
 
 Arquetipo combinado: El Sabio / El Justiciero. Busca la verdad y la pone al servicio de la comunidad.
 
@@ -30,6 +30,7 @@ Tono: formal pero no críptico, accesible sin ser simplista. Firme en investigac
 - Interfaces ruidosas, sensacionalistas o con publicidad invasiva
 - Tipografía sin contraste que causa fatiga visual en lectura móvil prolongada
 - Paletas que no reflejen identidad caribeña ni sobriedad periodística
+- Modo oscuro con gradientes púrpura, acentos neón, glassmorphism
 
 ## Design Principles
 
@@ -37,7 +38,7 @@ Tono: formal pero no críptico, accesible sin ser simplista. Firme en investigac
 
 2. **Memoria viva** — cada pieza es un registro para la historia. El diseño debe facilitar el archivo, la reindexación y el rescate dinámico de contenido histórico vinculado con la coyuntura presente.
 
-3. **Rigor visual** — la misma exigencia del periodismo de datos se aplica al diseño: consistencia tipográfica, jerarquía clara, sinsutilezas decorativas vacías.
+3. **Rigor visual** — la misma exigencia del periodismo de datos se aplica al diseño: consistencia tipográfica, jerarquía clara, sin sutilezas decorativas vacías.
 
 4. **Caribeidad sin cliché** — la identidad regional se expresa en la palabra, el tono y el fondo editorial, no en paletas tropicales predecibles ni iconografía folclórica.
 
@@ -45,10 +46,8 @@ Tono: formal pero no críptico, accesible sin ser simplista. Firme en investigac
 
 ## Accessibility & Inclusion
 
-- WCAG AA como estándar mínimo
+- WCAG AA como estándar mínimo, con metas AAA en contraste de texto principal
 - Contraste Primary (9.5:1) sobre Base-100 — AAA
 - Secondary naranja solo en badges sólidos (fondo naranja + texto blanco, ratio ~4.7:1 AA); nunca para texto informativo largo
-- Muted sobre Base-100 (5.2:1) — apto para metadatos AA
-- Base-Content sobre Base-100 (18:1) — AAA para lectura óptima
 - Mobile-first con énfasis en experiencia de lectura en pantallas pequeñas
-- Modo oscuro como extensión futura
+- Modo oscuro como extensión futura (no implementado)

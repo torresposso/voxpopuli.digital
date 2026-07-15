@@ -1,0 +1,31 @@
+*REPORTE DE GESTIÓN Y MEJORAS — VOX POPULI DIGITAL*
+*Para:* Edison Lucio Torres
+*De:* Asistente de Erick
+*Tiempo de trabajo dedicado:* 4 horas y 30 minutos de labores continuas hoy
+
+---
+
+Hola Edison, ¡un saludo muy especial! 
+
+De parte de Erick, te escribo para compartirte el reporte detallado con las mejoras clave que dejamos listas y funcionando hoy en el portal de *Vox Populi Digital*. El sitio quedó volando, súper seguro y optimizado para celulares:
+
+🚀 *1. ¡La web ahora carga más rápido!*
+• *Tiempo de lectura instantáneo:* Antes, la página calculaba los minutos de lectura cada vez que un lector entraba a un artículo. Ahora el sistema hace el cálculo una sola vez y lo guarda listo para mostrar, haciendo que la página cargue al instante y reduciendo el esfuerzo del servidor.
+• *Búsquedas y navegación más fluidas:* Optimizamos las consultas internas para que la búsqueda de sugerencias y noticias destacadas responda de inmediato, eliminando procesos que ponían lenta la web.
+
+👁️ *2. Mayor claridad visual y facilidad de lectura*
+• *Títulos legibles sobre cualquier foto:* En las noticias destacadas de la portada principal, a veces las fotos eran muy claras y hacían difícil leer los títulos blancos. Le agregamos un fondo degradado elegante y sombras a las letras para que se lean a la perfección, sin importar la foto de fondo.
+• *Lectura impecable en celulares:* Ajustamos el diseño de las portadas de los artículos individuales para que se adapten de forma fluida a cualquier tamaño de celular sin que el título se corte o se vea extraño.
+
+📲 *3. Botón para compartir en redes corregido*
+• *Iconos derechos:* Corregimos un detalle gráfico que hacía que los logos de WhatsApp, Facebook y Twitter salieran girados o torcidos. Ahora se muestran perfectamente derechos.
+• *Más fácil de tocar:* Alineamos los botones para que no se muevan al intentar tocarlos en el celular, y mejoramos el contraste de sus colores para que cualquier persona los identifique y use cómodamente.
+
+🛡️ *4. Seguridad reforzada y Accesibilidad*
+• *Escudo en el buscador:* Protegimos la barra de búsqueda del sitio contra intentos de códigos maliciosos de atacantes, manteniendo la web 100% segura.
+• *Inclusión digital:* Ajustamos etiquetas internas del menú móvil para que las personas con discapacidad visual que usan lectores de pantalla por voz puedan navegar y escuchar el menú sin ningún obstáculo.
+
+---
+Con este paquete de mejoras, Erick y el equipo nos aseguramos de que *Vox Populi Digital* mantenga su excelente nivel profesional, sea rapidísimo y esté completamente blindado.
+
+¡Quedamos a tu entera disposición ante cualquier duda o comentario, Edison!

@@ -184,6 +184,6 @@ it('renders to script tag via toScript', function () {
 
     expect($script)->toContain('<script type="application/ld+json">');
     expect($script)->toContain('</script>');
-    expect($script)->toContain('"@type": "Organization"');
-    expect($script)->toContain('"name": "Test"');
+    expect($script)->toContain('"@type":"Organization"');
+    expect($script)->toContain('"name":"Test"');
 });

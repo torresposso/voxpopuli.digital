@@ -43,3 +43,6 @@ wp-cli.local.yml
 composer-setup.php
 missing-batch-*.json
 *.xml
+
+# Agent skills (ignored per user request)
+.agents/skills/

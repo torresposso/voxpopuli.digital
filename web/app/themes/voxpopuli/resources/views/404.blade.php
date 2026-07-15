@@ -1,11 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-  @include('partials.page-header')
+  <div class="max-w-7xl mx-auto px-4">
+    @include('partials.page-header')
 
-  <x-alert type="warning">
-    {!! __('Sorry, but the page you are trying to view does not exist.', 'voxpopuli') !!}
-  </x-alert>
+    @if (! have_posts())
+      <x-alert type="warning">
+        {!! __('Sorry, but the page you are trying to view does not exist.', 'voxpopuli') !!}
+      </x-alert>
 
-  {!! get_search_form(false) !!}
+      {!! get_search_form(false) !!}
+    @endif
+  </div>
 @endsection

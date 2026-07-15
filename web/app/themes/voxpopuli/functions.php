@@ -1,31 +1,63 @@
 <?php
 
 use App\Providers\SeoServiceProvider;
+use App\Providers\ThemeServiceProvider;
 use Roots\Acorn\Application;
-use Roots\Acorn\Sage\SageServiceProvider;
 
-if (! file_exists($composer = __DIR__ . '/vendor/autoload.php')) {
+/*
+|--------------------------------------------------------------------------
+| Register The Auto Loader
+|--------------------------------------------------------------------------
+|
+| Composer provides a convenient, automatically generated class loader for
+| our theme. We will simply require it into the script here so that we
+| don't have to worry about manually loading any of our classes later on.
+|
+*/
+
+if (! file_exists($composer = __DIR__.'/vendor/autoload.php')) {
     wp_die(__('Error locating autoloader. Please run <code>composer install</code>.', 'voxpopuli'));
 }
 
 require $composer;
 
-$app = Application::configure()
-    ->withRouting(wordpress: true)
+/*
+|--------------------------------------------------------------------------
+| Register The Bootloader
+|--------------------------------------------------------------------------
+|
+| The first thing we will do is schedule a new Acorn application container
+| to boot when WordPress is finished loading the theme. The application
+| serves as the "glue" for all the components of Laravel and is
+| the IoC container for the system binding all of the various parts.
+|
+*/
+
+Application::configure()
     ->withProviders([
-        SageServiceProvider::class,
+        ThemeServiceProvider::class,
         SeoServiceProvider::class,
     ])
     ->boot();
 
-// Load theme configurations
-if (file_exists($setup = __DIR__ . '/app/setup.php')) {
-    require_once $setup;
-}
+/*
+|--------------------------------------------------------------------------
+| Register Sage Theme Files
+|--------------------------------------------------------------------------
+|
+| Out of the box, Sage ships with categorically named theme files
+| containing common functionality and setup to be bootstrapped with your
+| theme. Simply add (or remove) files from the array below to change what
+| is registered alongside Sage.
+|
+*/
 
-if (file_exists($filters = __DIR__ . '/app/filters.php')) {
-    require_once $filters;
-}
-
-return $app;
-
+collect(['setup', 'filters'])
+    ->each(function ($file) {
+        if (! locate_template($file = "app/{$file}.php", true, true)) {
+            wp_die(
+                /* translators: %s is replaced with the relative file path */
+                sprintf(__('Error locating <code>%s</code> for inclusion.', 'voxpopuli'), $file)
+            );
+        }
+    });

@@ -2,24 +2,32 @@ import { defineConfig } from 'vite'
 import tailwindcss from '@tailwindcss/vite';
 import laravel from 'laravel-vite-plugin'
 import { wordpressPlugin, wordpressThemeJson } from '@roots/vite-plugin';
+
+const devHost = process.env.VITE_DEV_HOST || 'localhost';
+
 // Set APP_URL if it doesn't exist for Laravel Vite plugin
 if (! process.env.APP_URL) {
   process.env.APP_URL = 'http://example.test';
 }
 
 export default defineConfig({
-  base: '/app/themes/voxpopuli/public/build/',
+  base: '/app/themes/sage/public/build/',
   server: {
-    host: '0.0.0.0',
+    host: true,
     port: 5174,
     strictPort: true,
-    cors: { origin: true },
-    origin: 'http://0.0.0.0:5174',
-    watch: {
-      usePolling: true,
+    cors: {
+      origin: [
+        'http://localhost:8080',
+        'http://127.0.0.1:8080',
+        `http://${devHost}:8080`,
+        `http://${devHost}:5174`,
+      ],
     },
     hmr: {
-      port: 5174,
+      host: devHost,
+      clientPort: 5174,
+      protocol: 'ws',
     },
   },
   plugins: [
@@ -27,7 +35,6 @@ export default defineConfig({
     laravel({
       input: [
         'resources/css/app.css',
-        'resources/js/app.js',
         'resources/css/editor.css',
         'resources/js/editor.js',
       ],
@@ -55,4 +62,3 @@ export default defineConfig({
     },
   },
 })
-

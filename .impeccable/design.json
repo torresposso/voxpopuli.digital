@@ -1,0 +1,311 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-14T00:00:00Z",
+  "title": "Design System: VoxPopuli Digital",
+  "extensions": {
+    "colorMeta": {
+      "azul-caribe": {
+        "role": "primary",
+        "displayName": "Azul Caribe",
+        "canonical": "oklch(35% 0.144 278.697)",
+        "tonalRamp": [
+          "oklch(10% 0.144 278.697)",
+          "oklch(20% 0.144 278.697)",
+          "oklch(30% 0.144 278.697)",
+          "oklch(35% 0.144 278.697)",
+          "oklch(50% 0.144 278.697)",
+          "oklch(65% 0.144 278.697)",
+          "oklch(80% 0.144 278.697)",
+          "oklch(90% 0.10 278.697)",
+          "oklch(95% 0.05 278.697)"
+        ]
+      },
+      "naranja-caribe": {
+        "role": "accent",
+        "displayName": "Naranja del Caribe",
+        "canonical": "oklch(75% 0.183 55.934)",
+        "tonalRamp": [
+          "oklch(15% 0.183 55.934)",
+          "oklch(30% 0.183 55.934)",
+          "oklch(45% 0.183 55.934)",
+          "oklch(60% 0.183 55.934)",
+          "oklch(75% 0.183 55.934)",
+          "oklch(80% 0.15 55.934)",
+          "oklch(85% 0.11 55.934)",
+          "oklch(90% 0.07 55.934)",
+          "oklch(95% 0.03 55.934)"
+        ]
+      },
+      "base-100": {
+        "role": "neutral",
+        "displayName": "Base-100",
+        "canonical": "oklch(100% 0 0)",
+        "tonalRamp": [
+          "oklch(10% 0 0)",
+          "oklch(25% 0 0)",
+          "oklch(40% 0 0)",
+          "oklch(55% 0 0)",
+          "oklch(70% 0 0)",
+          "oklch(80% 0 0)",
+          "oklch(90% 0 0)",
+          "oklch(96% 0 0)",
+          "oklch(100% 0 0)"
+        ]
+      },
+      "base-200": {
+        "role": "neutral",
+        "displayName": "Base-200",
+        "canonical": "oklch(98% 0.005 272.314)",
+        "tonalRamp": [
+          "oklch(10% 0.005 272.314)",
+          "oklch(25% 0.005 272.314)",
+          "oklch(40% 0.005 272.314)",
+          "oklch(55% 0.005 272.314)",
+          "oklch(70% 0.005 272.314)",
+          "oklch(80% 0.005 272.314)",
+          "oklch(90% 0.005 272.314)",
+          "oklch(95% 0.005 272.314)",
+          "oklch(98% 0.005 272.314)"
+        ]
+      },
+      "base-300": {
+        "role": "neutral",
+        "displayName": "Base-300 (Borders)",
+        "canonical": "oklch(96% 0.018 272.314)",
+        "tonalRamp": [
+          "oklch(10% 0.018 272.314)",
+          "oklch(25% 0.018 272.314)",
+          "oklch(40% 0.018 272.314)",
+          "oklch(55% 0.018 272.314)",
+          "oklch(70% 0.018 272.314)",
+          "oklch(80% 0.018 272.314)",
+          "oklch(90% 0.018 272.314)",
+          "oklch(93% 0.018 272.314)",
+          "oklch(96% 0.018 272.314)"
+        ]
+      },
+      "base-content": {
+        "role": "neutral",
+        "displayName": "Base-Content",
+        "canonical": "oklch(21% 0.006 285.885)",
+        "tonalRamp": [
+          "oklch(10% 0.006 285.885)",
+          "oklch(15% 0.006 285.885)",
+          "oklch(21% 0.006 285.885)",
+          "oklch(30% 0.006 285.885)",
+          "oklch(48% 0.006 285.885)",
+          "oklch(62% 0.006 285.885)",
+          "oklch(78% 0.006 285.885)",
+          "oklch(88% 0.006 285.885)",
+          "oklch(95% 0.006 285.885)"
+        ]
+      },
+      "neutral": {
+        "role": "neutral",
+        "displayName": "Neutral",
+        "canonical": "oklch(14% 0.005 285.823)",
+        "tonalRamp": [
+          "oklch(5% 0.005 285.823)",
+          "oklch(10% 0.005 285.823)",
+          "oklch(14% 0.005 285.823)",
+          "oklch(25% 0.005 285.823)",
+          "oklch(40% 0.005 285.823)",
+          "oklch(58% 0.005 285.823)",
+          "oklch(75% 0.005 285.823)",
+          "oklch(85% 0.005 285.823)",
+          "oklch(92% 0.005 285.823)"
+        ]
+      },
+      "neutral-content": {
+        "role": "neutral",
+        "displayName": "Neutral-Content",
+        "canonical": "oklch(92% 0.004 286.32)",
+        "tonalRamp": [
+          "oklch(10% 0.004 286.32)",
+          "oklch(25% 0.004 286.32)",
+          "oklch(40% 0.004 286.32)",
+          "oklch(55% 0.004 286.32)",
+          "oklch(70% 0.004 286.32)",
+          "oklch(80% 0.004 286.32)",
+          "oklch(88% 0.004 286.32)",
+          "oklch(92% 0.004 286.32)",
+          "oklch(96% 0.004 286.32)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display (Playfair Display)",
+        "purpose": "Titulares de portada, artículos destacados y wordmark. Playfair Display 800, tracking tighter."
+      },
+      "body": {
+        "displayName": "Body (Literata)",
+        "purpose": "Cuerpo de artículos flagship a 20px con leading-relaxed (1.75). Diseñada para lectura digital prolongada."
+      },
+      "label": {
+        "displayName": "Label / UI (Plus Jakarta Sans)",
+        "purpose": "Badges de categoría, botones, metadatos, navegación. Plus Jakarta Sans 800, uppercase, tracking 0.2em."
+      }
+    },
+    "shadows": [
+      {
+        "name": "hover-glow",
+        "value": "0 4px 20px oklch(0% 0 0 / 8%)",
+        "purpose": "Elevación sutil al hacer hover sobre tarjetas. Solo en estado interactivo."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-standard",
+        "value": "cubic-bezier(0.25, 0.8, 0.25, 1)",
+        "purpose": "Transición estándar de 200ms para hover, focus y cambios de estado."
+      },
+      {
+        "name": "ease-image",
+        "value": "cubic-bezier(0.4, 0, 0.2, 1)",
+        "purpose": "Transición de 500ms para efectos de escala en imágenes del hero."
+      }
+    ],
+    "breakpoints": [
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Botón Primario",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Botón de acción principal. Full pill, fondo Azul Caribe, texto Naranja del Caribe (Mirror Rule).",
+      "html": "<button class=\"ds-btn-primary\">Acceder al expediente</button>",
+      "css": ".ds-btn-primary { background-color: oklch(35% 0.144 278.697); color: oklch(75% 0.183 55.934); padding: 0.5rem 1.5rem; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; border: none; border-radius: 2rem; cursor: pointer; transition: background-color 200ms cubic-bezier(0.25, 0.8, 0.25, 1); } .ds-btn-primary:hover { background-color: oklch(28% 0.144 278.697); } .ds-btn-primary:focus-visible { outline: 2px solid oklch(35% 0.144 278.697); outline-offset: 4px; }"
+    },
+    {
+      "name": "Botón Outline",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Botón secundario con borde. Usado en CTAs como 'Leer expediente'.",
+      "html": "<button class=\"ds-btn-outline\">Leer expediente</button>",
+      "css": ".ds-btn-outline { background-color: transparent; color: oklch(35% 0.144 278.697); padding: 0.5rem 1.5rem; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; border: 2px solid oklch(35% 0.144 278.697); border-radius: 2rem; cursor: pointer; transition: background-color 200ms cubic-bezier(0.25, 0.8, 0.25, 1), color 200ms cubic-bezier(0.25, 0.8, 0.25, 1); } .ds-btn-outline:hover { background-color: oklch(35% 0.144 278.697); color: oklch(75% 0.183 55.934); } .ds-btn-outline:focus-visible { outline: 2px solid oklch(35% 0.144 278.697); outline-offset: 4px; }"
+    },
+    {
+      "name": "Badge de Categoría",
+      "kind": "chip",
+      "refersTo": "badge-accent",
+      "description": "Etiqueta de sección editorial. Texto Naranja del Caribe, sin fondo ni borde, sobre tarjetas y hero.",
+      "html": "<span class=\"ds-badge-category\">Investigación</span>",
+      "css": ".ds-badge-category { color: oklch(75% 0.183 55.934); font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; background: transparent; border: none; padding: 0; }"
+    },
+    {
+      "name": "Tarjeta de Artículo",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Tarjeta para listar investigaciones en portada. Fondo Base-200, borde Base-300 2px.",
+      "html": "<div class=\"ds-card\"><span class=\"ds-card-badge\">Investigación</span><h3 class=\"ds-card-title\"><a href=\"#\">El agua de La Mojana en crisis</a></h3><div class=\"ds-card-meta\">Por <span class=\"ds-card-author\">Redacción</span> — 10 Jul 2026</div></div>",
+      "css": ".ds-card { background-color: oklch(98% 0.005 272.314); border: 2px solid oklch(96% 0.018 272.314); border-radius: 1rem; padding: 1.5rem; font-family: 'Plus Jakarta Sans', sans-serif; transition: box-shadow 200ms cubic-bezier(0.25, 0.8, 0.25, 1); } .ds-card:hover { box-shadow: 0 4px 20px oklch(0% 0 0 / 8%); } .ds-card-badge { color: oklch(75% 0.183 55.934); font-weight: 800; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; display: inline-block; margin-bottom: 0.75rem; } .ds-card-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; margin: 0 0 0.5rem 0; line-height: 1.25; } .ds-card-title a { color: oklch(21% 0.006 285.885); text-decoration: none; transition: color 200ms cubic-bezier(0.25, 0.8, 0.25, 1); } .ds-card-title a:hover { color: oklch(75% 0.183 55.934); } .ds-card-meta { color: oklch(14% 0.005 285.823); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; } .ds-card-author { color: oklch(75% 0.183 55.934); }"
+    },
+    {
+      "name": "Wordmark Canónico",
+      "kind": "custom",
+      "refersTo": "wordmark",
+      "description": "Wordmark tipográfico inline. 'Vox' Naranja del Caribe, 'Populi' Azul Caribe, hair space entre palabras. Plus Jakarta Sans 800. Subtexto 'digital' centrado abajo.",
+      "html": "<span class=\"ds-wordmark\"><span class=\"ds-wordmark-vox\">Vox</span><span class=\"ds-wordmark-populi\">Populi</span><span class=\"ds-wordmark-sub\">digital</span></span>",
+      "css": ".ds-wordmark { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 1.5rem; line-height: 1; display: inline-flex; flex-wrap: wrap; justify-content: center; column-gap: 0.15em; } .ds-wordmark-vox { color: oklch(75% 0.183 55.934); } .ds-wordmark-populi { color: oklch(35% 0.144 278.697); } .ds-wordmark-sub { display: block; width: 100%; text-align: center; font-weight: 400; font-size: 40%; color: oklch(35% 0.144 278.697); letter-spacing: 0.15em; margin-top: 0.25em; }"
+    },
+    {
+      "name": "Wordmark (fondo oscuro)",
+      "kind": "custom",
+      "refersTo": "wordmark-inverted",
+      "description": "Wordmark sobre fondo oscuro. 'Vox' blanco, 'Populi' Naranja del Caribe, 'digital' blanco.",
+      "html": "<span class=\"ds-wordmark-inv\"><span class=\"ds-wordmark-inv-vox\">Vox</span><span class=\"ds-wordmark-inv-populi\">Populi</span><span class=\"ds-wordmark-inv-sub\">digital</span></span>",
+      "css": ".ds-wordmark-inv { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 1.5rem; line-height: 1; display: inline-flex; flex-wrap: wrap; justify-content: center; column-gap: 0.15em; } .ds-wordmark-inv-vox { color: oklch(100% 0 0); } .ds-wordmark-inv-populi { color: oklch(75% 0.183 55.934); } .ds-wordmark-inv-sub { display: block; width: 100%; text-align: center; font-weight: 400; font-size: 40%; color: oklch(100% 0 0); letter-spacing: 0.15em; margin-top: 0.25em; }"
+    },
+    {
+      "name": "Monogram VP (favicon)",
+      "kind": "custom",
+      "refersTo": "monogram-vp",
+      "description": "Monogram VP para favicon y contextos sub-48px. V naranja, P azul. Tipográfico puro.",
+      "html": "<svg class=\"ds-monogram\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 512 512\" fill=\"none\"><rect width=\"512\" height=\"512\" rx=\"128\" fill=\"#ffffff\"/><g transform=\"translate(20, 10)\"><path d=\"M 60,140 L 170,370 H 225 L 335,140 H 270 L 205,280 L 135,140 Z\" fill=\"oklch(75% 0.183 55.934)\"/><path d=\"M 270,140 H 395 C 445,140 445,250 395,250 H 325 V 370 H 270 V 140 Z M 325,180 V 210 H 385 C 396,210 396,180 385,180 H 325 Z\" fill=\"oklch(35% 0.144 278.697)\" fill-rule=\"evenodd\"/></g></svg>",
+      "css": ".ds-monogram { width: 100%; height: auto; }"
+    },
+    {
+      "name": "Navegación (Header)",
+      "kind": "nav",
+      "refersTo": "header-nav",
+      "description": "Barra de navegación superior con wordmark, menú horizontal y drawer toggle.",
+      "html": "<header class=\"ds-navbar\"><span class=\"ds-navbar-wordmark\"><span class=\"ds-navbar-vox\">Vox</span><span class=\"ds-navbar-populi\">Populi</span></span><nav class=\"ds-nav-menu\"><a href=\"#\">Investigación</a><a href=\"#\">Análisis</a><a href=\"#\">Opinión</a><a href=\"#\">Ahora</a></nav></header>",
+      "css": ".ds-navbar { background-color: oklch(100% 0 0); border-bottom: 2px solid oklch(96% 0.018 272.314); padding: 0 1.5rem; display: flex; align-items: center; min-height: 4rem; font-family: 'Plus Jakarta Sans', sans-serif; } .ds-navbar-wordmark { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 1.25rem; display: inline-flex; gap: 0.15em; } .ds-navbar-vox { color: oklch(75% 0.183 55.934); } .ds-navbar-populi { color: oklch(35% 0.144 278.697); } .ds-nav-menu { display: flex; gap: 0.25rem; margin-left: auto; } .ds-nav-menu a { color: oklch(21% 0.006 285.885); font-size: 0.8125rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; text-decoration: none; padding: 0.5rem 1rem; border-radius: 0.5rem; transition: background-color 200ms cubic-bezier(0.25, 0.8, 0.25, 1), color 200ms cubic-bezier(0.25, 0.8, 0.25, 1); } .ds-nav-menu a:hover { background-color: oklch(98% 0.005 272.314); color: oklch(35% 0.144 278.697); } .ds-nav-menu a:focus-visible { outline: 2px solid oklch(35% 0.144 278.697); outline-offset: 4px; }"
+    },
+    {
+      "name": "Hero Destacado",
+      "kind": "custom",
+      "refersTo": "hero-featured",
+      "description": "Sección principal de portada con artículo destacado. Grid 7/5, imagen + contenido.",
+      "html": "<section class=\"ds-hero\"><div class=\"ds-hero-image\"><div class=\"ds-hero-placeholder\">Sin imagen documental</div></div><div class=\"ds-hero-content\"><span class=\"ds-badge-category\">Investigación</span><h1 class=\"ds-hero-title\"><a href=\"#\">El agua de La Mojana: radiografía de una crisis anunciada</a></h1><p class=\"ds-hero-excerpt\">Un análisis de las decisiones administrativas que profundizaron la emergencia hídrica en la subregión de La Mojana durante la última década.</p><div class=\"ds-hero-meta\">Por <span>Redacción VoxPopuli</span> — 14 Jul 2026</div></div></section>",
+      "css": ".ds-hero { display: grid; grid-template-columns: 7fr 5fr; gap: 2.5rem; align-items: center; padding-bottom: 3rem; border-bottom: 2px solid oklch(96% 0.018 272.314); } .ds-hero-image { aspect-ratio: 16 / 10; border-radius: 0.5rem; overflow: hidden; background-color: oklch(98% 0.005 272.314); border: 2px solid oklch(96% 0.018 272.314); } .ds-hero-placeholder { display: flex; align-items: center; justify-content: center; height: 100%; color: oklch(14% 0.005 285.823); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.875rem; } .ds-hero-content { display: flex; flex-direction: column; gap: 1.25rem; } .ds-hero-title { font-family: 'Playfair Display', serif; font-weight: 800; font-size: 2.75rem; line-height: 1; letter-spacing: -0.02em; margin: 0; color: oklch(21% 0.006 285.885); } .ds-hero-title a { color: inherit; text-decoration: none; transition: color 200ms cubic-bezier(0.25, 0.8, 0.25, 1); } .ds-hero-title a:hover { color: oklch(75% 0.183 55.934); } .ds-hero-excerpt { font-family: 'Literata', serif; font-size: 1rem; line-height: 1.625; color: oklch(21% 0.006 285.885); opacity: 0.9; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; margin: 0; } .ds-hero-meta { color: oklch(14% 0.005 285.823); font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; } .ds-hero-meta span { color: oklch(75% 0.183 55.934); } @media (max-width: 1024px) { .ds-hero { grid-template-columns: 1fr; } .ds-hero-title { font-size: 2rem; } }"
+    },
+    {
+      "name": "Manifiesto Editorial",
+      "kind": "custom",
+      "refersTo": "manifesto-section",
+      "description": "Sección de marca con fondo Azul Caribe, cita del manifiesto y firma de valores. La única sección donde el color primario domina la superficie.",
+      "html": "<section class=\"ds-manifesto\"><span class=\"ds-manifesto-badge\">Manifiesto Editorial</span><blockquote class=\"ds-manifesto-quote\">\"Creemos que el Caribe Colombiano no es una periferia, es un centro de producción de pensamiento crítico.\"</blockquote><p class=\"ds-manifesto-values\">— Independencia. Rigor. Caribeidad.</p></section>",
+      "css": ".ds-manifesto { background-color: oklch(35% 0.144 278.697); color: oklch(75% 0.183 55.934); padding: 4rem 2.5rem; text-align: center; border-radius: 1rem; } .ds-manifesto > * { max-width: 45rem; margin-left: auto; margin-right: auto; } .ds-manifesto-badge { display: block; color: oklch(75% 0.183 55.934); font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 1.5rem; } .ds-manifesto-quote { font-family: 'Playfair Display', serif; font-style: italic; font-size: 2rem; font-weight: 400; line-height: 1.25; letter-spacing: -0.01em; margin: 0; } .ds-manifesto-values { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.85; margin: 1.5rem 0 0 0; } @media (max-width: 768px) { .ds-manifesto { padding: 2.5rem 1.5rem; } .ds-manifesto-quote { font-size: 1.5rem; } }"
+    }
+  ],
+  "narrative": {
+    "northStar": "La Mirada Caribe",
+    "overview": "VoxPopuli Digital se constituye visualmente como un repositorio documental riguroso, sobrio y profundamente arraigado en la identidad del Caribe colombiano. No es un medio genérico con piel tropical: es un archivo vivo que mira el poder desde la costa, con la autoridad de quien conoce el territorio y la serenidad de quien no necesita gritar para ser escuchado. El sistema visual rechaza explícitamente el sensacionalismo gráfico, los adornos cosméticos del SaaS comercial, las paletas 'cálidas por defecto' del diseño editorial prefabricado y cualquier estética que priorice el entretenimiento sobre la comprensión.",
+    "keyCharacteristics": [
+      "Estructuras ortogonales limpias con separadores sutiles (bordes de 2px en base-300)",
+      "Tipografía serif clásica para titulares, serif ergonómica para lectura prolongada, sans geométrica para UI",
+      "Inversión cromática deliberada: primary-content y accent-content se espejan mutuamente",
+      "Maquetación intrínseca sin breakpoints fijos",
+      "Mobile-first con prioridad en rendimiento para conexiones limitadas"
+    ],
+    "rules": [
+      {
+        "name": "The Mirror Rule",
+        "body": "primary-content y accent-content son imágenes especulares: el contenido del primary es el color del accent, y el contenido del accent es el color del primary. Texto naranja sobre fondo azul, texto azul sobre fondo naranja.",
+        "section": "colors"
+      },
+      {
+        "name": "The 5% Accent Rule",
+        "body": "El Naranja del Caribe se reserva para categorías, interacciones y la 'V' del wordmark. Jamás supera el 5% de la superficie visual. Su rareza es su poder.",
+        "section": "colors"
+      },
+      {
+        "name": "The Reading Ergonomics Rule",
+        "body": "Todo artículo flagship usa Literata a 20px con leading-relaxed (1.75), ancho máximo de 75 caracteres. Calibrada para lectura móvil prolongada en el trópico.",
+        "section": "typography"
+      },
+      {
+        "name": "The CLS Prevention Rule",
+        "body": "Contenedores de texto con carga asíncrona de fuentes deben declarar font-size-adjust: from-font para mitigar desplazamientos de layout.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat-At-Rest Rule",
+        "body": "Todas las superficies son planas en reposo. Las sombras aparecen únicamente en respuesta a estado (hover, focus). Si una sombra es visible sin interacción del usuario, es un error.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do limitar el ancho del cuerpo de lectura a 75ch máximo con max-w-prose para prevenir fatiga visual en lectura móvil.",
+      "Do usar font-size-adjust: from-font en contenedores de texto para prevenir CLS durante la carga de Google Fonts.",
+      "Do mantener el fondo Base-100 (blanco puro) como el color mayoritario (~70%) del espacio visual.",
+      "Do aplicar la Mirror Rule consistentemente: texto accent sobre fondo primary, texto primary sobre fondo accent.",
+      "Do usar bordes de 2px en Base-300 como separadores estructurales — son visibles, deliberados, no decorativos."
+    ],
+    "donts": [
+      "Don't usar el Naranja del Caribe para texto informativo largo sobre fondos claros — solo en badges, hover states y el wordmark.",
+      "Don't aplicar border-left o border-right mayor a 1px como acento decorativo en tarjetas o callouts.",
+      "Don't combinar fondos degradados con background-clip: text para titulares — el texto siempre es color sólido.",
+      "Don't usar modales (pop-ups, overlays) para flujos que puedan resolverse inline o al final del artículo.",
+      "Don't aplicar filtros de escala de grises (grayscale) persistentes sobre rostros humanos en reportajes de derechos humanos.",
+      "Don't usar paletas 'cálidas por defecto' (crema, arena, parchment) — el fondo es blanco puro, la calidez viene del contenido.",
+      "Don't superar 2rem de border-radius en ningún elemento.",
+      "Don't emparejar bordes de 1px con sombras difusas de más de 8px en el mismo elemento."
+    ]
+  }
+}
