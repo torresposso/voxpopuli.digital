@@ -44,5 +44,8 @@ composer-setup.php
 missing-batch-*.json
 *.xml
 
+# Node dependencies
+/node_modules
+
 # Agent skills (ignored per user request)
 .agents/skills/
