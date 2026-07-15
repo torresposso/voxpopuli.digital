@@ -26,8 +26,93 @@ class SeoServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Register the View Composer for SEO data injection
+        // Register the View Composer for SEO data injection (Sage Blade layouts)
         $this->app->make('view')->composer('layouts.app', SeoComposer::class);
+
+        // Render SEO meta tags in wp_head for non-Blade themes (e.g. SmartMag)
+        add_action('wp_head', function () {
+            $composer = $this->app->make(SeoComposer::class);
+            $data = $composer->with();
+            if (! empty($data['seoMetaTags'])) {
+                echo $data['seoMetaTags'] . "\n";
+            }
+            if (! empty($data['seoJsonLd'])) {
+                echo $data['seoJsonLd'] . "\n";
+            }
+        }, 1);
+
+        // Alternative: Direct wp_head output for SEO tags (when Sage Blade layout is not used)
+        add_action('wp_head', function () {
+            $data = [];
+            if (is_singular()) {
+                $postId = get_queried_object_id();
+                $data = [
+                    'post_title' => get_the_title($postId),
+                    'post_url' => get_permalink($postId),
+                    'meta_desc' => get_post_meta($postId, '_voxpopuli_meta_desc', true) ?: null,
+                    'og_title' => get_post_meta($postId, '_voxpopuli_og_title', true) ?: null,
+                    'og_desc' => get_post_meta($postId, '_voxpopuli_og_desc', true) ?: null,
+                    'og_image_url' => null,
+                    'noindex' => get_post_meta($postId, '_voxpopuli_noindex', true) === '1',
+                    'canonical' => get_post_meta($postId, '_voxpopuli_canonical', true) ?: null,
+                    'post_url' => get_permalink($postId),
+                ];
+                $ogImageId = get_post_meta($postId, '_voxpopuli_og_image', true);
+                if (empty($ogImageId)) {
+                    $ogImageId = get_post_thumbnail_id($postId);
+                }
+                if ($ogImageId) {
+                    $data['og_image_url'] = wp_get_attachment_url((int) $ogImageId);
+                }
+            } elseif (is_front_page()) {
+                $data = [
+                    'post_title' => get_bloginfo('name'),
+                    'post_url' => home_url('/'),
+                    'meta_desc' => get_bloginfo('description'),
+                    'og_title' => get_bloginfo('name'),
+                    'og_desc' => get_bloginfo('description'),
+                    'og_image_url' => null,
+                    'noindex' => false,
+                    'canonical' => home_url('/'),
+                ];
+            }
+
+            if (empty($data)) {
+                return;
+            }
+
+            $seo = new \App\Seo\SeoMeta($data);
+            $renderer = new \App\Seo\MetaRenderer($seo);
+            echo $renderer->render() . "\n";
+
+            // JSON-LD
+            $siteUrl = home_url();
+            $siteName = get_bloginfo('name');
+            $jsonld = app(\App\Seo\JsonLd::class);
+            $graph = [];
+
+            $org = $jsonld->organization(['name' => $siteName, 'url' => $siteUrl]);
+            unset($org['@context']);
+            $graph[] = $org;
+
+            $site = $jsonld->website(['name' => $siteName, 'url' => $siteUrl, 'search_url' => $siteUrl . '/?s={search_term_string}']);
+            unset($site['@context']);
+            $graph[] = $site;
+
+            if (is_singular('post')) {
+                $article = $jsonld->article([
+                    'headline' => $data['post_title'] ?? '',
+                    'description' => $data['meta_desc'] ?? $data['og_desc'] ?? '',
+                    'url' => $data['post_url'] ?? '',
+                ]);
+                unset($article['@context']);
+                $graph[] = $article;
+            }
+
+            $graph[] = $jsonld->breadcrumbList([['name' => 'Inicio', 'url' => $siteUrl]]);
+
+            echo \App\Seo\JsonLd::toScript(['@context' => 'https://schema.org', '@graph' => $graph]) . "\n";
+        }, 1);
 
         // Register admin meta boxes
         add_action('add_meta_boxes', function () {
@@ -38,6 +123,9 @@ class SeoServiceProvider extends ServiceProvider
         add_action('save_post', function (int $postId) {
             $this->saveMetaBoxFields($postId);
         });
+
+        // Disable WordPress core sitemaps — we use a custom one
+        add_filter('wp_sitemaps_enabled', '__return_false');
 
         // Register sitemap rewrite rule
         add_action('init', function () {

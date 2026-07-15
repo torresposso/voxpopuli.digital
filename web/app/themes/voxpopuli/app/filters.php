@@ -195,3 +195,20 @@ add_filter('wp_calculate_image_srcset', function ($sources) {
     }
     return $sources;
 }, 10, 1);
+
+/**
+ * Disable jQuery Migrate script in production for performance.
+ */
+add_filter('wp_default_scripts', function ($scripts) {
+    if (! empty($scripts->registered['jquery'])) {
+        $scripts->registered['jquery']->deps = array_diff(
+            $scripts->registered['jquery']->deps,
+            ['jquery-migrate']
+        );
+    }
+});
+
+/**
+ * Disable WordPress core sitemaps — custom sitemap via SeoServiceProvider.
+ */
+add_filter('wp_sitemaps_enabled', '__return_false');
