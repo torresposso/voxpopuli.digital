@@ -4,7 +4,9 @@
   Artículo destacado curado — ocupación de ancho completo.
   ═══════════════════════════════════════════════════════════════
 --}}
-<section class="space-y-4">
+
+<section class="space-y-4 my-16">
+<div class="max-w-7xl mx-auto px-4">
 
   {{-- Badge --}}
   <x-badge tracking="tracking-[0.2em]">
@@ -55,4 +57,5 @@
 
     </div>
   </div>
+</div>
 </section>

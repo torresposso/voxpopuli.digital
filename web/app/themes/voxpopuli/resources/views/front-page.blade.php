@@ -119,6 +119,10 @@
             @include('sections.front-page.opinion', ['posts' => $opinion])
         @endif
 
+        @if (!empty($deportes))
+            @include('sections.front-page.deportes', ['deportes' => $deportes])
+        @endif
+
         @if (!empty($barranquilla) || !empty($cartagena) || !empty($santaMarta))
             @include('sections.front-page.territorios', [
                 'barranquilla' => $barranquilla,
@@ -135,13 +139,13 @@
             @include('sections.front-page.esenciales', ['posts' => $esenciales])
         @endif
 
-        @if (!empty($multimedia))
+       {{--  @if (!empty($multimedia))
             @include('sections.front-page.multimedia', ['posts' => $multimedia])
         @endif
+--}}
+        {{--@include('sections.front-page.boletin') --}}
 
-        @include('sections.front-page.boletin')
-
-        <section
+        <!--<section
             class="bg-primary text-primary-content rounded-lg p-[2.5rem] lg:p-[4rem] text-center relative overflow-hidden">
             <div class="absolute inset-0 noise-overlay opacity-5"></div>
 
@@ -154,6 +158,6 @@
                     — {{ __('Independencia. Rigor. Caribeidad.', 'voxpopuli') }}
                 </p>
             </div>
-        </section>
+        </section>-->
 
 @endsection

@@ -1,4 +1,5 @@
 <section aria-labelledby="heading-esenciales">
+  <div class="max-w-7xl mx-auto px-4">
   {{-- Encabezado con borde inferior --}}
   <div class="border-b-2 border-base-content pb-3.5 mb-6">
     <h2 id="heading-esenciales"
@@ -34,4 +35,5 @@
       @endif
     @endforeach
   </ul>
+</div>
 </section>

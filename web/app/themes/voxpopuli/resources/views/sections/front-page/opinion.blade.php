@@ -1,17 +1,17 @@
 {{--
   ═══════════════════════════════════════════════════════════════
-  Section: Periodismo de Investigación
-  Grid de 6 artículos — sin cards, solo imagen documental + título.
+  Section: Opinión
+  Grid de 4 artículos — con imagen documental, título y byline.
   ═══════════════════════════════════════════════════════════════
 --}}
-<section class="bg-base-300 p-4">
+<section class="bg-base-100 p-4">
 <div class="mx-auto max-w-7xl">
   {{-- Encabezado de sección --}}
   <div class="flex items-end justify-between border-b-2 border-base-300">
     <h2 class="font-display font-extrabold text-[0.8rem] md:text-[1.2rem] tracking-tight text-base-content">
-      {{ __('Periodismo de Investigación', 'voxpopuli') }}
+      {{ __('Opinión', 'voxpopuli') }}
     </h2>
-    <a href="{{ home_url('/category/investigacion/') }}"
+    <a href="{{ home_url('/category/opinion/') }}"
        class="font-sans font-bold text-[0.75rem] uppercase tracking-[0.2em] text-accent hover:text-accent/80 transition-colors duration-200 no-underline shrink-0 focus-visible:outline-primary focus-visible:outline-2 focus-visible:outline-offset-2 rounded-sm">
       {{ __('Ver todas', 'voxpopuli') }}
       <span aria-hidden="true"
@@ -24,7 +24,7 @@
     @forelse($posts as $post)
       <article>
 
-        {{-- Miniatura documental (4:3) --}}
+        {{-- Imagen documental (16:9) --}}
         <figure class="aspect-video overflow-hidden rounded-box bg-base-300 mb-4">
           @if ($post->image)
             <img src="{{ $post->image }}"
@@ -48,10 +48,16 @@
           </a>
         </h3>
 
+        {{-- Byline --}}
+        <div class="font-sans font-semibold text-[0.75rem] uppercase tracking-wider text-neutral mt-2">
+          {{ __('Por', 'voxpopuli') }}
+          <span class="text-accent">{{ $post->author }}</span>
+        </div>
+
       </article>
     @empty
       <p class="font-serif text-base-content/60 col-span-full text-center py-8">
-        {{ __('No hay investigaciones disponibles.', 'voxpopuli') }}
+        {{ __('No hay artículos de opinión disponibles.', 'voxpopuli') }}
       </p>
     @endforelse
   </div>

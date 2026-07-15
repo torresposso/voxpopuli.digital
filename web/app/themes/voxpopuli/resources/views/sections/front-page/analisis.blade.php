@@ -1,7 +1,7 @@
 {{--
   ═══════════════════════════════════════════════════════════════
-  Section: Periodismo de Investigación
-  Grid de 6 artículos — sin cards, solo imagen documental + título.
+  Section: Análisis
+  Grid de 8 artículos — sin cards, solo imagen documental + título.
   ═══════════════════════════════════════════════════════════════
 --}}
 <section class="bg-base-300 p-4">
@@ -9,9 +9,9 @@
   {{-- Encabezado de sección --}}
   <div class="flex items-end justify-between border-b-2 border-base-300">
     <h2 class="font-display font-extrabold text-[0.8rem] md:text-[1.2rem] tracking-tight text-base-content">
-      {{ __('Periodismo de Investigación', 'voxpopuli') }}
+      {{ __('Análisis', 'voxpopuli') }}
     </h2>
-    <a href="{{ home_url('/category/investigacion/') }}"
+    <a href="{{ home_url('/category/analisis/') }}"
        class="font-sans font-bold text-[0.75rem] uppercase tracking-[0.2em] text-accent hover:text-accent/80 transition-colors duration-200 no-underline shrink-0 focus-visible:outline-primary focus-visible:outline-2 focus-visible:outline-offset-2 rounded-sm">
       {{ __('Ver todas', 'voxpopuli') }}
       <span aria-hidden="true"
@@ -51,7 +51,7 @@
       </article>
     @empty
       <p class="font-serif text-base-content/60 col-span-full text-center py-8">
-        {{ __('No hay investigaciones disponibles.', 'voxpopuli') }}
+        {{ __('No hay análisis disponibles.', 'voxpopuli') }}
       </p>
     @endforelse
   </div>

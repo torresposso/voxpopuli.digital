@@ -1,0 +1,48 @@
+@import "tailwindcss" theme(static);
+@source "../../app/**/*.php";
+@source "../**/*.blade.php";
+@source "../**/*.js";
+
+@plugin "daisyui" {
+  themes: vox-caribe;
+}
+@plugin "@tailwindcss/typography";
+
+@plugin "daisyui/theme" {
+  name: "vox-caribe";
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
+
+  --color-base-100: oklch(100% 0 0);
+  --color-base-200: oklch(98% 0.005 272.314);
+  --color-base-300: oklch(96% 0.018 272.314);
+  --color-base-content: oklch(21% 0.006 285.885);
+
+  --color-primary: oklch(35% 0.144 278.697);
+  --color-primary-content: oklch(75% 0.183 55.934);
+
+  --color-accent: oklch(75% 0.183 55.934);
+  --color-accent-content: oklch(35% 0.144 278.697);
+
+  --color-neutral: oklch(14% 0.005 285.823);
+  --color-neutral-content: oklch(92% 0.004 286.32);
+
+  /* The Atlantic style: no border-radius, no borders, flat */
+  --radius-selector: 0px;
+  --radius-field: 0px;
+  --radius-box: 0px;
+
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+
+  --border: 0px;
+  --depth: 0;
+  --noise: 0;
+}
+
+@theme {
+  --font-display: "Source Serif 4", serif;
+  --font-serif: "Source Serif 4", serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+}

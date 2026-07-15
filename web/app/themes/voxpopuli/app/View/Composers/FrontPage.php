@@ -60,6 +60,10 @@ class FrontPage extends Composer
         $santaMarta = array_map([$this, 'process'],
             $this->posts->findForSection('santa-marta', 2, $usedIds));
 
+        // Sports section
+        $deportes = array_map([$this, 'process'],
+            $this->posts->findForSection('deportes', 3, $usedIds));
+
         // Multimedia section (videos + podcast)
         $multimedia = array_map([$this, 'process'],
             $this->posts->findFromCategories(['videos', 'podcast'], 3, $usedIds));
@@ -76,6 +80,7 @@ class FrontPage extends Composer
             'hero', 'featured', 'rail',
             'investigacion', 'analisis', 'opinion',
             'barranquilla', 'cartagena', 'santaMarta',
+            'deportes',
             'multimedia', 'editorPick',
             'esenciales'
         );
