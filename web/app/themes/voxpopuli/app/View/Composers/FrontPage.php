@@ -34,20 +34,31 @@ class FrontPage extends Composer
     public function with()
     {
         // Core sections: hero + LATEST
-        $result = $this->posts->findFrontPage(8);
+        $result = $this->posts->findFrontPage(6);
         $usedIds = $result['ids'];
 
         $hero = $result['hero'] ? $this->process($result['hero']) : null;
         $featured = $result['featured'] ? $this->process($result['featured']) : null;
         $rail = array_map([$this, 'process'], $result['rail']);
 
-        // Investigation section
+        // Investigation + Analysis merged section
         $investigacion = array_map([$this, 'process'],
             $this->posts->findForSection('investigacion', 3, $usedIds));
 
-        // Territories section
-        $territorios = array_map([$this, 'process'],
-            $this->posts->findForSection('territorios', 3, $usedIds));
+        $analisis = array_map([$this, 'process'],
+            $this->posts->findForSection('analisis', 3, $usedIds));
+
+        // Opinion section
+        $opinion = array_map([$this, 'process'],
+            $this->posts->findForSection('opinion', 4, $usedIds));
+
+        // Territories section — 2 últimos de cada ciudad
+        $barranquilla = array_map([$this, 'process'],
+            $this->posts->findForSection('barranquilla', 2, $usedIds));
+        $cartagena = array_map([$this, 'process'],
+            $this->posts->findForSection('cartagena', 2, $usedIds));
+        $santaMarta = array_map([$this, 'process'],
+            $this->posts->findForSection('santa-marta', 2, $usedIds));
 
         // Multimedia section (videos + podcast)
         $multimedia = array_map([$this, 'process'],
@@ -63,7 +74,8 @@ class FrontPage extends Composer
 
         return compact(
             'hero', 'featured', 'rail',
-            'investigacion', 'territorios',
+            'investigacion', 'analisis', 'opinion',
+            'barranquilla', 'cartagena', 'santaMarta',
             'multimedia', 'editorPick',
             'esenciales'
         );

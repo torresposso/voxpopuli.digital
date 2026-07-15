@@ -1,14 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-    @if ($hero)
         <a href="{{ $hero->url }}"
             class="hero min-h-[clamp(480px,74vh,720px)] overflow-hidden bg-cover bg-center bg-base-200"
             @if ($hero->image) style="background-image:url('{{ $hero->image }}')" @endif>
             <div class="hero-overlay bg-linear-to-t from-black/85 via-black/35 to-black/5"></div>
             <div class="hero-content text-neutral-content text-left w-full justify-start items-end pb-14 px-6 lg:px-16">
                 <div class="max-w-[760px]">
-                    <div class="flex items-center gap-2.5 mb-4">
+                    <div class="flex items-center gap-2.5">
                         <span class="w-[5px] h-[17px] bg-accent block"></span>
                         <span
                             class="font-sans font-bold text-xs tracking-[0.16em] uppercase text-accent">{{ $hero->category }}</span>
@@ -32,38 +31,19 @@
                 </div>
             </div>
         </a>
-    @else
-        <div class="max-w-7xl mx-auto px-4">
-            <section class="hero min-h-[40vh] bg-base-200 border border-base-300 rounded-lg p-[3rem] text-center">
-                <div class="max-w-160 mx-auto space-y-4">
-                    <h1 class="font-display font-extrabold text-[2.5rem] tracking-tighter text-base-content">
-                        {{ __('El archivo vivo del periodismo de investigación', 'voxpopuli') }}
-                    </h1>
-                    <p class="font-serif text-lg leading-relaxed text-neutral">
-                        {{ __('Bienvenido a Vox Populi Digital. Estamos indexando los últimos expedientes, investigaciones y análisis del Caribe colombiano.', 'voxpopuli') }}
-                    </p>
-                    <div class="pt-4">
-                        <a href="/wp/wp-admin/post-new.php"
-                            class="btn btn-primary font-sans font-bold uppercase tracking-wider">
-                            {{ __('Crear primera entrada', 'voxpopuli') }}
-                        </a>
-                    </div>
-                </div>
-            </section>
-        </div>
-    @endif
+
 
     <div class="py-6">
         @if ($featured || !empty($rail))
-            <section class="max-w-7xl mx-auto">
-                <div class="grid grid-cols-1 lg:grid-cols-[1.7fr_1fr] gap-12 items-start">
+            <section class="max-w-7xl mx-auto px-4">
+                <div class="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-12 lg:gap-24 items-start">
                     @if ($featured)
                         <a href="{{ $featured->url }}" class="block no-underline text-base-content">
                             <div
-                                class="w-full aspect-[16/10] overflow-hidden rounded-lg bg-base-200 border border-base-300 relative mb-5">
+                                class="w-full overflow-hidden rounded-lg bg-base-200 border border-base-300 relative mb-5">
                                 @if ($featured->image)
                                     <img src="{{ $featured->image }}" alt="{{ $featured->alt }}" loading="lazy"
-                                        class="w-full h-full object-cover" />
+                                        class="w-full h-full aspect-video object-cover" />
                                 @else
                                     <div class="w-full h-full img-placeholder flex items-center justify-center p-8">
                                         <span
@@ -107,10 +87,10 @@
                             @foreach ($rail as $post)
                                 <a href="{{ $post->url }}"
                                     class="flex gap-3.5 items-start py-6 border-b border-base-300 no-underline text-base-content hover:text-accent transition-colors duration-200">
-                                    <div class="shrink-0 w-24 h-[70px] overflow-hidden rounded bg-base-200 relative">
+                                    <div class="shrink-0 w-1/4 overflow-hidden rounded bg-base-200 relative">
                                         @if ($post->image)
                                             <img src="{{ $post->image }}" alt="{{ $post->alt }}" loading="lazy"
-                                                class="w-full h-full object-cover" />
+                                                class="w-full h-full aspect-square lg:aspect-video object-cover" />
                                         @endif
                                     </div>
                                     <div>
@@ -119,7 +99,7 @@
                                             {{ $post->category }}
                                         </div>
                                         <div
-                                            class="font-sans font-semibold text-[0.9375rem] leading-tight text-base-content">
+                                            class="font-sans font-semibold text-base lg:text-lg leading-tight text-base-content">
                                             {{ $post->title }}
                                         </div>
                                     </div>
@@ -131,12 +111,20 @@
             </section>
         @endif
     </div>
-        @if (!empty($investigacion))
-            @include('sections.front-page.investigacion', ['posts' => $investigacion])
+        @if (!empty($investigacion) || !empty($analisis))
+            @include('sections.front-page.investigacion-analisis', ['investigacion' => $investigacion, 'analisis' => $analisis])
         @endif
 
-        @if (!empty($territorios))
-            @include('sections.front-page.territorios', ['posts' => $territorios])
+        @if (!empty($opinion))
+            @include('sections.front-page.opinion', ['posts' => $opinion])
+        @endif
+
+        @if (!empty($barranquilla) || !empty($cartagena) || !empty($santaMarta))
+            @include('sections.front-page.territorios', [
+                'barranquilla' => $barranquilla,
+                'cartagena' => $cartagena,
+                'santaMarta' => $santaMarta,
+            ])
         @endif
 
         @if (!empty($editorPick))

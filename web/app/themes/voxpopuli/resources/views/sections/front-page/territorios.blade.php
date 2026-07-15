@@ -1,4 +1,6 @@
-<section aria-labelledby="titulo-territorios">
+<div class="bg-base-200 py-8">
+
+<section class="max-w-7xl mx-auto px-4" aria-labelledby="titulo-territorios">
   {{-- Encabezado --}}
   <header class="mb-8 lg:mb-10">
     <div class="flex items-center justify-between pb-4 border-b-2 border-base-300">
@@ -17,39 +19,153 @@
     </div>
   </header>
 
-  {{-- Grid de 3 cards --}}
+  {{-- Grid de 3 columnas — una por ciudad --}}
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-    @foreach ($posts as $post)
-      <div class="card card-border bg-base-200 rounded-box">
-        <div class="card-body p-[1.5rem] gap-[1rem]">
-          {{-- Badge con nombre del territorio --}}
-          <x-badge>{{ $post->category }}</x-badge>
 
-          {{-- Titular --}}
-          <h3 class="card-title font-display font-bold text-[1.5rem] tracking-tighter text-base-content leading-tight">
-            <a
-              href="{{ $post->url }}"
-              class="hover:text-accent focus-visible:outline-primary transition-colors duration-[200ms] no-underline"
-            >
-              {{ $post->title }}
-            </a>
-          </h3>
-
-          {{-- Bajada --}}
-          @if ($post->excerpt)
-            <p class="font-serif text-sm text-base-content/70 leading-relaxed">
-              {{ $post->excerpt }}
-            </p>
-          @endif
-
-          {{-- Firma y fecha --}}
-          <div class="text-neutral font-sans font-semibold text-[0.75rem] uppercase tracking-wider mt-[0.5rem]">
-            {{ __('Por', 'voxpopuli') }}
-            <span class="text-accent">{{ $post->author }}</span>
-            · {{ $post->date }}
-          </div>
-        </div>
+    {{-- Barranquilla --}}
+    <div>
+      <h3 class="font-display font-black text-lg text-base-content border-b-2 border-base-content pb-2 mb-4">
+        Barranquilla
+      </h3>
+      <div class="space-y-4">
+        @forelse ($barranquilla as $post)
+          <article class="card card-border bg-base-200 rounded-box">
+            <div class="flex items-start gap-3 p-4">
+              <div class="flex-1 min-w-0">
+                <h4 class="font-display font-bold text-[1.125rem] tracking-tighter text-base-content leading-tight">
+                  <a
+                    href="{{ $post->url }}"
+                    class="hover:text-accent focus-visible:outline-primary transition-colors duration-[200ms] no-underline"
+                  >
+                    {{ $post->title }}
+                  </a>
+                </h4>
+                @if ($post->excerpt)
+                  <p class="font-serif text-sm text-base-content/70 leading-relaxed line-clamp-2 mt-1">
+                    {{ $post->excerpt }}
+                  </p>
+                @endif
+                <div class="text-neutral font-sans font-semibold text-[0.6875rem] uppercase tracking-wider mt-2">
+                  {{ __('Por', 'voxpopuli') }}
+                  <span class="text-accent">{{ $post->author }}</span>
+                  · {{ $post->date }}
+                </div>
+              </div>
+              <div class="shrink-0 w-[80px] h-[80px] overflow-hidden rounded-box bg-base-300">
+                @if ($post->image)
+                  <img src="{{ $post->image }}" alt="{{ $post->alt }}" loading="lazy" class="w-full h-full object-cover" />
+                @else
+                  <div class="w-full h-full flex items-center justify-center text-base-content/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-6 h-6">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.41a2.25 2.25 0 0 1 3.182 0l2.909 2.91m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                    </svg>
+                  </div>
+                @endif
+              </div>
+            </div>
+          </article>
+        @empty
+          <p class="font-sans text-sm text-base-content/50 italic">{{ __('Sin crónicas de Barranquilla', 'voxpopuli') }}</p>
+        @endforelse
       </div>
-    @endforeach
     </div>
+
+    {{-- Cartagena --}}
+    <div>
+      <h3 class="font-display font-black text-lg text-base-content border-b-2 border-base-content pb-2 mb-4">
+        Cartagena
+      </h3>
+      <div class="space-y-4">
+        @forelse ($cartagena as $post)
+          <article class="card card-border bg-base-200 rounded-box">
+            <div class="flex items-start gap-3 p-4">
+              <div class="flex-1 min-w-0">
+                <h4 class="font-display font-bold text-[1.125rem] tracking-tighter text-base-content leading-tight">
+                  <a
+                    href="{{ $post->url }}"
+                    class="hover:text-accent focus-visible:outline-primary transition-colors duration-[200ms] no-underline"
+                  >
+                    {{ $post->title }}
+                  </a>
+                </h4>
+                @if ($post->excerpt)
+                  <p class="font-serif text-sm text-base-content/70 leading-relaxed line-clamp-2 mt-1">
+                    {{ $post->excerpt }}
+                  </p>
+                @endif
+                <div class="text-neutral font-sans font-semibold text-[0.6875rem] uppercase tracking-wider mt-2">
+                  {{ __('Por', 'voxpopuli') }}
+                  <span class="text-accent">{{ $post->author }}</span>
+                  · {{ $post->date }}
+                </div>
+              </div>
+              <div class="shrink-0 w-[80px] h-[80px] overflow-hidden rounded-box bg-base-300">
+                @if ($post->image)
+                  <img src="{{ $post->image }}" alt="{{ $post->alt }}" loading="lazy" class="w-full h-full object-cover" />
+                @else
+                  <div class="w-full h-full flex items-center justify-center text-base-content/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-6 h-6">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.41a2.25 2.25 0 0 1 3.182 0l2.909 2.91m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                    </svg>
+                  </div>
+                @endif
+              </div>
+            </div>
+          </article>
+        @empty
+          <p class="font-sans text-sm text-base-content/50 italic">{{ __('Sin crónicas de Cartagena', 'voxpopuli') }}</p>
+        @endforelse
+      </div>
+    </div>
+
+    {{-- Santa Marta --}}
+    <div>
+      <h3 class="font-display font-black text-lg text-base-content border-b-2 border-base-content pb-2 mb-4">
+        Santa Marta
+      </h3>
+      <div class="space-y-4">
+        @forelse ($santaMarta as $post)
+          <article class="card card-border bg-base-200 rounded-box">
+            <div class="flex items-start gap-3 p-4">
+              <div class="flex-1 min-w-0">
+                <h4 class="font-display font-bold text-[1.125rem] tracking-tighter text-base-content leading-tight">
+                  <a
+                    href="{{ $post->url }}"
+                    class="hover:text-accent focus-visible:outline-primary transition-colors duration-[200ms] no-underline"
+                  >
+                    {{ $post->title }}
+                  </a>
+                </h4>
+                @if ($post->excerpt)
+                  <p class="font-serif text-sm text-base-content/70 leading-relaxed line-clamp-2 mt-1">
+                    {{ $post->excerpt }}
+                  </p>
+                @endif
+                <div class="text-neutral font-sans font-semibold text-[0.6875rem] uppercase tracking-wider mt-2">
+                  {{ __('Por', 'voxpopuli') }}
+                  <span class="text-accent">{{ $post->author }}</span>
+                  · {{ $post->date }}
+                </div>
+              </div>
+              <div class="shrink-0 w-[80px] h-[80px] overflow-hidden rounded-box bg-base-300">
+                @if ($post->image)
+                  <img src="{{ $post->image }}" alt="{{ $post->alt }}" loading="lazy" class="w-full h-full object-cover" />
+                @else
+                  <div class="w-full h-full flex items-center justify-center text-base-content/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-6 h-6">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.41a2.25 2.25 0 0 1 3.182 0l2.909 2.91m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                    </svg>
+                  </div>
+                @endif
+              </div>
+            </div>
+          </article>
+        @empty
+          <p class="font-sans text-sm text-base-content/50 italic">{{ __('Sin crónicas de Santa Marta', 'voxpopuli') }}</p>
+        @endforelse
+      </div>
+    </div>
+
+  </div>
 </section>
+</div>
