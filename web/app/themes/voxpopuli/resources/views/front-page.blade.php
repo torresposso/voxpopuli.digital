@@ -1,16 +1,22 @@
 @extends('layouts.app')
 
+@push('head')
+    @if ($hero && $hero->image)
+        <link rel="preload" as="image" href="{{ $hero->image }}" fetchpriority="high">
+    @endif
+@endpush
+
 @section('content')
         <a href="{{ $hero->url }}"
             class="hero min-h-[clamp(480px,74vh,720px)] overflow-hidden bg-cover bg-center bg-base-200"
             @if ($hero->image) style="background-image:url('{{ $hero->image }}')" @endif>
-            <div class="hero-overlay bg-linear-to-t from-black/85 via-black/35 to-black/5"></div>
+            <div class="hero-overlay bg-linear-to-t from-black/85 via-black/35 to-black/25"></div>
             <div class="hero-content text-neutral-content text-left w-full justify-start items-end pb-14 px-6 lg:px-16">
                 <div class="max-w-[760px]">
                     <div class="flex items-center gap-2.5">
                         <span class="w-[5px] h-[17px] bg-accent block"></span>
                         <span
-                            class="font-sans font-bold text-xs tracking-[0.16em] uppercase text-accent">{{ $hero->category }}</span>
+                            class="font-sans font-bold text-xs tracking-[0.14em] uppercase text-accent">{{ $hero->category }}</span>
                     </div>
 
                     <h1 class="font-display font-extrabold text-white leading-[1.02] tracking-tight mb-4.5"
@@ -25,7 +31,7 @@
                         </p>
                     @endif
 
-                    <div class="font-sans font-semibold text-xs tracking-[0.06em] uppercase text-white/70">
+                    <div class="font-sans font-semibold text-xs tracking-[0.06em] uppercase text-white/80">
                         {{ __('Por', 'voxpopuli') }} {{ $hero->author }} · {{ $hero->date }}
                     </div>
                 </div>
@@ -42,7 +48,7 @@
                             <div
                                 class="w-full overflow-hidden rounded-lg bg-base-200 border border-base-300 relative mb-5">
                                 @if ($featured->image)
-                                    <img src="{{ $featured->image }}" alt="{{ $featured->alt }}" loading="lazy"
+                                    <img src="{{ $featured->image }}" alt="{{ $featured->alt }}" loading="lazy" decoding="async"
                                         class="w-full h-full aspect-video object-cover" />
                                 @else
                                     <div class="w-full h-full img-placeholder flex items-center justify-center p-8">
@@ -89,13 +95,13 @@
                                     class="flex gap-3.5 items-start py-6 border-b border-base-300 no-underline text-base-content hover:text-accent transition-colors duration-200">
                                     <div class="shrink-0 w-1/4 overflow-hidden rounded bg-base-200 relative">
                                         @if ($post->image)
-                                            <img src="{{ $post->image }}" alt="{{ $post->alt }}" loading="lazy"
+                                            <img src="{{ $post->image }}" alt="{{ $post->alt }}" loading="lazy" decoding="async"
                                                 class="w-full h-full aspect-square lg:aspect-video object-cover" />
                                         @endif
                                     </div>
                                     <div>
                                         <div
-                                            class="font-sans font-bold text-[0.625rem] tracking-[0.14em] uppercase text-accent mb-1.5">
+                                            class="font-sans font-bold text-[0.6875rem] tracking-[0.14em] uppercase text-primary mb-1.5">
                                             {{ $post->category }}
                                         </div>
                                         <div
@@ -139,25 +145,4 @@
             @include('sections.front-page.esenciales', ['posts' => $esenciales])
         @endif
 
-       {{--  @if (!empty($multimedia))
-            @include('sections.front-page.multimedia', ['posts' => $multimedia])
-        @endif
---}}
-        {{--@include('sections.front-page.boletin') --}}
-
-        <!--<section
-            class="bg-primary text-primary-content rounded-lg p-[2.5rem] lg:p-[4rem] text-center relative overflow-hidden">
-            <div class="absolute inset-0 noise-overlay opacity-5"></div>
-
-            <div class="max-w-[45rem] mx-auto space-y-[1.5rem] relative z-10">
-                <x-badge tracking="tracking-[0.2em]">{{ __('Manifiesto Editorial', 'voxpopuli') }}</x-badge>
-                <blockquote class="font-display italic text-[1.5rem] md:text-[2rem] leading-tight tracking-tight">
-                    "{{ __('Creemos que el Caribe Colombiano no es una periferia, es un centro de producción de pensamiento crítico.', 'voxpopuli') }}"
-                </blockquote>
-                <p class="font-sans font-semibold text-[0.875rem] tracking-widest uppercase opacity-85">
-                    — {{ __('Independencia. Rigor. Caribeidad.', 'voxpopuli') }}
-                </p>
-            </div>
-        </section>-->
-
-@endsection
+        @endsection

@@ -34,10 +34,10 @@
           {{-- Thumbnail 16:9 --}}
           <figure class="aspect-video overflow-hidden bg-base-300">
             @if ($post->image)
-              <img src="{{ $post->image }}" alt="{{ $post->alt }}" loading="lazy" class="w-full h-full object-cover" />
+              <img src="{{ $post->image }}" alt="{{ $post->alt }}" loading="lazy" decoding="async" class="w-full h-full object-cover" />
             @else
               <div class="w-full h-full flex items-center justify-center">
-                <span class="font-sans font-bold text-[0.5625rem] uppercase tracking-[0.12em] text-neutral/40 text-center leading-tight px-1">
+                <span class="font-sans font-bold text-xs uppercase tracking-[0.12em] text-base-content/40 text-center leading-tight px-1">
                   {{ __('Sin imagen documental', 'voxpopuli') }}
                 </span>
               </div>
@@ -46,7 +46,7 @@
 
           <div class="p-5">
           {{-- Badge del deporte --}}
-          <span class="badge badge-outline badge-accent font-sans font-bold text-[0.625rem] tracking-[0.14em] uppercase mb-4">
+          <span class="badge bg-accent text-white font-sans font-bold text-[0.6875rem] tracking-[0.14em] uppercase mb-4">
             {{ $post->category }}
           </span>
 

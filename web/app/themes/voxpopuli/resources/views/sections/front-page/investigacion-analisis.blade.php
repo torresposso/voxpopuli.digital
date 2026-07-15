@@ -42,7 +42,7 @@
               @if ($post->image)
                 <img src="{{ $post->image }}"
                      alt="{{ $post->alt }}"
-                     loading="lazy"
+                     loading="lazy" decoding="async"
                      class="w-full h-full aspect-square lg:aspect-video object-cover" />
               @else
                 <div class="w-full h-full aspect-video flex items-center justify-center bg-base-200">
@@ -53,7 +53,7 @@
               @endif
             </figure>
             <div class="min-w-0">
-              <span class="font-sans font-bold text-[0.625rem] tracking-[0.14em] uppercase text-accent mb-1 block">
+              <span class="font-sans font-bold text-[0.6875rem] tracking-[0.14em] uppercase text-primary mb-1 block">
                 {{ $post->category }}
               </span>
               <h3 class="font-display font-bold text-md lg:text-2xl line-clamp-3 lg:text-xl leading-snug tracking-tight">
@@ -98,7 +98,7 @@
               @if ($post->image)
                 <img src="{{ $post->image }}"
                      alt="{{ $post->alt }}"
-                     loading="lazy"
+                     loading="lazy" decoding="async"
                      class="w-full h-full aspect-square lg:aspect-video object-cover" />
               @else
                 <div class="w-full h-full aspect-video flex items-center justify-center bg-base-200">
@@ -109,7 +109,7 @@
               @endif
             </figure>
             <div class="min-w-0">
-              <span class="font-sans font-bold text-[0.625rem] tracking-[0.14em] uppercase text-accent mb-1 block">
+              <span class="font-sans font-bold text-[0.6875rem] tracking-[0.14em] uppercase text-primary mb-1 block">
                 {{ $post->category }}
               </span>
               <h3 class="font-display font-bold text-md lg:text-2xl leading-snug tracking-tight">

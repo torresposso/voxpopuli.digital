@@ -8,7 +8,7 @@
 <div class="mx-auto max-w-7xl">
   {{-- Encabezado de sección --}}
   <div class="flex items-end justify-between border-b-2 border-base-300">
-    <h2 class="font-display font-extrabold text-[0.8rem] md:text-[1.2rem] tracking-tight text-base-content">
+    <h2 class="font-display font-extrabold text-xl md:text-2xl tracking-tight text-base-content">
       {{ __('Opinión', 'voxpopuli') }}
     </h2>
     <a href="{{ home_url('/category/opinion/') }}"
@@ -29,7 +29,7 @@
           @if ($post->image)
             <img src="{{ $post->image }}"
                  alt="{{ $post->alt }}"
-                 loading="lazy"
+                 loading="lazy" decoding="async"
                  class="w-full h-full object-cover" />
           @else
             <div class="w-full h-full flex items-center justify-center">
@@ -51,7 +51,7 @@
         {{-- Byline --}}
         <div class="font-sans font-semibold text-[0.75rem] uppercase tracking-wider text-neutral mt-2">
           {{ __('Por', 'voxpopuli') }}
-          <span class="text-accent">{{ $post->author }}</span>
+          <span class="text-primary">{{ $post->author }}</span>
         </div>
 
       </article>

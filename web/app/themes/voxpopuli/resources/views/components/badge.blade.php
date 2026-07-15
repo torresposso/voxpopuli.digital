@@ -1,5 +1,9 @@
-@props(['variant' => 'accent', 'tracking' => 'tracking-widest'])
+@props(['variant' => 'accent', 'tracking' => 'tracking-[0.14em]'])
 
-<span {{ $attributes->merge(['class' => "badge badge-{$variant} font-sans font-extrabold text-[0.5rem] {$tracking} uppercase bg-transparent text-{$variant} p-0 border-none"]) }}>
+@php
+  $classes = 'badge bg-' . $variant . ' text-white font-sans font-bold text-[0.6875rem] ' . $tracking . ' uppercase border-none';
+@endphp
+
+<span {{ $attributes->merge(['class' => $classes]) }}>
   {{ $slot }}
 </span>

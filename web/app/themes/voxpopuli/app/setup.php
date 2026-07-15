@@ -134,6 +134,25 @@ add_action('after_setup_theme', function () {
 }, 20);
 
 /**
+ * Dequeue unnecessary WordPress block CSS and emoji scripts from the frontend.
+ *
+ * @return void
+ */
+add_action('wp_enqueue_scripts', function () {
+    wp_dequeue_style('wp-block-library');
+    wp_dequeue_style('wp-block-library-theme');
+    wp_dequeue_style('wc-blocks-style');
+    wp_dequeue_style('global-styles');
+    wp_dequeue_style('wp-emoji-styles');
+
+    // Remove emoji detection scripts
+    remove_action('wp_head', 'print_emoji_detection_script', 7);
+
+    remove_action('wp_head', 'wp_oembed_add_discovery_links');
+    remove_action('wp_head', 'wp_oembed_add_host_js');
+}, 100);
+
+/**
  * Register the theme sidebars.
  *
  * @return void

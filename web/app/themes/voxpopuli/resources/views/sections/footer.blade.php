@@ -17,13 +17,13 @@
          ═══════════════════════════════════════════════════════ --}}
       <div>
         <a href="{{ home_url('/') }}" class="inline-block no-underline group focus-visible:outline-white focus-visible:outline-2 focus-visible:outline-offset-4 rounded-sm">
-          <div class="font-sans font-extrabold text-[2.25rem] leading-[0.85] tracking-tight">
-            <div class="text-base-100 group-hover:opacity-90 transition-opacity">Vox</div>
-            <div class="text-accent group-hover:opacity-90 transition-opacity">Populi</div>
-          </div>
-          <span class="font-sans font-normal text-[0.6875rem] tracking-[0.15em] text-base-100/40 uppercase">digital</span>
+        <div class="font-sans font-extrabold text-[2.25rem] leading-[0.85] tracking-tight">
+          <div class="text-base-100 group-hover:opacity-90 transition-opacity">Vox</div>
+          <div class="text-accent group-hover:opacity-90 transition-opacity">Populi</div>
+        </div>
+        <span class="font-sans font-normal text-[0.6875rem] tracking-[0.15em] text-base-100/60 uppercase">digital</span>
         </a>
-        <p class="font-serif text-sm text-base-100/60 leading-relaxed mt-5 max-w-xs">
+        <p class="font-serif text-sm text-base-100/70 leading-relaxed mt-5 max-w-xs">
           {{ __('Periodismo independiente desde el Caribe colombiano.', 'voxpopuli') }}
         </p>
       </div>
@@ -47,7 +47,7 @@
             @if ($footerShown >= 8) @break @endif
             <li>
               <a href="{{ $item->url }}"
-                 class="font-sans text-sm text-base-100/70 hover:text-accent transition-colors duration-200 no-underline">
+                 class="font-sans text-sm text-base-100/80 hover:text-accent transition-colors duration-200 no-underline">
                 {{ $item->title }}
               </a>
             </li>
@@ -55,7 +55,7 @@
           @endforeach
         </ul>
         @if ($footerShown === 0)
-          <p class="font-serif text-sm text-base-100/40 italic">
+          <p class="font-serif text-sm text-base-100/60 italic">
             {{ __('Configure un menú de navegación primario.', 'voxpopuli') }}
           </p>
         @endif
@@ -68,25 +68,25 @@
         <h3 class="font-sans font-bold text-[0.6875rem] uppercase tracking-[0.2em] text-accent mb-5">
           {{ __('Contacto', 'voxpopuli') }}
         </h3>
-        <p class="font-serif text-sm text-base-100/60 leading-relaxed max-w-xs">
+        <p class="font-serif text-sm text-base-100/70 leading-relaxed max-w-xs">
           {{ __('Cartagena de Indias, Colombia', 'voxpopuli') }}
         </p>
 
-        {{-- Social icons — mismos que el header, invertidos para fondo oscuro --}}
-        <div class="flex items-center gap-4 mt-6">
-          <a href="#" class="text-base-100/50 hover:text-accent transition-colors duration-200" aria-label="X (Twitter)">
+        {{-- Social icons — 44x44px touch targets per WCAG 2.5.8 --}}
+        <div class="flex items-center gap-2 mt-6">
+          <a href="#" class="flex items-center justify-center w-11 h-11 text-base-100/70 hover:text-accent transition-colors duration-200" aria-label="X (Twitter)">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
               <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
             </svg>
           </a>
-          <a href="#" class="text-base-100/50 hover:text-accent transition-colors duration-200" aria-label="Instagram">
+          <a href="#" class="flex items-center justify-center w-11 h-11 text-base-100/70 hover:text-accent transition-colors duration-200" aria-label="Instagram">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
               <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
               <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
             </svg>
           </a>
-          <a href="#" class="text-base-100/50 hover:text-accent transition-colors duration-200" aria-label="YouTube">
+          <a href="#" class="flex items-center justify-center w-11 h-11 text-base-100/70 hover:text-accent transition-colors duration-200" aria-label="YouTube">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/>
               <path d="m10 15 5-3-5-3z"/>
@@ -103,11 +103,11 @@
     <div class="h-px bg-base-100/10 mt-12 mb-6" role="presentation"></div>
 
     <div class="flex flex-col sm:flex-row justify-between items-center gap-2">
-      <p class="font-sans text-[0.6875rem] text-base-100/40">
+      <p class="font-sans text-[0.6875rem] text-base-100/60">
         &copy; {{ date('Y') }} Vox Populi Digital.
         {{ __('Todos los derechos reservados.', 'voxpopuli') }}
       </p>
-      <p class="font-sans text-[0.6875rem] text-base-100/30">
+      <p class="font-sans text-[0.6875rem] text-base-100/60">
         {{ __('Hecho desde el Caribe colombiano', 'voxpopuli') }}
       </p>
     </div>

@@ -6,13 +6,13 @@
     <div class="flex items-center justify-between pb-4 border-b-2 border-base-300">
       <h2
         id="titulo-territorios"
-        class="font-display text-2xl lg:text-3xl font-black text-base-content leading-tight tracking-tighter"
+        class="font-display text-2xl lg:text-3xl font-black text-base-content leading-tight tracking-tight"
       >
         Territorios
       </h2>
       <a
         href="{{ home_url('/category/territorios/') }}"
-        class="font-sans text-[10px] font-extrabold uppercase tracking-[0.2em] text-secondary hover:text-base-content transition-colors shrink-0"
+        class="font-sans text-xs font-bold uppercase tracking-[0.14em] text-primary hover:text-base-content transition-colors shrink-0 focus-visible:outline-primary focus-visible:outline-2 focus-visible:outline-offset-2 rounded-sm"
       >
         Ver todas →
       </a>
@@ -32,7 +32,7 @@
           <article class="card card-border bg-base-200 rounded-box">
             <div class="flex items-start gap-3 p-4">
               <div class="flex-1 min-w-0">
-                <h4 class="font-display font-bold text-[1.125rem] tracking-tighter text-base-content leading-tight">
+                <h4 class="font-display font-bold text-[1.125rem] tracking-tight text-base-content leading-tight">
                   <a
                     href="{{ $post->url }}"
                     class="hover:text-accent focus-visible:outline-primary transition-colors duration-[200ms] no-underline"
@@ -47,7 +47,7 @@
                 @endif
                 <div class="text-neutral font-sans font-semibold text-[0.6875rem] uppercase tracking-wider mt-2">
                   {{ __('Por', 'voxpopuli') }}
-                  <span class="text-accent">{{ $post->author }}</span>
+                  <span class="text-primary">{{ $post->author }}</span>
                   · {{ $post->date }}
                 </div>
               </div>
@@ -80,7 +80,7 @@
           <article class="card card-border bg-base-200 rounded-box">
             <div class="flex items-start gap-3 p-4">
               <div class="flex-1 min-w-0">
-                <h4 class="font-display font-bold text-[1.125rem] tracking-tighter text-base-content leading-tight">
+                <h4 class="font-display font-bold text-[1.125rem] tracking-tight text-base-content leading-tight">
                   <a
                     href="{{ $post->url }}"
                     class="hover:text-accent focus-visible:outline-primary transition-colors duration-[200ms] no-underline"
@@ -95,7 +95,7 @@
                 @endif
                 <div class="text-neutral font-sans font-semibold text-[0.6875rem] uppercase tracking-wider mt-2">
                   {{ __('Por', 'voxpopuli') }}
-                  <span class="text-accent">{{ $post->author }}</span>
+                  <span class="text-primary">{{ $post->author }}</span>
                   · {{ $post->date }}
                 </div>
               </div>
@@ -128,7 +128,7 @@
           <article class="card card-border bg-base-200 rounded-box">
             <div class="flex items-start gap-3 p-4">
               <div class="flex-1 min-w-0">
-                <h4 class="font-display font-bold text-[1.125rem] tracking-tighter text-base-content leading-tight">
+                <h4 class="font-display font-bold text-[1.125rem] tracking-tight text-base-content leading-tight">
                   <a
                     href="{{ $post->url }}"
                     class="hover:text-accent focus-visible:outline-primary transition-colors duration-[200ms] no-underline"
@@ -143,7 +143,7 @@
                 @endif
                 <div class="text-neutral font-sans font-semibold text-[0.6875rem] uppercase tracking-wider mt-2">
                   {{ __('Por', 'voxpopuli') }}
-                  <span class="text-accent">{{ $post->author }}</span>
+                  <span class="text-primary">{{ $post->author }}</span>
                   · {{ $post->date }}
                 </div>
               </div>

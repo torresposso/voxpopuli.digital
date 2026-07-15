@@ -19,12 +19,12 @@
     {{-- Línea decorativa accent — reemplaza la imagen en card-side
          Mobile:  barra horizontal de 6px arriba
          Desktop: barra vertical de 6px a la izquierda --}}
-    <div class="w-full sm:w-[6px] h-[6px] sm:h-auto bg-accent shrink-0" aria-hidden="true"></div>
+    <div class="w-full sm:h-full sm:w-[6px] bg-accent shrink-0" aria-hidden="true"></div>
 
     <div class="card-body p-[1.5rem] gap-[1.25rem]">
 
       {{-- Título grande --}}
-      <h2 class="font-display font-extrabold text-base-content leading-[1.08] tracking-tighter"
+      <h2 class="font-display font-extrabold text-base-content leading-[1.08] tracking-tight"
           style="font-size:clamp(1.75rem, 3vw, 2.375rem)">
         <a href="{{ $post->url }}"
            class="hover:text-accent focus-visible:outline-primary transition-colors duration-[200ms] no-underline">
@@ -42,7 +42,7 @@
       {{-- Metadatos: autor · fecha --}}
       <div class="font-sans font-semibold text-[0.75rem] uppercase tracking-wider text-neutral">
         {{ __('Por', 'voxpopuli') }}
-        <span class="text-accent">{{ $post->author }}</span>
+        <span class="text-primary">{{ $post->author }}</span>
         · {{ $post->date }}
       </div>
 

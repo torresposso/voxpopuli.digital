@@ -105,7 +105,7 @@ class FrontPage extends Composer
         return (object) [
             'id'       => $post->ID,
             'title'    => get_the_title($post),
-            'excerpt'  => get_the_excerpt($post),
+            'excerpt'  => html_entity_decode(wp_strip_all_tags(get_the_excerpt($post)), ENT_QUOTES, 'UTF-8'),
             'url'      => get_permalink($post),
             'image'    => get_the_post_thumbnail_url($post->ID, 'large') ?: '',
             'alt'      => $thumbnailId
