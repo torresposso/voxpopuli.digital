@@ -89,10 +89,16 @@ class Seo extends Composer
      */
     private function getSeoDataForPost(int $postId): array
     {
+        $post = get_post($postId);
+        if (!$post) {
+            return [];
+        }
+
         $ogImageId = get_post_meta($postId, '_voxpopuli_og_image', true);
 
         if (empty($ogImageId)) {
-            $ogImageId = get_post_thumbnail_id($postId);
+            // ⚡ Bolt: Pass $post object instead of $postId to avoid redundant get_post() loopkups
+            $ogImageId = get_post_thumbnail_id($post);
             $ogImageUrl = $ogImageId ? wp_get_attachment_url($ogImageId) : null;
         } else {
             $ogImageUrl = wp_get_attachment_url((int) $ogImageId);
@@ -106,12 +112,13 @@ class Seo extends Composer
             'og_image_url' => $ogImageUrl ?: null,
             'noindex' => get_post_meta($postId, '_voxpopuli_noindex', true) === '1',
             'canonical' => get_post_meta($postId, '_voxpopuli_canonical', true) ?: null,
-            'post_title' => get_the_title($postId),
-            'post_url' => get_permalink($postId),
-            'post_type' => get_post_type($postId),
-            'date_published' => get_the_date('c', $postId),
-            'date_modified' => get_the_modified_date('c', $postId),
-            'author_name' => get_the_author_meta('display_name', get_post_field('post_author', $postId)),
+            // ⚡ Bolt: Replaced function overhead and multiple get_post() DB calls by directly passing the $post object or raw properties
+            'post_title' => get_the_title($post),
+            'post_url' => get_permalink($post),
+            'post_type' => $post->post_type,
+            'date_published' => get_the_date('c', $post),
+            'date_modified' => get_the_modified_date('c', $post),
+            'author_name' => get_the_author_meta('display_name', $post->post_author),
         ];
     }
 
