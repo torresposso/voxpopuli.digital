@@ -63,10 +63,12 @@ class PerformanceServiceProvider extends ServiceProvider
 
             delete_transient(\App\View\Components\Hero::getCacheKey());
             (new \App\View\Composers\Index())->bustCache();
+            \Illuminate\Support\Facades\Cache::forget('voxpopuli_drawer_featured_post');
         }, 10, 1);
         add_action('deleted_post', function () {
             delete_transient(\App\View\Components\Hero::getCacheKey());
             (new \App\View\Composers\Index())->bustCache();
+            \Illuminate\Support\Facades\Cache::forget('voxpopuli_drawer_featured_post');
         });
 
         /**
