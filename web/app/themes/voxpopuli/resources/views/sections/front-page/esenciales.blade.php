@@ -1,12 +1,15 @@
-<section aria-labelledby="heading-esenciales">
+<section aria-labelledby="heading-esenciales" class="py-8 lg:py-16">
   <div class="max-w-7xl mx-auto px-4">
   {{-- Encabezado con borde inferior --}}
-  <div class="border-b-2 border-base-content pb-3.5 mb-6">
-    <h2 id="heading-esenciales"
-        class="font-display font-extrabold text-xl tracking-tight text-base-content">
-      {{ __('Lecturas Esenciales', 'voxpopuli') }}
-    </h2>
-  </div>
+  <header class="flex items-center justify-between border-b-2 border-primary pb-2 mb-6">
+    <div class="flex items-center gap-3">
+      <span class="w-1.25 h-5.5 bg-accent block rounded-full" aria-hidden="true"></span>
+      <h2 id="heading-esenciales"
+          class="font-display font-black text-primary text-2xl lg:text-3xl tracking-tight">
+        {{ __('Lecturas Esenciales', 'voxpopuli') }}
+      </h2>
+    </div>
+  </header>
 
   {{-- Lista numerada de lecturas esenciales --}}
   <ul class="list">

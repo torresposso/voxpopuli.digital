@@ -5,21 +5,20 @@
   ═══════════════════════════════════════════════════════════════
 --}}
 
-<section class="space-y-4 my-16">
+<section class="space-y-4 py-8 lg:py-16">
 <div class="max-w-7xl mx-auto px-4">
 
-  {{-- Badge --}}
-  <x-badge tracking="tracking-[0.2em]">
-    {{ __('Selección del Editor', 'voxpopuli') }}
-  </x-badge>
+  <header class="flex items-center justify-between border-b-2 border-primary pb-2 mb-6">
+    <div class="flex items-center gap-3">
+      <span class="w-1.25 h-5.5 bg-accent block rounded-full" aria-hidden="true"></span>
+      <h2 class="font-display font-black text-primary text-2xl lg:text-3xl tracking-tight">
+        {{ __('Selección del Editor', 'voxpopuli') }}
+      </h2>
+    </div>
+  </header>
 
   {{-- Card destacada (full-width) --}}
-  <div class="card card-border bg-base-200 border-2 border-base-300 rounded-box sm:card-side overflow-hidden">
-
-    {{-- Línea decorativa accent — reemplaza la imagen en card-side
-         Mobile:  barra horizontal de 6px arriba
-         Desktop: barra vertical de 6px a la izquierda --}}
-    <div class="w-full sm:h-full sm:w-[6px] bg-accent shrink-0" aria-hidden="true"></div>
+  <div class="card bg-base-200 border-2 border-accent/30 rounded-box sm:card-side overflow-hidden">
 
     <div class="card-body p-[1.5rem] gap-[1.25rem]">
 

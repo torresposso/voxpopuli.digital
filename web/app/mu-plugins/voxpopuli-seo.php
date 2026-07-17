@@ -349,3 +349,87 @@ add_action('template_redirect', function () {
     echo '</urlset>' . "\n";
     exit;
 }, 5);
+
+// ──────────────────────────────────────────────
+// 6. ENQUEUE WEB FONTS FOR HERO (Playfair Display & Literata)
+// ──────────────────────────────────────────────
+add_action('wp_enqueue_scripts', function () {
+    if (is_front_page()) {
+        wp_enqueue_style('voxpopuli-hero-fonts', 'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&display=swap', [], null);
+    }
+});
+
+// ──────────────────────────────────────────────
+// 7. INJECT HERO READ MORE CTA BUTTON
+// ──────────────────────────────────────────────
+add_action('wp_footer', function () {
+    if (!is_front_page()) {
+        return;
+    }
+    ?>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Encontrar el primer bloque de post listado (Hero de Elementor)
+        const heroContent = document.querySelector('.elementor-element-31491d6b .content');
+        const titleLink = document.querySelector('.elementor-element-31491d6b .post-title a');
+        
+        if (heroContent && titleLink && !heroContent.querySelector('.read-more-btn')) {
+            const btn = document.createElement('a');
+            btn.href = titleLink.href;
+            btn.className = 'ts-button ts-button-outline read-more-btn';
+            btn.textContent = 'LEER ARTÍCULO';
+            
+            // Estilos en línea para espaciado base, el resto lo controla el CSS del tema
+            btn.style.marginTop = '24px';
+            btn.style.display = 'inline-block';
+            
+            heroContent.appendChild(btn);
+        }
+    });
+    </script>
+    <?php
+});
+
+// ──────────────────────────────────────────────
+// 8. CUSTOM STICKY POSTS QUERIES FOR HERO & GRID
+// ──────────────────────────────────────────────
+add_filter('bunyad_block_query_args', function ($query_args, $block = null, $props = []) {
+    $heading = $props['heading'] ?? '';
+    $posts_count = $props['posts'] ?? 0;
+    
+    // Hero: Heading is 'Últimas Noticias' and displays 1 post
+    if ($heading === 'Últimas Noticias' && $posts_count == 1) {
+        $sticky = get_option('sticky_posts');
+        if (!empty($sticky)) {
+            $query_args['post__in'] = $sticky;
+            $query_args['posts_per_page'] = 1;
+            $query_args['orderby'] = 'date';
+            $query_args['order'] = 'DESC';
+            $query_args['ignore_sticky_posts'] = 1;
+            
+            unset($query_args['cat']);
+            unset($query_args['category__in']);
+            unset($query_args['tax_query']);
+        }
+    } 
+    // Grid: Heading is 'Investigación' and displays 4 posts
+    elseif ($heading === 'Investigación' && $posts_count == 4) {
+        $sticky = get_option('sticky_posts');
+        if (!empty($sticky)) {
+            $query_args['post__in'] = $sticky;
+            $query_args['posts_per_page'] = 4;
+            $query_args['offset'] = 1;
+            $query_args['orderby'] = 'date';
+            $query_args['order'] = 'DESC';
+            $query_args['ignore_sticky_posts'] = 1;
+            
+            unset($query_args['cat']);
+            unset($query_args['category__in']);
+            unset($query_args['tax_query']);
+        }
+    }
+    
+    return $query_args;
+}, 10, 3);
+
+

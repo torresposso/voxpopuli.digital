@@ -1,6 +1,20 @@
 # Application
 web/app/plugins/*
 !web/app/plugins/.gitkeep
+!web/app/plugins/bunyad-amp/
+!web/app/plugins/bunyad-demo-import/
+!web/app/plugins/bunyad-instagram-widget/
+!web/app/plugins/contact-form-7/
+!web/app/plugins/custom-sidebars/
+!web/app/plugins/debloat/
+!web/app/plugins/elementor/
+!web/app/plugins/media-sync/
+!web/app/plugins/regenerate-thumbnails/
+!web/app/plugins/selfhost-google-fonts/
+!web/app/plugins/smartmag-core/
+!web/app/plugins/sphere-core/
+!web/app/plugins/sphere-post-views/
+!web/app/plugins/wordpress-importer/
 # Ignore Composer-installed mu-plugin directories; single-file mu-plugins are tracked intentionally
 web/app/mu-plugins/*/
 web/app/themes/twentytwentyfive/

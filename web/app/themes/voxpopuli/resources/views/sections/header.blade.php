@@ -38,18 +38,18 @@
                 {{-- Fallback: static utility links --}}
                 <span
                     class="hidden sm:inline text-neutral font-sans font-bold text-[0.6875rem] uppercase tracking-wider">
-                    <a href="#" class="hover:text-accent transition-colors">Newsletter</a>
+                    <a href="#" class="inline-flex items-center py-[13px] hover:text-accent transition-colors">Newsletter</a>
                     <span class="mx-1 opacity-30">·</span>
-                    <a href="#" class="hover:text-accent transition-colors">Nosotros</a>
+                    <a href="#" class="inline-flex items-center py-[13px] hover:text-accent transition-colors">Nosotros</a>
                     <span class="mx-1 opacity-30">·</span>
-                    <a href="#" class="hover:text-accent transition-colors">Membresía</a>
+                    <a href="#" class="inline-flex items-center py-[13px] hover:text-accent transition-colors">Membresía</a>
                 </span>
             @endif
 
             {{-- Social icons — 44x44px touch targets per WCAG 2.5.8 --}}
             <div class="flex items-center gap-1">
                 {{-- X/Twitter --}}
-                <a href="#" class="flex items-center justify-center w-11 h-11 text-base-content hover:text-accent transition-colors" aria-label="X">
+                <a href="#" class="flex items-center justify-center min-w-[44px] min-h-[44px] text-base-content hover:text-accent transition-colors" aria-label="X">
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
                         fill="currentColor">
                         <path
@@ -57,7 +57,7 @@
                     </svg>
                 </a>
                 {{-- Instagram --}}
-                <a href="#" class="flex items-center justify-center w-11 h-11 text-base-content hover:text-accent transition-colors" aria-label="Instagram">
+                <a href="#" class="flex items-center justify-center min-w-[44px] min-h-[44px] text-base-content hover:text-accent transition-colors" aria-label="Instagram">
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
@@ -67,7 +67,7 @@
                     </svg>
                 </a>
                 {{-- YouTube --}}
-                <a href="#" class="flex items-center justify-center w-11 h-11 text-base-content hover:text-accent transition-colors" aria-label="YouTube">
+                <a href="#" class="flex items-center justify-center min-w-[44px] min-h-[44px] text-base-content hover:text-accent transition-colors" aria-label="YouTube">
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
@@ -89,7 +89,7 @@
             {{-- Left: hamburger (mobile) --}}
             <div class="navbar-start">
                 <label for="main-navigation-drawer"
-                    class="btn btn-square btn-ghost drawer-button lg:hidden cursor-pointer"
+                    class="btn btn-square btn-ghost drawer-button lg:hidden cursor-pointer min-h-[44px] min-w-[44px]"
                     aria-label="{{ __('Abrir menú de navegación', 'voxpopuli') }}" role="button">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                         class="inline-block h-6 w-6 stroke-current">
@@ -97,7 +97,7 @@
                             d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                 </label>
-                <a href="{{ home_url('/') }}" class="!no-underline focus-visible:outline-primary">
+                <a href="{{ home_url('/') }}" class="!no-underline focus-visible:outline-primary inline-flex items-center min-h-[44px]">
                     <span class="font-sans font-extrabold text-[1.5rem] tracking-normal">
                         <span class="text-accent">Vox</span><span class="text-primary">Populi</span>
                     </span>
@@ -106,7 +106,7 @@
 
             {{-- Right: search icon --}}
             <div class="navbar-end">
-                <button class="btn btn-square btn-ghost" aria-label="{{ __('Buscar', 'voxpopuli') }}">
+                <button class="btn btn-square btn-ghost min-h-[44px] min-w-[44px]" aria-label="{{ __('Buscar', 'voxpopuli') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                         class="inline-block h-5 w-5 stroke-current">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

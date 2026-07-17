@@ -1,0 +1,178 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: SmartMag 10.3.2\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/theme/smart-mag\n"
+"Last-Translator: VPD\n"
+"Language-Team: Spanish\n"
+"Language: es_CO\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Domain: bunyad\n"
+
+msgid "SmartMag Core"
+msgstr "SmartMag Core"
+
+msgctxt "breadcrumbs"
+msgid "You are at:"
+msgstr "Estás en:"
+
+msgctxt "breadcrumbs"
+msgid "Home"
+msgstr "Inicio"
+
+msgctxt "breadcrumbs"
+msgid "Search Results for \"%s\""
+msgstr "Resultados de búsqueda para \"%s\""
+
+msgctxt "breadcrumbs"
+msgid "Error 404"
+msgstr "Error 404"
+
+msgctxt "breadcrumbs"
+msgid " (Page %d)"
+msgstr " (Página %d)"
+
+msgctxt "breadcrumbs"
+msgid "Category: \"%s\""
+msgstr "Categoría: \"%s\""
+
+msgctxt "breadcrumbs"
+msgid "Archive for \"%s\""
+msgstr "Archivo de \"%s\""
+
+msgctxt "breadcrumbs"
+msgid "Posts Tagged \"%s\""
+msgstr "Entradas etiquetadas con \"%s\""
+
+msgctxt "breadcrumbs"
+msgid "Author: %s"
+msgstr "Autor: %s"
+
+msgid "All"
+msgstr "Todo"
+
+msgid "In"
+msgstr "En"
+
+msgid "Updated:"
+msgstr "Actualizado:"
+
+msgid "%d Min Read"
+msgid_plural "%d Mins Read"
+msgstr[0] "%d min de lectura"
+msgstr[1] "%d min de lectura"
+
+msgctxt "Post Meta"
+msgid "Views"
+msgstr "Vistas"
+
+msgid "Views"
+msgstr "Vistas"
+
+msgctxt "Post Meta"
+msgid "%s Article Views"
+msgstr "%s vistas"
+
+msgid "By"
+msgstr "Por"
+
+msgctxt "Post Meta"
+msgid "By"
+msgstr "Por"
+
+msgctxt "Legacy Meta"
+msgid "By"
+msgstr "Por"
+
+msgid "Facebook"
+msgstr "Facebook"
+
+msgid "Share on Facebook"
+msgstr "Compartir en Facebook"
+
+msgid "Twitter"
+msgstr "Twitter"
+
+msgid "Share on X (Twitter)"
+msgstr "Compartir en X (Twitter)"
+
+msgid "Pinterest"
+msgstr "Pinterest"
+
+msgid "Share on Pinterest"
+msgstr "Compartir en Pinterest"
+
+msgid "LinkedIn"
+msgstr "LinkedIn"
+
+msgid "Share on LinkedIn"
+msgstr "Compartir en LinkedIn"
+
+msgid "Email"
+msgstr "Correo electrónico"
+
+msgid "Share via Email"
+msgstr "Compartir por correo electrónico"
+
+msgid "WhatsApp"
+msgstr "WhatsApp"
+
+msgid "Share on WhatsApp"
+msgstr "Compartir por WhatsApp"
+
+msgid "Telegram"
+msgstr "Telegram"
+
+msgid "Share on Telegram"
+msgstr "Compartir por Telegram"
+
+msgid "Search..."
+msgstr "Buscar..."
+
+msgid "Type and press Enter"
+msgstr "Escribe y presiona Enter"
+
+msgid "View All"
+msgstr "Ver todo"
+
+msgid "Share"
+msgstr "Compartir"
+
+msgid "Comments"
+msgstr "Comentarios"
+
+msgid "No Comments"
+msgstr "Sin comentarios"
+
+msgid "1 Comment"
+msgstr "1 comentario"
+
+msgid "%d Comments"
+msgstr "%d comentarios"
+
+msgid "Leave a Reply"
+msgstr "Deja una respuesta"
+
+msgid "Post Comment"
+msgstr "Publicar comentario"
+
+msgid "Related Posts"
+msgstr "Artículos relacionados"
+
+msgid "Stay In Touch"
+msgstr "Síguenos"
+
+msgid "Next"
+msgstr "Siguiente"
+
+msgid "Previous"
+msgstr "Anterior"
+
+msgctxt "pagination"
+msgid "Next"
+msgstr "Siguiente"
+
+msgctxt "pagination"
+msgid "Previous"
+msgstr "Anterior"

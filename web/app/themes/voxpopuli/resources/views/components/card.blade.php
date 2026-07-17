@@ -21,7 +21,7 @@
     
     <!-- Metadatos Documentales -->
     <div class="text-neutral font-sans font-semibold text-[0.75rem] uppercase tracking-wider mt-[0.5rem]">
-      {{ __('Por', 'voxpopuli') }} <span class="text-accent">{{ $author }}</span> — {{ $date }}
+      {{ __('Por', 'voxpopuli') }} <span class="text-primary">{{ $author }}</span> — {{ $date }}
     </div>
   </div>
 </div>

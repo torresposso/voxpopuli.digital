@@ -59,6 +59,8 @@ RUN apk add --no-cache git curl sqlite bash unzip \
     && chmod +x wp-cli.phar \
     && mv wp-cli.phar /usr/local/bin/wp
 
+COPY docker/php/conf.d/uploads.ini /usr/local/etc/php/conf.d/uploads.ini
+
 EXPOSE 8080
 
 RUN setcap CAP_NET_BIND_SERVICE=+eip /usr/local/bin/frankenphp \
@@ -79,7 +81,11 @@ ARG GROUP_ID=1000
 RUN addgroup -g ${GROUP_ID} appuser \
     && adduser -u ${USER_ID} -G appuser -D appuser
 
+RUN apk add --no-cache sqlite bash
 RUN install-php-extensions gd zip exif mysqli pdo_mysql opcache
+COPY --from=dev /usr/local/bin/wp /usr/local/bin/wp
+
+COPY docker/php/conf.d/uploads.ini /usr/local/etc/php/conf.d/uploads.ini
 
 WORKDIR /app
 
@@ -100,7 +106,9 @@ RUN setcap CAP_NET_BIND_SERVICE=+eip /usr/local/bin/frankenphp \
     && mkdir -p /data/caddy /config/caddy \
     && chown -R appuser:appuser /data/caddy /config/caddy \
     && mkdir -p /app/web/app/cache \
-    && chown -R appuser:appuser /app/web/app/cache
+    && chown -R appuser:appuser /app/web/app/cache \
+    && rm -rf /app/web/app/uploads \
+    && ln -sf /data/uploads /app/web/app/uploads
 
 ENV SERVER_NAME=:$PORT
 ENV SERVER_ROOT=/app/web

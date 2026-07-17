@@ -16,11 +16,21 @@
     }
 @endphp
 
-<section>
-    {{-- SECTION HEADER — "Multimedia" with bottom border --}}
-    <h2 class="font-display font-bold text-[2rem] sm:text-[2.5rem] text-base-content border-b-2 border-base-300 pb-4 mb-8">
-        {{ __('Multimedia', 'voxpopuli') }}
-    </h2>
+<section class="py-8 lg:py-16">
+  <div class="max-w-7xl mx-auto px-4">
+    <header class="flex items-center justify-between border-b-2 border-primary pb-2 mb-8">
+      <div class="flex items-center gap-3">
+        <span class="w-1.25 h-5.5 bg-accent block rounded-full" aria-hidden="true"></span>
+        <h2 class="font-display font-black text-primary text-2xl lg:text-3xl tracking-tight">
+          {{ __('Multimedia', 'voxpopuli') }}
+        </h2>
+      </div>
+      <a href="{{ home_url('/category/multimedia/') }}"
+         class="group font-sans font-bold text-xs uppercase tracking-[0.2em] text-accent hover:text-accent/80 transition-colors duration-200 no-underline shrink-0 focus-visible:outline-primary focus-visible:outline-2 focus-visible:outline-offset-2 rounded-sm">
+        {{ __('Ver todas', 'voxpopuli') }}
+        <span aria-hidden="true" class="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1">→</span>
+      </a>
+    </header>
 
     <div class="grid lg:grid-cols-2 gap-8">
         {{-- LEFT COLUMN — En Video (YouTube embed 16:9) --}}
@@ -129,4 +139,5 @@
             </div>
         </div>
     @endif
+  </div>
 </section>

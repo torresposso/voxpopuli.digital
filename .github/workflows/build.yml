@@ -2,7 +2,7 @@ name: Build & Push
 
 on:
   push:
-    branches: [main]
+    branches: [main, staging]
     tags: ["v*"]
 
 env:
@@ -38,6 +38,8 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=ref,event=branch
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
+            type=raw,value=staging,enable=${{ github.ref == 'refs/heads/staging' }}
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
             type=sha,format=long

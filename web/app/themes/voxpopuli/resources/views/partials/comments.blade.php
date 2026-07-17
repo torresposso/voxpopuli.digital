@@ -22,12 +22,6 @@
       @endif
     @endif
 
-    @if ($closed())
-      <x-alert type="warning">
-        {!! __('Comments are closed.', 'voxpopuli') !!}
-      </x-alert>
-    @endif
-
     @php(comment_form([
       'title_reply' => __('Deja un comentario', 'voxpopuli'),
       'label_submit' => __('Publicar comentario', 'voxpopuli'),

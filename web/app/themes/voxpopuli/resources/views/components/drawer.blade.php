@@ -3,7 +3,7 @@
 ])
 
 <div {{ $attributes->merge(['class' => 'drawer min-h-screen']) }}>
-    <input id="{{ $id }}" type="checkbox" class="drawer-toggle" />
+    <input id="{{ $id }}" type="checkbox" class="drawer-toggle" aria-label="{{ __('Abrir menú de navegación', 'voxpopuli') }}" />
 
     <div class="drawer-content flex flex-col">
         {{ $slot }}

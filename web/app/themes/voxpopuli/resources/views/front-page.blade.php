@@ -4,6 +4,13 @@
     @if ($hero && $hero->image)
         <link rel="preload" as="image" href="{{ $hero->image }}" fetchpriority="high">
     @endif
+    <meta name="description" content="{{ __('Periodismo independiente desde el Caribe colombiano. Investigación, análisis y opinión con rigor técnico, mirada progresista y arraigo caribeño.', 'voxpopuli') }}">
+    <meta property="og:title" content="{{ __('Vox Populi Digital', 'voxpopuli') }}">
+    <meta property="og:description" content="{{ __('Periodismo independiente desde el Caribe colombiano. Investigación, análisis y opinión con rigor técnico, mirada progresista y arraigo caribeño.', 'voxpopuli') }}">
+    <meta property="og:type" content="website">
+    @if ($hero && $hero->image)
+        <meta property="og:image" content="{{ $hero->image }}">
+    @endif
 @endpush
 
 @section('content')
@@ -39,7 +46,7 @@
         </a>
 
 
-    <div class="py-6">
+    <div class="py-8 lg:py-16">
         @if ($featured || !empty($rail))
             <section class="max-w-7xl mx-auto px-4">
                 <div class="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-12 lg:gap-24 items-start">
@@ -61,7 +68,7 @@
                             <div class="flex items-center gap-2 mb-3">
                                 <span class="w-[5px] h-[17px] bg-accent block"></span>
                                 <span
-                                    class="font-sans font-bold text-xs tracking-[0.14em] uppercase text-base-content">{{ $featured->category }}</span>
+                                    class="font-sans font-bold text-xs tracking-[0.14em] uppercase text-primary">{{ $featured->category }}</span>
                             </div>
 
                             <h2 class="font-display font-bold text-base-content leading-[1.08] tracking-tight mb-3.5"
@@ -70,7 +77,7 @@
                             </h2>
 
                             @if ($featured->excerpt)
-                                <p class="font-serif text-base-content/70 leading-relaxed mb-3.5 max-w-[620px]">
+                                <p class="font-serif text-base-content/85 leading-relaxed mb-3.5 max-w-[620px]">
                                     {{ $featured->excerpt }}
                                 </p>
                             @endif
@@ -82,12 +89,13 @@
                     @endif
 
                     @if (!empty($rail))
-                        <div>
+                        <div aria-labelledby="heading-rail">
                             <div class="flex items-center gap-2.5 mb-1 pb-3.5 border-b-2 border-base-content">
-                                <span
+                                <h2
+                                    id="heading-rail"
                                     class="font-display font-extrabold text-sm tracking-[0.14em] uppercase text-base-content">
                                     {{ __('Últimas', 'voxpopuli') }}
-                                </span>
+                                </h2>
                             </div>
 
                             @foreach ($rail as $post)
@@ -144,5 +152,11 @@
         @if (!empty($esenciales))
             @include('sections.front-page.esenciales', ['posts' => $esenciales])
         @endif
+
+        {{-- @if (!empty($multimedia))
+            @include('sections.front-page.multimedia', ['posts' => $multimedia])
+        @endif
+
+        @include('sections.front-page.boletin') --}}
 
         @endsection

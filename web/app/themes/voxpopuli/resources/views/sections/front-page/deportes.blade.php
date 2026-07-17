@@ -4,22 +4,22 @@
   Grid de 3 artículos — texto primero, energía visual sin imágenes.
   ═══════════════════════════════════════════════════════════════
 --}}
-<section class="bg-base-100 px-4 py-8 lg:py-16" aria-labelledby="heading-deportes">
-<div class="mx-auto max-w-7xl">
+<section class="bg-base-100  py-8 lg:py-16" aria-labelledby="heading-deportes">
+<div class="mx-auto max-w-7xl px-4">
   {{-- Encabezado --}}
-  <header class="flex items-center justify-between border-b-2 border-base-300 pb-4 mb-8">
+  <header class="flex items-center justify-between border-b-2 border-primary pb-2 mb-4">
     <div class="flex items-center gap-3">
-      <span class="w-[5px] h-[22px] bg-accent block rounded-full" aria-hidden="true"></span>
+      <span class="w-1.25 h-5.5 bg-accent block rounded-full" aria-hidden="true"></span>
       <h2
         id="heading-deportes"
-        class="font-display font-black text-2xl lg:text-3xl tracking-tight text-base-content"
+        class="font-display font-black text-primary text-2xl lg:text-3xl tracking-tight"
       >
         {{ __('Deportes', 'voxpopuli') }}
       </h2>
     </div>
     <a
       href="{{ home_url('/category/deportes/') }}"
-      class="group font-sans font-bold text-xs uppercase tracking-[0.2em] text-accent hover:text-accent/80 transition-colors duration-200 no-underline shrink-0 focus-visible:outline-primary focus-visible:outline-2 focus-visible:outline-offset-2 rounded-sm"
+      class="group font-sans font-bold text-xs uppercase tracking-[0.2em] text-primary hover:text-primary/80 transition-colors duration-200 no-underline shrink-0 min-h-[44px] inline-flex items-center focus-visible:outline-primary focus-visible:outline-2 focus-visible:outline-offset-2 rounded-sm"
     >
       {{ __('Ver todas', 'voxpopuli') }}
       <span aria-hidden="true" class="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1">→</span>
@@ -37,9 +37,9 @@
               <img src="{{ $post->image }}" alt="{{ $post->alt }}" loading="lazy" decoding="async" class="w-full h-full object-cover" />
             @else
               <div class="w-full h-full flex items-center justify-center">
-                <span class="font-sans font-bold text-xs uppercase tracking-[0.12em] text-base-content/40 text-center leading-tight px-1">
-                  {{ __('Sin imagen documental', 'voxpopuli') }}
-                </span>
+                <span class="font-sans font-bold text-xs uppercase tracking-[0.12em] text-base-content/70 text-center leading-tight px-1">
+                    {{ __('Sin imagen documental', 'voxpopuli') }}
+                  </span>
               </div>
             @endif
           </figure>
@@ -57,7 +57,7 @@
 
           {{-- Excerpt --}}
           @if ($post->excerpt)
-            <p class="font-serif text-sm text-base-content/70 leading-relaxed line-clamp-2 mb-4">
+            <p class="font-serif text-sm text-base-content/85 leading-relaxed line-clamp-2 mb-4">
               {{ $post->excerpt }}
             </p>
           @endif

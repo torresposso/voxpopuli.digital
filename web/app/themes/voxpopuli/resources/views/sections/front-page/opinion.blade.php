@@ -4,20 +4,23 @@
   Grid de 4 artículos — con imagen documental, título y byline.
   ═══════════════════════════════════════════════════════════════
 --}}
-<section class="bg-base-100 p-4">
-<div class="mx-auto max-w-7xl">
+<section class="bg-base-100 py-8 lg:py-16">
+<div class="mx-auto max-w-7xl px-4">
   {{-- Encabezado de sección --}}
-  <div class="flex items-end justify-between border-b-2 border-base-300">
-    <h2 class="font-display font-extrabold text-xl md:text-2xl tracking-tight text-base-content">
-      {{ __('Opinión', 'voxpopuli') }}
-    </h2>
+  <header class="flex items-center justify-between border-b-2 border-primary pb-2 mb-4">
+    <div class="flex items-center gap-3">
+      <span class="w-1.25 h-5.5 bg-accent block rounded-full" aria-hidden="true"></span>
+      <h2 class="font-display font-black text-primary text-2xl lg:text-3xl tracking-tight">
+        {{ __('Opinión', 'voxpopuli') }}
+      </h2>
+    </div>
     <a href="{{ home_url('/category/opinion/') }}"
-       class="font-sans font-bold text-[0.75rem] uppercase tracking-[0.2em] text-accent hover:text-accent/80 transition-colors duration-200 no-underline shrink-0 focus-visible:outline-primary focus-visible:outline-2 focus-visible:outline-offset-2 rounded-sm">
+       class="group font-sans font-bold text-xs uppercase tracking-[0.2em] text-primary hover:text-primary/80 transition-colors duration-200 no-underline shrink-0 min-h-[44px] inline-flex items-center focus-visible:outline-primary focus-visible:outline-2 focus-visible:outline-offset-2 rounded-sm">
       {{ __('Ver todas', 'voxpopuli') }}
       <span aria-hidden="true"
-            class="inline-block transition-transform duration-300 ease-out group-hover/flecha:translate-x-1">→</span>
+            class="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1">→</span>
     </a>
-  </div>
+  </header>
 
   {{-- Grid con entrada escalonada --}}
   <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 pt-6">

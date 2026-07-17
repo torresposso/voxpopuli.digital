@@ -18,6 +18,7 @@
         {!! $seoJsonLd !!}
     @endif
 
+    <meta name="theme-color" content="#1a237e">
     @vite(['resources/css/app.css'])
     @stack('head')
 </head>
