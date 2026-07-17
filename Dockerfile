@@ -23,6 +23,9 @@ WORKDIR /app
 
 RUN mkdir -p web/app/mu-plugins web/app/plugins web/app/themes web/wp
 
+COPY web/app/plugins/ ./web/app/plugins/
+COPY web/app/mu-plugins/ ./web/app/mu-plugins/
+
 COPY composer.json composer.lock ./
 COPY web/app/themes/voxpopuli/composer.json ./web/app/themes/voxpopuli/
 
