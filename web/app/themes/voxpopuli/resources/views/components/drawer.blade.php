@@ -188,32 +188,40 @@
 
       {{-- Premium Dynamic Featured Post Section --}}
       @php
-        $drawer_posts = get_posts([
-          'numberposts' => 1,
-          'post_status' => 'publish',
-          'no_found_rows' => true
-        ]);
-      @endphp
-      @if(!empty($drawer_posts))
-        @php
+        // ⚡ Bolt: Cache globally rendered drawer featured post data to avoid unconditional DB query on every page load
+        $feat_data = \Illuminate\Support\Facades\Cache::remember('voxpopuli_drawer_featured_post', 3600, function () {
+          $drawer_posts = get_posts([
+            'numberposts' => 1,
+            'post_status' => 'publish',
+            'no_found_rows' => true
+          ]);
+
+          if (empty($drawer_posts)) {
+            return null;
+          }
+
           $feat_post = $drawer_posts[0];
-          $feat_title = get_the_title($feat_post);
-          $feat_link = get_permalink($feat_post);
-          $feat_date = get_the_date('', $feat_post);
           $feat_cats = get_the_category($feat_post);
-          $feat_cat_name = !empty($feat_cats) ? $feat_cats[0]->name : __('Destacado', 'voxpopuli');
-          $feat_thumb = get_the_post_thumbnail_url($feat_post, 'medium');
-        @endphp
+          return [
+            'title' => get_the_title($feat_post),
+            'link' => get_permalink($feat_post),
+            'date' => get_the_date('', $feat_post),
+            'cat_name' => !empty($feat_cats) ? $feat_cats[0]->name : __('Destacado', 'voxpopuli'),
+            'thumb' => get_the_post_thumbnail_url($feat_post, 'medium'),
+          ];
+        });
+      @endphp
+      @if(!empty($feat_data))
         <div class="px-6 py-6 bg-base-100/30 border-b border-base-300/40 shrink-0">
           <h3 class="font-sans text-[9px] uppercase tracking-[0.2em] text-primary font-extrabold mb-4 flex items-center gap-2">
             <span>{{ __('Historia Destacada', 'voxpopuli') }}</span>
             <span class="inline-block w-4 h-[1px] bg-primary/30"></span>
           </h3>
           
-          <a href="{{ $feat_link }}" class="drawer-featured-card flex gap-4 p-3 bg-base-100 rounded-xl overflow-hidden hover:no-underline group">
-            @if($feat_thumb)
+          <a href="{{ $feat_data['link'] }}" class="drawer-featured-card flex gap-4 p-3 bg-base-100 rounded-xl overflow-hidden hover:no-underline group">
+            @if($feat_data['thumb'])
               <div class="w-20 h-20 rounded-lg overflow-hidden shrink-0 bg-base-200 relative">
-                <img src="{{ $feat_thumb }}" alt="{{ esc_attr($feat_title) }}" class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500">
+                <img src="{{ $feat_data['thumb'] }}" alt="{{ esc_attr($feat_data['title']) }}" class="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500">
               </div>
             @else
               <div class="w-20 h-20 rounded-lg overflow-hidden shrink-0 bg-primary/5 flex items-center justify-center font-serif text-primary/30 text-xl font-bold border border-primary/15">
@@ -222,16 +230,16 @@
             @endif
             <div class="flex flex-col justify-center min-w-0">
               <span class="font-sans text-[8px] font-extrabold uppercase tracking-widest text-secondary mb-1">
-                {{ $feat_cat_name }}
+                {{ $feat_data['cat_name'] }}
               </span>
               <h4 class="font-display text-sm font-bold text-base-content leading-snug group-hover:text-primary transition-colors duration-300 line-clamp-2">
-                {{ $feat_title }}
+                {{ $feat_data['title'] }}
               </h4>
               <span class="font-sans text-[9px] text-base-content/40 mt-1.5 flex items-center gap-1.5">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
-                {{ $feat_date }}
+                {{ $feat_data['date'] }}
               </span>
             </div>
           </a>

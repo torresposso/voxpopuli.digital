@@ -42,3 +42,8 @@
 
 **Learning:** View Composer and Component caching strategies can be silently undermined by WordPress background autosaves and revision creations if `save_post` invalidation hooks are left un-guarded. This causes continuous cache destruction on production while editors draft content, negating the performance benefits of caching.
 **Action:** Always add guard clauses for `DOING_AUTOSAVE` and `wp_is_post_revision()` inside `save_post` hooks when used for cache invalidation or metadata updates to prevent redundant processing and cache stampedes.
+
+## 2024-11-21 - Cache Globally Rendered Layout Components
+
+**Learning:** When database queries (like `get_posts`) and expensive functions (like `get_the_category()`) are placed inside globally rendered layout components (e.g., headers, footers, or a navigation drawer), they execute unconditionally on every single page load and across all endpoints. If these components lack a caching layer, they create an architectural bottleneck that degrades overall site TTFB.
+**Action:** Always wrap expensive data extraction logic and database queries inside globally rendered layout components with a unified caching layer (e.g., `\Illuminate\Support\Facades\Cache::remember()`) to prevent unconditional, repeated execution on every page load.
