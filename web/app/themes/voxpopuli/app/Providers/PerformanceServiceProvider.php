@@ -51,7 +51,7 @@ class PerformanceServiceProvider extends ServiceProvider
         }, 10, 1);
 
         /**
-         * Invalidate Hero and Homepage sections caches when a post is saved or deleted.
+         * Invalidate Hero, Homepage sections, and Drawer caches when a post is saved or deleted.
          */
         add_action('save_post', function ($post_id) {
             if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
@@ -63,10 +63,12 @@ class PerformanceServiceProvider extends ServiceProvider
 
             delete_transient(\App\View\Components\Hero::getCacheKey());
             (new \App\View\Composers\Index())->bustCache();
+            \Illuminate\Support\Facades\Cache::forget('voxpopuli_drawer_featured_post');
         }, 10, 1);
         add_action('deleted_post', function () {
             delete_transient(\App\View\Components\Hero::getCacheKey());
             (new \App\View\Composers\Index())->bustCache();
+            \Illuminate\Support\Facades\Cache::forget('voxpopuli_drawer_featured_post');
         });
 
         /**

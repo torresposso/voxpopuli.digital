@@ -93,11 +93,12 @@ class ThemeServiceProvider extends ServiceProvider
         });
 
         /**
-         * Surgical cache invalidation for homepage sections and hero component when publishing or updating posts.
+         * Surgical cache invalidation for homepage sections, hero component, and drawer featured post when publishing or updating posts.
          */
         $invalidateCache = function () {
             delete_transient(\App\View\Components\Hero::getCacheKey());
             \Illuminate\Support\Facades\Cache::forget('voxpopuli_homepage_sections_ids');
+            \Illuminate\Support\Facades\Cache::forget('voxpopuli_drawer_featured_post');
         };
 
         add_action('save_post', $invalidateCache);
