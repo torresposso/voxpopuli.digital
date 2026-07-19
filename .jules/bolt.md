@@ -42,3 +42,8 @@
 
 **Learning:** View Composer and Component caching strategies can be silently undermined by WordPress background autosaves and revision creations if `save_post` invalidation hooks are left un-guarded. This causes continuous cache destruction on production while editors draft content, negating the performance benefits of caching.
 **Action:** Always add guard clauses for `DOING_AUTOSAVE` and `wp_is_post_revision()` inside `save_post` hooks when used for cache invalidation or metadata updates to prevent redundant processing and cache stampedes.
+
+## 2024-11-23 - Avoid Caching Raw WP_Post Objects
+
+**Learning:** When using caching mechanisms like `\Illuminate\Support\Facades\Cache::remember` to store the results of WordPress queries for presentation layer components (e.g., a featured post in a Drawer), caching the raw `WP_Post` object directly is suboptimal. Retrieving the object from the cache and subsequently calling functions like `get_the_title($post)` or `get_permalink($post)` in the template still triggers the expensive WordPress filter cascade on every page load, defeating a significant part of the caching benefit.
+**Action:** When caching post data for presentation, always map the raw `WP_Post` object to a simple associative array containing only the specific, fully processed scalar values needed by the template (e.g., the evaluated title, URL, formatted date, category name, and attachment URL) before returning it to the cache store. This ensures O(1) lookups and zero filter executions upon retrieval.
